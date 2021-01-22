@@ -1,0 +1,39 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraPosition : MonoBehaviour
+{
+
+    [SerializeField]
+    private GameObject _player;
+
+    [SerializeField]
+    float rotateSpeed;
+
+    [SerializeField]
+    private float zOffset;
+    [SerializeField]
+    private float yOffset;
+
+    float yRotate = 0;
+
+    private void Start()
+    {
+
+    }
+    void Update()
+    {
+        
+        yRotate += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
+
+        transform.rotation = new Quaternion(0, yRotate, 0,1);
+
+        Camera.main.transform.position = _player.transform.position + (transform.up.normalized * yOffset) + (transform.forward.normalized * zOffset);
+
+        Camera.main.transform.LookAt(_player.transform.position);
+    }
+
+
+
+}

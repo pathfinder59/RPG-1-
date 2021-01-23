@@ -18,20 +18,24 @@ public class CameraPosition : MonoBehaviour
 
     float yRotate = 0;
 
+    GameObject _settingButton;
+
     private void Start()
     {
-
+        _settingButton = GameObject.Find("GameSceneCanvas").transform.Find("SettingButton").gameObject;
     }
     void Update()
     {
-        
-        yRotate += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
+        if (_settingButton.activeSelf)
+        {
+            yRotate += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
 
-        transform.rotation = new Quaternion(0, yRotate, 0,1);
+            transform.rotation = new Quaternion(0, yRotate, 0, 1);
 
-        Camera.main.transform.position = _player.transform.position + (transform.up.normalized * yOffset) + (transform.forward.normalized * zOffset);
+            Camera.main.transform.position = _player.transform.position + (transform.up.normalized * yOffset) + (transform.forward.normalized * zOffset);
 
-        Camera.main.transform.LookAt(_player.transform.position);
+            Camera.main.transform.LookAt(_player.transform.position);
+        }
     }
 
 

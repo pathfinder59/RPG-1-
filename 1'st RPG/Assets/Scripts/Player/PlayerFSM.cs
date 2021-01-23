@@ -28,7 +28,7 @@ public class PlayerFSM : MonoBehaviour
         _status.Level = 1;
         _status.Name = "player";
 
-        _status.SkillPoint = 0;
+        _status.SkillPoint = 3;
         _status.PassiveLevel = 0;
         _status.ActiveLevel = 0;
         _status.HealLevel = 0;

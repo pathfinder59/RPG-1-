@@ -2,26 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingButton : MonoBehaviour
+
+namespace GameScene.Ui
 {
-
-    GameObject SettingPage;
-    void Start()
+    public class SettingButton : MonoBehaviour
     {
-        SettingPage = GameObject.Find("GameSceneCanvas").transform.Find("SettingPage").gameObject;    
-    }
 
-    void Update()
-    {
-        
-    }
-
-    public void OnClickSettingButton()
-    {
-        if (SettingPage)
+        GameObject SettingPage;
+        void Start()
         {
-            SettingPage.SetActive(true);
-            gameObject.SetActive(false);
+            SettingPage = GameObject.Find("GameSceneCanvas").transform.Find("SettingPage").gameObject;
+        }
+
+        void Update()
+        {
+
+        }
+
+        public void OnClickSettingButton()
+        {
+            if (SettingPage)
+            {
+                SettingPage.SetActive(true);
+                gameObject.SetActive(false);
+            }
         }
     }
 }

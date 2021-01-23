@@ -3029,6 +3029,7 @@ GameObject:
   - component: {fileID: 5930651934207234998}
   - component: {fileID: 877161804}
   - component: {fileID: 877161803}
+  - component: {fileID: 8369939466610322985}
   m_Layer: 0
   m_Name: arthur_01
   m_TagString: Untagged
@@ -3102,6 +3103,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movePower: 10
+--- !u!114 &8369939466610322985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5930651934574334247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bd2baee5c4eeec46b3b49ab233e0a7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5930651934574334249
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,17 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using common;
+using GameScene.Skill;
+using UnityEngine.UI;
+
 public class SkillSlot : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    SkillData _data;
+    [SerializeField]
+    GameObject _coverImage;
+    [SerializeField]
+    GameObject _parent;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void OnClickBtn()
+    {
+        if(_coverImage.activeInHierarchy)
+        {
+            SkillSlot[] slotList = _parent.GetComponentsInChildren<SkillSlot>();
+            foreach(var slot in slotList)
+            {
+                if (slot._data == GameManager.Instance.skillData)
+                {
+                    slot._data = null;
+                    slot.gameObject.GetComponent<Button>().image.sprite = null;
+                }
+            }
+
+
+            _coverImage.SetActive(false);
+            _data = GameManager.Instance.skillData;
+            GetComponent<Button>().image.sprite = _data._sprite;
+
+
+        }
+        else
+        {
+
+        }
+
     }
 }

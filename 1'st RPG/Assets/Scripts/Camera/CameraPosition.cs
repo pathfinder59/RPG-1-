@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CameraPosition : MonoBehaviour
 {
-
-    [SerializeField]
     private GameObject _player;
 
     [SerializeField]
@@ -22,6 +20,7 @@ public class CameraPosition : MonoBehaviour
 
     private void Start()
     {
+        _player = GameObject.Find("Player");
         _settingButton = GameObject.Find("GameSceneCanvas").transform.Find("SettingButton").gameObject;
     }
     void Update()

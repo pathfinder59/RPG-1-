@@ -18,5 +18,7 @@ namespace GameScene.Skill
         public float _coolDown;
         [SerializeField]
         public string _content;
+
+        
     }
 }

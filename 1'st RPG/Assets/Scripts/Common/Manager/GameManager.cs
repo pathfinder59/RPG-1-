@@ -15,12 +15,10 @@ namespace common
 
         GameState _gameState;
 
-        public SkillData skillData;
-        
-
+     
         void Start()
         {
-
+            
         }
 
         void Update()

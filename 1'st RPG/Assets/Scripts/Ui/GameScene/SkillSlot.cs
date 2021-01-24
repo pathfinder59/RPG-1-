@@ -31,7 +31,7 @@ public class SkillSlot : MonoBehaviour
             SkillSlot[] slotList = _parent.GetComponentsInChildren<SkillSlot>();
             foreach(var slot in slotList)
             {
-                if (slot._data == GameManager.Instance.skillData)
+                if (slot._data == PlayerManager.Instance.skillData)
                 {
                     slot._data = null;
                     slot.gameObject.GetComponent<Button>().image.sprite = null;
@@ -40,7 +40,7 @@ public class SkillSlot : MonoBehaviour
 
 
             _coverImage.SetActive(false);
-            _data = GameManager.Instance.skillData;
+            _data = PlayerManager.Instance.skillData;
             GetComponent<Button>().image.sprite = _data._sprite;
 
 

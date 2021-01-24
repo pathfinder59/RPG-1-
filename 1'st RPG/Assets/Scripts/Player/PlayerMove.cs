@@ -9,7 +9,7 @@ public class PlayerMove : MonoBehaviour
 
     Animator _animator;
 
-    [SerializeField]
+    
     float movePower;
 
 
@@ -17,6 +17,7 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         moveAmount = 0;
+        movePower = 10;
 
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();

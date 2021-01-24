@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using common;
 public class PlayerFSM : MonoBehaviour
 {
 
@@ -18,7 +19,12 @@ public class PlayerFSM : MonoBehaviour
     {
         _state = PlayerState.Idle;
         _status = new PlayerStatus();
-        LoadData();
+        if(gameObject.name == "Player")
+        {
+            _status = PlayerManager.Instance._playerStatus;
+        }
+        else
+           LoadData();
     }
     void LoadData()
     {
@@ -27,6 +33,9 @@ public class PlayerFSM : MonoBehaviour
         _status.MaxHp = 150;
         _status.Level = 1;
         _status.Name = "player";
+
+        _status.ClassType = "Warrior"; // 임시로 클래스는 자동으로 워리어를 갖도록 함 이후
+        // 캐릭터 추가까지 완성된다면 이부분은 바뀔것임
 
         _status.SkillPoint = 3;
         _status.PassiveLevel = 0;

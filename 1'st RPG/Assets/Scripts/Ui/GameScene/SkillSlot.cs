@@ -14,9 +14,11 @@ public class SkillSlot : MonoBehaviour
     GameObject _coverImage;
     [SerializeField]
     GameObject _parent;
+
+    PlayerFSM _playerFsm;
     void Start()
     {
-        
+        _playerFsm = GameObject.Find("Player").GetComponent<PlayerFSM>();
     }
 
     void Update()
@@ -47,7 +49,10 @@ public class SkillSlot : MonoBehaviour
         }
         else
         {
-
+            if (!_playerFsm.isUsingSkill)
+            {
+                StartCoroutine(_playerFsm.UseSkill(_data));
+            }
         }
 
     }

@@ -33,6 +33,8 @@ public class Skill_Icon : MonoBehaviour
     }
     public void OnClickIcon()
     {
+        if (PlayerManager.Instance._playerStatus.SkillLevels[data._name] == 0)
+            return;
         if (!_coverImage.activeInHierarchy)
         {
             _coverImage.SetActive(true);

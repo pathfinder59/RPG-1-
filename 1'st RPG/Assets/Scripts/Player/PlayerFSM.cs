@@ -3,28 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using common;
+using GameScene.Skill;
 public class PlayerFSM : MonoBehaviour
 {
 
     PlayerStatus _status;
+    Animator _animator;
+    PlayerMove _move;
     public PlayerStatus Status => _status;
+
     
     enum PlayerState
     {
-        Idle,Move,Attack,Passive,Active,Heal
+        Idle,Move,Attack,UseSkill
     }
 
     PlayerState _state;
+    public bool isUsingSkill = false;
+
     void Start()
     {
+        isUsingSkill = false;
         _state = PlayerState.Idle;
         _status = new PlayerStatus();
+
         if(gameObject.name == "Player")
         {
             _status = PlayerManager.Instance._playerStatus;
         }
         else
            LoadData();
+
+        _animator = GetComponent<Animator>();
+        _move = gameObject.GetComponent<PlayerMove>();
     }
     void LoadData()
     {
@@ -53,16 +64,14 @@ public class PlayerFSM : MonoBehaviour
         switch(_state)
         {
             case PlayerState.Idle:
+                Idle();
                 break;
             case PlayerState.Move:
+                Move();
                 break;
             case PlayerState.Attack:
                 break;
-            case PlayerState.Passive:
-                break;
-            case PlayerState.Active:
-                break;
-            case PlayerState.Heal:
+            case PlayerState.UseSkill:
                 break;
                    
         }
@@ -70,28 +79,49 @@ public class PlayerFSM : MonoBehaviour
 
     void Idle()
     {
-
+        if (isUsingSkill)
+            return;
+        if (name == "Player")
+        {
+            if (_move.Move())
+            {
+                _state = PlayerState.Move;
+                _animator.SetTrigger("Move");
+            }
+        }
     }
-
     void Move()
     {
-
+        if (isUsingSkill)
+            return;
+        if (name == "Player")  //플레이어인 경우에만
+        {
+            if (!_move.Move())
+            {
+                _state = PlayerState.Idle;
+                _animator.SetTrigger("Idle");
+            }
+        }
     }
-    
+
     void Attack()
     {
-
+        if (isUsingSkill)
+            return;
     }
-    void Passive()
-    {
 
-    }
-    void Active()
-    {
 
-    }
-    void Heal()
+    public IEnumerator UseSkill(SkillData data)
     {
+        isUsingSkill = true;
+        _state = PlayerState.Idle;
 
+        if(data._trigger != null)
+        {
+            _animator.SetTrigger(data._trigger);
+        }
+
+        yield return new WaitForSeconds(data._time);
+        isUsingSkill = false;
     }
 }

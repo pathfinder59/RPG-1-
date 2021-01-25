@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Passive
   m_EditorClassIdentifier: 
   _name: Passive
-  _sprite: {fileID: -2171568961056027262, guid: 649b98d366d2a8f4188aef10cb072c5d,
+  _sprite: {fileID: -8477655214482937113, guid: 649b98d366d2a8f4188aef10cb072c5d,
     type: 3}
   _range: 30
   _coolDown: 7
   _content: "\uC8FC\uBCC0 \uC801\uB4E4\uC744 \uAE30\uC808\uC2DC\uD0A8\uB2E4."
+  _trigger: Passive
+  _time: 3

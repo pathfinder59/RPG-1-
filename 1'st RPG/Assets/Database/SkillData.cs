@@ -22,6 +22,10 @@ namespace GameScene.Skill
         public string _trigger = null;
         [SerializeField]
         public float _time;
+        [SerializeField]
+        public bool isTargeting;
+        [SerializeField]
+        public float distance;
 
     }
 }

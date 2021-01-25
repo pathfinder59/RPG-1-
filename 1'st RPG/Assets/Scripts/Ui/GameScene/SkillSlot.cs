@@ -26,6 +26,10 @@ public class SkillSlot : MonoBehaviour
         
     }
 
+    public void OnClickAttackBtn()
+    {
+
+    }
     public void OnClickBtn()
     {
         if(_coverImage.activeInHierarchy)
@@ -51,9 +55,33 @@ public class SkillSlot : MonoBehaviour
         {
             if (!_playerFsm.isUsingSkill)
             {
+                if (_data.isTargeting)
+                {
+                    if (_playerFsm.target = null)
+                        return;
+                    StartCoroutine("InDistance");
+                    if (_playerFsm.target == null)
+                        return;
+                    //타겟팅일경우 상대와의 거리가 사정거리 안까지 올때 이동 후 코루틴 실행
+                }
+
+                //쿨타임 적용부분
                 StartCoroutine(_playerFsm.UseSkill(_data));
             }
         }
 
     }
+    IEnumerator InDistance()
+    {
+        while(true)
+        {
+
+            if(_playerFsm.target == null || Vector3.Distance(_playerFsm.target.transform.position,gameObject.transform.position) <= _data.distance)
+            {
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
 }

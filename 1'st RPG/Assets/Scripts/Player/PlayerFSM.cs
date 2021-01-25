@@ -7,22 +7,27 @@ using GameScene.Skill;
 public class PlayerFSM : MonoBehaviour
 {
 
-    PlayerStatus _status;
     Animator _animator;
-    PlayerMove _move;
-    public PlayerStatus Status => _status;
 
+    PlayerStatus _status;    public PlayerStatus Status => _status;
+    PlayerMove _move;
     
+    public GameObject target;
+
     enum PlayerState
     {
-        Idle,Move,Attack,UseSkill
+        Idle,Move,Chase,Attack,UseSkill
     }
 
     PlayerState _state;
     public bool isUsingSkill = false;
 
+    private float currentTime;  //현재 공격 쿨타임을 나타냄
+    private float attackDelay;  //공격 딜레이 길이
+
     void Start()
     {
+        target = null;
         isUsingSkill = false;
         _state = PlayerState.Idle;
         _status = new PlayerStatus();
@@ -36,6 +41,9 @@ public class PlayerFSM : MonoBehaviour
 
         _animator = GetComponent<Animator>();
         _move = gameObject.GetComponent<PlayerMove>();
+
+        currentTime = 0.0f;
+        attackDelay = 2.0f;
     }
     void LoadData()
     {
@@ -49,9 +57,6 @@ public class PlayerFSM : MonoBehaviour
         // 캐릭터 추가까지 완성된다면 이부분은 바뀔것임
 
         _status.SkillPoint = 3;
-        _status.PassiveLevel = 0;
-        _status.ActiveLevel = 0;
-        _status.HealLevel = 0;
 
         _status.Exp = 0;
         _status.MaxExp = 100;
@@ -60,7 +65,10 @@ public class PlayerFSM : MonoBehaviour
 
     void Update()
     {
-        
+
+        if (currentTime >= 0.0f)
+            currentTime -= Time.deltaTime;
+
         switch(_state)
         {
             case PlayerState.Idle:
@@ -69,7 +77,11 @@ public class PlayerFSM : MonoBehaviour
             case PlayerState.Move:
                 Move();
                 break;
+            case PlayerState.Chase:
+                Chase();
+                break;
             case PlayerState.Attack:
+                Attack();
                 break;
             case PlayerState.UseSkill:
                 break;
@@ -87,7 +99,14 @@ public class PlayerFSM : MonoBehaviour
             {
                 _state = PlayerState.Move;
                 _animator.SetTrigger("Move");
+                return;
             }
+        }
+
+        if(target != null)
+        {
+            _state = PlayerState.Chase;
+            _animator.SetTrigger("Move");
         }
     }
     void Move()
@@ -98,7 +117,37 @@ public class PlayerFSM : MonoBehaviour
         {
             if (!_move.Move())
             {
-                _state = PlayerState.Idle;
+                if (target == null)
+                {
+                    _state = PlayerState.Idle;
+                    _animator.SetTrigger("Idle");
+
+                }
+                else
+                    _state = PlayerState.Chase;
+                return;
+            }
+        }
+    }
+
+    void Chase()
+    {
+        if (isUsingSkill)
+            return;
+        if (target == null || !Vector3.Equals(_move.ValueInputMove(), new Vector3(0,0,0) ))  //플레이어인 경우에만
+        {
+            _state = PlayerState.Move;
+            //_animator.SetTrigger("Idle");
+            _move.StopChase();
+            return;
+
+        }
+        else
+        {
+            _move.Chase(target.transform.position, 3.0f);
+            if(Vector3.Distance(gameObject.transform.position,target.transform.position) <= 3.0f)
+            {
+                _state = PlayerState.Attack;
                 _animator.SetTrigger("Idle");
             }
         }
@@ -108,15 +157,40 @@ public class PlayerFSM : MonoBehaviour
     {
         if (isUsingSkill)
             return;
+        if(target == null || !Vector3.Equals(_move.ValueInputMove(), new Vector3(0, 0, 0)))
+        {
+            _state = PlayerState.Move;
+            _animator.SetTrigger("Move");
+            _move.StopChase();
+            return;
+        }
+        if (Vector3.Distance(gameObject.transform.position, target.transform.position) <= 3.0f)
+        {
+            if (currentTime < 0.0f)
+            {
+                
+                currentTime = attackDelay;
+                gameObject.transform.LookAt(target.transform);
+                _animator.SetTrigger("Attack");
+            }
+        }
+        else
+        {
+            _state = PlayerState.Chase;
+            _animator.SetTrigger("Move");
+        }
     }
 
 
     public IEnumerator UseSkill(SkillData data)
     {
-        isUsingSkill = true;
+
+        //이부분에서 스킬 동작 함수 변경하는게 맞는듯 startegy 패턴
         _state = PlayerState.Idle;
 
-        if(data._trigger != null)
+        isUsingSkill = true;
+
+        if (data._trigger != null)
         {
             _animator.SetTrigger(data._trigger);
         }

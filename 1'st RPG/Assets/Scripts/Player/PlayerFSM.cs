@@ -11,7 +11,9 @@ public class PlayerFSM : MonoBehaviour
 
     PlayerStatus _status;    public PlayerStatus Status => _status;
     PlayerMove _move;
-    
+    float movePower;
+
+
     public GameObject target;
 
     enum PlayerState
@@ -25,12 +27,15 @@ public class PlayerFSM : MonoBehaviour
     private float currentTime;  //현재 공격 쿨타임을 나타냄
     private float attackDelay;  //공격 딜레이 길이
 
+
+    //move,idle함수를 담고있는 인터페이스를 만들어서 디벞 or 벞 상태에서의 동작들을 담는 인터페이스를 만들자.
     void Start()
     {
+        movePower = 10;
+
         target = null;
         isUsingSkill = false;
         _state = PlayerState.Idle;
-        _status = new PlayerStatus();
 
         if(gameObject.name == "Player")
         {
@@ -47,6 +52,8 @@ public class PlayerFSM : MonoBehaviour
     }
     void LoadData()
     {
+        _status = new PlayerStatus();
+
         //로그파일 없으면 아래 기본값으로, 있으면 로그파일에 저장된 값으로 데이터 저장
         _status.Hp = 150;
         _status.MaxHp = 150;
@@ -83,9 +90,7 @@ public class PlayerFSM : MonoBehaviour
             case PlayerState.Attack:
                 Attack();
                 break;
-            case PlayerState.UseSkill:
-                break;
-                   
+            
         }
     }
 
@@ -95,7 +100,7 @@ public class PlayerFSM : MonoBehaviour
             return;
         if (name == "Player")
         {
-            if (_move.Move())
+            if (_move.Move(movePower))
             {
                 _state = PlayerState.Move;
                 _animator.SetTrigger("Move");
@@ -115,7 +120,7 @@ public class PlayerFSM : MonoBehaviour
             return;
         if (name == "Player")  //플레이어인 경우에만
         {
-            if (!_move.Move())
+            if (!_move.Move(movePower))
             {
                 if (target == null)
                 {
@@ -144,12 +149,12 @@ public class PlayerFSM : MonoBehaviour
         }
         else
         {
-            _move.Chase(target.transform.position, 3.0f);
             if(Vector3.Distance(gameObject.transform.position,target.transform.position) <= 3.0f)
             {
                 _state = PlayerState.Attack;
                 _animator.SetTrigger("Idle");
             }
+            _move.Chase(target.transform.position, 3.0f);
         }
     }
 
@@ -187,6 +192,11 @@ public class PlayerFSM : MonoBehaviour
 
         //이부분에서 스킬 동작 함수 변경하는게 맞는듯 startegy 패턴
         _state = PlayerState.Idle;
+        _animator.SetTrigger("Idle");
+        _move.StopChase();
+
+        
+        
 
         isUsingSkill = true;
 
@@ -198,4 +208,6 @@ public class PlayerFSM : MonoBehaviour
         yield return new WaitForSeconds(data._time);
         isUsingSkill = false;
     }
+
+    //스킬 시전 도중에 발생하는 이벤트함수는 코루틴으로 생성할까?
 }

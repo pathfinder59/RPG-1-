@@ -12,12 +12,12 @@ public class PlayerMove : MonoBehaviour
 
     NavMeshAgent _navMeshAgent;
     
-    float movePower;
+    
 
     public CharacterController CharacterController => _characterController;
     void Start()
     {
-        movePower = 10;
+        
 
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
@@ -38,7 +38,7 @@ public class PlayerMove : MonoBehaviour
         Vector3 dir = Camera.main.transform.right * xMove + Camera.main.transform.forward * yMove;
         return dir;
     }
-    public bool Move()
+    public bool Move(float movePower)
     {
         //navmesh로 움직일땐 플레이어의 look을 스크린으로 바꿔서 x,y에 적용시켜보자 
 

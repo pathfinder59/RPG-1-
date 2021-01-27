@@ -15,10 +15,10 @@ public class SkillSlot : MonoBehaviour
     [SerializeField]
     GameObject _parent;
 
-    PlayerFSM _playerFsm;
+    PlayableFSM _playerFsm;
     void Start()
     {
-        _playerFsm = GameObject.Find("Player").GetComponent<PlayerFSM>();
+        _playerFsm = GameObject.Find("Player").GetComponent<PlayableFSM>();
     }
 
     void Update()
@@ -57,10 +57,10 @@ public class SkillSlot : MonoBehaviour
             {
                 if (_data.isTargeting)
                 {
-                    if (_playerFsm.target = null)
+                    if (_playerFsm.Target = null)
                         return;
                     StartCoroutine("InDistance");
-                    if (_playerFsm.target == null)
+                    if (_playerFsm.Target == null)
                         return;
                     //타겟팅일경우 상대와의 거리가 사정거리 안까지 올때 이동 후 코루틴 실행
                 }
@@ -76,7 +76,7 @@ public class SkillSlot : MonoBehaviour
         while(true)
         {
 
-            if(_playerFsm.target == null || Vector3.Distance(_playerFsm.target.transform.position,gameObject.transform.position) <= _data.distance)
+            if(_playerFsm.Target == null || Vector3.Distance(_playerFsm.Target.transform.position,gameObject.transform.position) <= _data.distance)
             {
                 yield break;
             }

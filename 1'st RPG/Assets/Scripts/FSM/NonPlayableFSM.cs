@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public abstract class NonPlayableFSM : MonoBehaviour
 {
 
-    public enum EnemyState
+    public enum FuncState
     {
         Idle,
         Move,
@@ -16,7 +16,7 @@ public abstract class NonPlayableFSM : MonoBehaviour
         Damaged,
         Die
     }
-    EnemyState m_State;
+    FuncState _state;
 
     [SerializeField]
     float findDistance;   //탐색 범위
@@ -43,7 +43,7 @@ public abstract class NonPlayableFSM : MonoBehaviour
     int hp;
     public int maxHp;
     [SerializeField]
-    int hitPoint;  //이 수치 이상으로 데미지를 받을 경우 피격모션 발생
+    int criticalHit;  //이 수치 이상으로 데미지를 받을 경우 피격모션 발생
 
     [SerializeField]
     float hitTime;
@@ -55,7 +55,7 @@ public abstract class NonPlayableFSM : MonoBehaviour
 
     void Start()
     {
-        m_State = EnemyState.Idle;
+        _state = FuncState.Idle;
         hp = maxHp;
 
         _target = GameObject.Find("Player").transform;  //변경할것임
@@ -73,24 +73,24 @@ public abstract class NonPlayableFSM : MonoBehaviour
     {
         currentTime = Mathf.Clamp(currentTime - Time.deltaTime, 0, attackDelay);
 
-        switch (m_State)
+        switch (_state)
         {
-            case EnemyState.Idle:
+            case FuncState.Idle:
                 Idle();
                 break;
-            case EnemyState.Move:
+            case FuncState.Move:
                 Move();
                 break;
-            case EnemyState.Attack:
+            case FuncState.Attack:
                 Attack();
                 break;
-            case EnemyState.Return:
+            case FuncState.Return:
                 Return();
                 break;
-            case EnemyState.Damaged:
+            case FuncState.Damaged:
                 //Damaged();
                 break;
-            case EnemyState.Die:
+            case FuncState.Die:
                 //Die();
                 break;
         }
@@ -102,10 +102,10 @@ public abstract class NonPlayableFSM : MonoBehaviour
     {
         if (_target != null)
         {
-            m_State = EnemyState.Move;
+            _state = FuncState.Move;
             print("상태 전환: Idle -> Move");
 
-            _anim.SetTrigger("IdleToMove");
+            _anim.SetTrigger("Move");
         }
     }
 
@@ -113,8 +113,9 @@ public abstract class NonPlayableFSM : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, _target.position) > moveDistance)
         {
-            m_State = EnemyState.Return;
+            _state = FuncState.Return;
             print("상태 전환: Move -> Return");
+            _target = null;
         }
         else if (Vector3.Distance(transform.position, _target.position) > attackDistance)
         {
@@ -127,10 +128,10 @@ public abstract class NonPlayableFSM : MonoBehaviour
         else
         {
 
-            m_State = EnemyState.Attack;
+            _state = FuncState.Attack;
             print("상태 전환: Move -> Attack");
 
-            _anim.SetTrigger("MoveToAttackDelay");           
+            _anim.SetTrigger("Attack");           
         }
     }
 
@@ -146,13 +147,12 @@ public abstract class NonPlayableFSM : MonoBehaviour
                 _anim.SetTrigger("StartAttack");
                 StartCoroutine("AttackEffect");
             }
-
         }
         else
         {
-            m_State = EnemyState.Move;
+            _state = FuncState.Move;
             print("상태 전환: Attack -> Move");
-            _anim.SetTrigger("AttackToMove");
+            _anim.SetTrigger("Move");
         }
     }
 
@@ -175,16 +175,16 @@ public abstract class NonPlayableFSM : MonoBehaviour
 
             hp = maxHp;
 
-            m_State = EnemyState.Idle;
+            _state = FuncState.Idle;
             print("상태 전환: Return -> Idle");
 
-            _anim.SetTrigger("MoveToIdle");
+            _anim.SetTrigger("Idle");
         }
     }
 
-    public void HitEnemy(int hitPower)
+    public void HitEnemy(int hitPower,Transform enemy) // 이부분에 매개변수로 데미지를 주는 객체를 넣도록 해서 쫒아가도록 하자(_target에 대입)
     {
-        if (m_State == EnemyState.Damaged || m_State == EnemyState.Die || m_State == EnemyState.Return)
+        if (_state == FuncState.Damaged || _state == FuncState.Die || _state == FuncState.Return)
         {
             return;
         }
@@ -195,9 +195,18 @@ public abstract class NonPlayableFSM : MonoBehaviour
         _navMeshAgent.ResetPath();
         if (hp > 0)
         {
-            if (hitPoint <= hitPower)
+            _target = enemy;
+            if(hitPower == 0)
             {
-                m_State = EnemyState.Damaged;
+                if (_state != FuncState.Attack)
+                {
+                    _state = FuncState.Move;
+                    _anim.SetTrigger("Move");
+                }
+            }
+            else if (criticalHit <= hitPower)
+            {
+                _state = FuncState.Damaged;
                 print("상태 전환: Any State -> Damaged");
                 _anim.SetTrigger("Damaged");
                 Damaged();
@@ -205,7 +214,7 @@ public abstract class NonPlayableFSM : MonoBehaviour
         }
         else
         {
-            m_State = EnemyState.Die;
+            _state = FuncState.Die;
             print("상태 전환: Any State -> Die");
             _anim.SetTrigger("Die");
             Die();
@@ -221,8 +230,10 @@ public abstract class NonPlayableFSM : MonoBehaviour
     {
         yield return new WaitForSeconds(hitTime);
 
-        m_State = EnemyState.Move;
+        _state = FuncState.Move;
         print("상태 전환: Damaged -> Move");
+        //데미지 애니메이션이 실행될 경우 끝나면 바로 무브로 넘어가기때문에 트리거를 따로 설정하지 않아도 됨
+        //이 부분을 바꿀 필요가 잇음
     }
     IEnumerator DieProcess()
     {

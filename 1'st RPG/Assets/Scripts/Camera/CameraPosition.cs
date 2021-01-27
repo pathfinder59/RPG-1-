@@ -27,7 +27,8 @@ public class CameraPosition : MonoBehaviour
     {
         if (_settingButton.activeSelf)
         {
-            yRotate += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
+            if(Input.GetMouseButton(0))
+                yRotate += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
 
             transform.rotation = new Quaternion(0, yRotate, 0, 1);
 

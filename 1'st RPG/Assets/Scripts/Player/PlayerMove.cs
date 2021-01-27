@@ -40,8 +40,6 @@ public class PlayerMove : MonoBehaviour
     }
     public bool Move(float movePower)
     {
-        //navmesh로 움직일땐 플레이어의 look을 스크린으로 바꿔서 x,y에 적용시켜보자 
-
         Vector3 dir = ValueInputMove();
         dir = new Vector3(dir.x, 0.0f, dir.z).normalized;
         if (!dir.Equals(new Vector3(0, 0, 0)))

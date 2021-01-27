@@ -3029,7 +3029,7 @@ GameObject:
   - component: {fileID: 5930651934207234998}
   - component: {fileID: 877161804}
   - component: {fileID: 877161803}
-  - component: {fileID: 5093712930712414304}
+  - component: {fileID: 380393973468996350}
   - component: {fileID: 2059571213471084016}
   m_Layer: 8
   m_Name: arthur_01
@@ -3103,7 +3103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d95f85d23647f4d8cdc088aff51187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5093712930712414304
+--- !u!114 &380393973468996350
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3112,11 +3112,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5930651934574334247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da81a175867b514ab65e9458189ec55, type: 3}
+  m_Script: {fileID: 11500000, guid: a304983731215aa4989b5c88ada00ff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   isUsingSkill: 0
+  attackDelay: 2
+  attackDistance: 3
+  movePower: 10
 --- !u!195 &2059571213471084016
 NavMeshAgent:
   m_ObjectHideFlags: 0

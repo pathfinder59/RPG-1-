@@ -133,7 +133,7 @@ public abstract class PlayableFSM : MonoBehaviour
     {
         if (isUsingSkill)
             return;
-        if (_target == null || !Vector3.Equals(_move.ValueInputMove(), new Vector3(0, 0, 0)))  //플레이어인 경우에만
+        if (_target == null || !_move.ValueInputMove().Equals( new Vector3(0, 0, 0)))  //플레이어인 경우에만
         {
             _state = FuncState.Move;
             //_animator.SetTrigger("Idle");
@@ -146,9 +146,10 @@ public abstract class PlayableFSM : MonoBehaviour
             if (Vector3.Distance(gameObject.transform.position, _target.transform.position) <= attackDistance)
             {
                 _state = FuncState.Attack;
-                _animator.SetTrigger("Idle");
+                _animator.SetTrigger("Attack");
             }
-            _move.Chase(_target.transform.position, attackDistance);
+            else
+                _move.Chase(_target.transform.position, attackDistance);
         }
     }
 
@@ -170,7 +171,7 @@ public abstract class PlayableFSM : MonoBehaviour
 
                 currentTime = attackDelay;
                 gameObject.transform.LookAt(_target.transform);
-                _animator.SetTrigger("Attack");
+                _animator.SetTrigger("AttackStart");
                 StartCoroutine("AttackEffect");
             }
         }

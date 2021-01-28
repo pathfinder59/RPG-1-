@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,13 +20,7 @@ public class AttackButton : MonoBehaviour
     public void OnClickBtn()
     {
         if (_playerFsm.Target == null)
-        {
-            Collider[] colliders = Physics.OverlapSphere(_playerFsm.gameObject.transform.position, 10f);
-            if (colliders.Length == 0)
-                return;
-            // Algorithm.SortColliderDistance(colliders, 0, colliders.Length - 1, _playerFsm.gameObject);
-            _playerFsm.Target = colliders[1].gameObject;
-        }
+            _playerFsm.FindTarget(10f, 1 << LayerMask.NameToLayer("Enemy"));
         else
             _playerFsm.Target = null;
 

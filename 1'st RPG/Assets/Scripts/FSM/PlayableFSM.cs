@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameScene.Skill;
 using common;
-public abstract class PlayableFSM : MonoBehaviour
+using UnityEngine.UI;
+
+public abstract class PlayableFSM : FSM, IDamagable
 {
 
     protected Animator _animator;
@@ -13,27 +15,34 @@ public abstract class PlayableFSM : MonoBehaviour
     PlayerStatus _status;
     public PlayerStatus Status { get { return _status; } set { _status = value; } }
 
-    GameObject _target;
-    public GameObject Target { get { return _target; } set { _target = value; } }
+    public int Hp { get { return _status.Hp; } set { _status.Hp = value; } }
+    public int MaxHp { get { return _status.MaxHp; } set { _status.MaxHp = value; } }
 
     public enum FuncState
     {
-        Idle, Move, Chase, Attack
+        Idle, Move, Chase, Attack, Damaged,Die
     }
     FuncState _state;
     
     public bool isUsingSkill = false;
 
     private float currentTime;  //현재 공격 쿨타임을 나타냄
-    public float attackDelay;  //공격 딜레이 길이
 
-    public float attackDistance;
-    public float movePower;
+    [SerializeField]
+    float attackDelay;  //공격 딜레이 길이
 
+    [SerializeField]
+    float attackDistance;
+    [SerializeField]
+    float movePower;
 
-    private void Start()
+    [SerializeField]
+    float dieTime;
+
+    [SerializeField]
+    Slider _hpBar;
+    void Start()
     {
-        _target = null;
         if (gameObject.name == "Player")
         {
             _status = PlayerManager.Instance._playerStatus;
@@ -42,8 +51,16 @@ public abstract class PlayableFSM : MonoBehaviour
         else
             LoadData();
         _animator = GetComponent<Animator>();
-        currentTime = 0.0f;
+        
+    }
 
+    void OnEnable()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Player");
+        _target = null;
+        currentTime = 0.0f;
+        if(_status != null)
+            Hp = MaxHp;
     }
 
     void LoadData()
@@ -51,7 +68,7 @@ public abstract class PlayableFSM : MonoBehaviour
         _status = new PlayerStatus();
 
         //로그파일 없으면 아래 기본값으로, 있으면 로그파일에 저장된 값으로 데이터 저장
-        _status.Hp = 150;
+        Hp = 150;
         _status.MaxHp = 150;
         _status.Level = 1;
         _status.Name = "player";
@@ -65,8 +82,9 @@ public abstract class PlayableFSM : MonoBehaviour
         _status.MaxExp = 100;
     }
 
-    private void Update()
+    void Update()
     {
+        _hpBar.value = (float)Hp / MaxHp;
         currentTime = Mathf.Clamp(currentTime - Time.deltaTime, 0, attackDelay);
 
         switch (_state)
@@ -136,7 +154,6 @@ public abstract class PlayableFSM : MonoBehaviour
         if (_target == null || !_move.ValueInputMove().Equals( new Vector3(0, 0, 0)))  //플레이어인 경우에만
         {
             _state = FuncState.Move;
-            //_animator.SetTrigger("Idle");
             _move.StopChase();
             return;
 
@@ -203,4 +220,39 @@ public abstract class PlayableFSM : MonoBehaviour
         yield return new WaitForSeconds(data._time);
         isUsingSkill = false;
     }
+
+    public void Damaged(int hitPower, Transform enemy)
+    {
+        if (_state == FuncState.Damaged || _state == FuncState.Die)
+        {
+            return;
+        }
+
+        Hp -= hitPower;
+
+        _move.Agent.isStopped = true;
+        _move.Agent.ResetPath();
+        if (Hp <= 0)
+        {
+            _state = FuncState.Die;
+            print("상태 전환: Any State -> Die");
+            _animator.SetTrigger("Die");
+            Die(enemy);
+        }
+    }
+    IEnumerator DieProcess(Transform enemy)
+    {
+        yield return new WaitForSeconds(dieTime);
+        print("소멸!");
+        gameObject.SetActive(false);
+    }
+    void Die(Transform enemy)
+    {
+        StopAllCoroutines();
+        StartCoroutine("LateDie");
+        StartCoroutine(DieProcess(enemy));
+    }
+
+    abstract public IEnumerator LateDie(Transform enemy);
+
 }

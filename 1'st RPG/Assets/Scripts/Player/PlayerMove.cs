@@ -11,7 +11,7 @@ public class PlayerMove : MonoBehaviour
     Animator _animator;
 
     NavMeshAgent _navMeshAgent;
-    
+    public NavMeshAgent Agent => _navMeshAgent;
     
 
     public CharacterController CharacterController => _characterController;

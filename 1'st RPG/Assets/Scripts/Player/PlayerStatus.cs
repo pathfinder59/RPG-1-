@@ -9,6 +9,7 @@ using System.Linq;
 public class PlayerStatus : Status
 {
 
+
     string _classType;
     int _skillPoint;
 

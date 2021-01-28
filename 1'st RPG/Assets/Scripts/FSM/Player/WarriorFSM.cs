@@ -6,6 +6,15 @@ public class WarriorFSM : PlayableFSM
 {
     public override IEnumerator AttackEffect()
     {
+        yield return new WaitForSeconds(1.0f);
+        Target.GetComponent<EnemyFSM>().Damaged(5,gameObject.transform);
+    }
+
+    public override IEnumerator LateDie(Transform enemy)
+    {
+        var fsm = enemy.GetComponent<FSM>();
+        if (fsm != null)
+            fsm.FindTarget(5, 1 << LayerMask.NameToLayer("Enemy"));
         yield break;
     }
 
@@ -13,4 +22,6 @@ public class WarriorFSM : PlayableFSM
     {
         yield break;
     }
+
+    
 }

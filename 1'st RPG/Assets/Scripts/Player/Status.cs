@@ -8,6 +8,7 @@ namespace common
     public class Status
     {
         string _name;
+
         int _maxHp;
         int _hp;
         int _level;

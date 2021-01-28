@@ -200,7 +200,7 @@ public abstract class PlayableFSM : FSM, IDamagable
     }
 
     abstract public IEnumerator AttackEffect();
-    abstract public IEnumerator SkillEffect();
+    
 
     public IEnumerator UseSkill(SkillData data)
     {
@@ -216,6 +216,7 @@ public abstract class PlayableFSM : FSM, IDamagable
         {
             _animator.SetTrigger(data._trigger);
         }
+        StartCoroutine(data._trigger); //각 자식 클래스에서 스킬이 있을경우 스킬 이름과 동일한 코루틴을 만들어 둘것! , 공통 스킬은 여기에 만들어 둔다
 
         yield return new WaitForSeconds(data._time);
         isUsingSkill = false;

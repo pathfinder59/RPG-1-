@@ -17,11 +17,15 @@ public class WarriorFSM : PlayableFSM
             fsm.FindTarget(5, 1 << LayerMask.NameToLayer("Enemy"));
         yield break;
     }
-
-    public override IEnumerator SkillEffect()
+    
+    public IEnumerator Active()
     {
-        yield break;
+        yield return null;
     }
 
-    
+    public IEnumerator Passive()
+    {
+        yield return null;
+    }
+
 }

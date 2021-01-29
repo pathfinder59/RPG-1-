@@ -25,8 +25,6 @@ public abstract class EnemyFSM : FSM, IDamagable
     [SerializeField]
     float attackDistance; //공격 범위
 
-    public int attackPower = 3;
-
     CharacterController cc;
 
     float currentTime = 0;
@@ -36,23 +34,22 @@ public abstract class EnemyFSM : FSM, IDamagable
     Vector3 _originPos;
     Quaternion _originRot;
 
-
-
     int hp;
     public int Hp { get { return hp; } set { hp = value; } }
-    public int maxHp;
+    [SerializeField]
+    int maxHp;
+    public int MaxHp { get { return maxHp; } }
 
-    public int MaxHp { get { return maxHp; } set { maxHp = value; } }
 
     [SerializeField]
-    int criticalHit;  //이 수치 이상으로 데미지를 받을 경우 피격모션 발생
-
+    int atk; // 데미지
+    public int Atk => atk;
     [SerializeField]
     float hitTime;
     [SerializeField]
     float dieTime;
 
-    Animator _anim;
+    Animator _animator;
     NavMeshAgent _navMeshAgent;
 
     [SerializeField]
@@ -65,12 +62,16 @@ public abstract class EnemyFSM : FSM, IDamagable
         _originPos = transform.position;
         _originRot = transform.rotation;
 
-        _anim = transform.GetComponentInChildren<Animator>();
+        _animator = transform.GetComponentInChildren<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
+
+        string str = name.Substring(0,name.IndexOf('('));
+        str += "Status";
     }
 
     void OnEnable()
     {
+        _animator.SetTrigger("Reset");
         gameObject.layer = LayerMask.NameToLayer("Enemy");
         _state = FuncState.Idle;
         hp = maxHp;
@@ -115,7 +116,7 @@ public abstract class EnemyFSM : FSM, IDamagable
             _state = FuncState.Move;
             print("상태 전환: Idle -> Move");
 
-            _anim.SetTrigger("Move");
+            _animator.SetTrigger("Move");
         }
     }
 
@@ -141,7 +142,7 @@ public abstract class EnemyFSM : FSM, IDamagable
             _state = FuncState.Attack;
             print("상태 전환: Move -> Attack");
 
-            _anim.SetTrigger("Attack");           
+            _animator.SetTrigger("Attack");           
         }
     }
 
@@ -154,7 +155,7 @@ public abstract class EnemyFSM : FSM, IDamagable
                 //player.GetComponent<PlayerMove>().DamageAction(attackPower);
                 print("공격");
                 currentTime = attackDelay;
-                _anim.SetTrigger("StartAttack");
+                _animator.SetTrigger("StartAttack");
                 StartCoroutine("AttackEffect");
             }
         }
@@ -162,7 +163,7 @@ public abstract class EnemyFSM : FSM, IDamagable
         {
             _state = FuncState.Move;
             print("상태 전환: Attack -> Move");
-            _anim.SetTrigger("Move");
+            _animator.SetTrigger("Move");
         }
     }
 
@@ -188,7 +189,7 @@ public abstract class EnemyFSM : FSM, IDamagable
             _state = FuncState.Idle;
             print("상태 전환: Return -> Idle");
 
-            _anim.SetTrigger("Idle");
+            _animator.SetTrigger("Idle");
         }
     }
 
@@ -211,14 +212,14 @@ public abstract class EnemyFSM : FSM, IDamagable
                 if (_state != FuncState.Attack)
                 {
                     _state = FuncState.Move;
-                    _anim.SetTrigger("Move");
+                    _animator.SetTrigger("Move");
                 }
             }
-            else if (criticalHit <= hitPower)
+            else if (maxHp/5 <= hitPower)
             {
                 _state = FuncState.Damaged;
                 print("상태 전환: Any State -> Damaged");
-                _anim.SetTrigger("Damaged");
+                _animator.SetTrigger("Damaged");
                 StartCoroutine(DamageProcess());
             }
         }
@@ -228,7 +229,7 @@ public abstract class EnemyFSM : FSM, IDamagable
 
             _state = FuncState.Die;
             print("상태 전환: Any State -> Die");
-            _anim.SetTrigger("Die");
+            _animator.SetTrigger("Die");
             Die(enemy);
         }
     }

@@ -47,7 +47,7 @@ public class SkillSlot : MonoBehaviour
 
             _coverImage.SetActive(false);
             _data = PlayerManager.Instance.skillData;
-            GetComponent<Button>().image.sprite = _data._sprite;
+            GetComponent<Button>().image.sprite = _data.Sprite;
 
 
         }
@@ -55,7 +55,7 @@ public class SkillSlot : MonoBehaviour
         {
             if (!_playerFsm.isUsingSkill)
             {
-                if (_data.isTargeting)
+                if (_data.IsTargeting)
                 {
                     if (_playerFsm.Target = null)
                         return;
@@ -76,7 +76,7 @@ public class SkillSlot : MonoBehaviour
         while(true)
         {
 
-            if(_playerFsm.Target == null || Vector3.Distance(_playerFsm.Target.transform.position,gameObject.transform.position) <= _data.distance)
+            if(_playerFsm.Target == null || Vector3.Distance(_playerFsm.Target.transform.position,gameObject.transform.position) <= _data.Distance)
             {
                 yield break;
             }

@@ -16,7 +16,7 @@ public abstract class PlayableFSM : FSM, IDamagable
     public PlayerStatus Status { get { return _status; } set { _status = value; } }
 
     public int Hp { get { return _status.Hp; } set { _status.Hp = value; } }
-    public int MaxHp { get { return _status.MaxHp; } set { _status.MaxHp = value; } }
+    public int MaxHp { get { return _status.MaxHp; }}
 
     public enum FuncState
     {
@@ -56,6 +56,7 @@ public abstract class PlayableFSM : FSM, IDamagable
 
     void OnEnable()
     {
+        _animator.SetTrigger("Reset");
         gameObject.layer = LayerMask.NameToLayer("Player");
         _target = null;
         currentTime = 0.0f;
@@ -212,13 +213,13 @@ public abstract class PlayableFSM : FSM, IDamagable
 
         isUsingSkill = true;
 
-        if (data._trigger != null)
+        if (data.Trigger != null)
         {
-            _animator.SetTrigger(data._trigger);
+            _animator.SetTrigger(data.Trigger);
         }
-        StartCoroutine(data._trigger); //각 자식 클래스에서 스킬이 있을경우 스킬 이름과 동일한 코루틴을 만들어 둘것! , 공통 스킬은 여기에 만들어 둔다
+        StartCoroutine(data.Trigger); //각 자식 클래스에서 스킬이 있을경우 스킬 이름과 동일한 코루틴을 만들어 둘것! , 공통 스킬은 여기에 만들어 둔다
 
-        yield return new WaitForSeconds(data._time);
+        yield return new WaitForSeconds(data.Time);
         isUsingSkill = false;
     }
 

@@ -8,6 +8,7 @@ namespace common
     public class DataManager : Singleton<DataManager>
     {
         public List<SkillDatabase> skillDatabases;
+        public List<StatusData> statusDatabase;
         void Start()
         {
             

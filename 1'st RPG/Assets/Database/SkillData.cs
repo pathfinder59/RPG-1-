@@ -9,23 +9,34 @@ namespace GameScene.Skill
     {
         
         [SerializeField]
-        public string _name;
+        string _name;
         [SerializeField]
-        public Sprite _sprite;
+        Sprite _sprite;
         [SerializeField]
-        public int _range;
+        int _range;
         [SerializeField]
-        public float _coolDown;
+        float _coolDown;
         [SerializeField]
-        public string _content;
+        string _content;
         [SerializeField]
-        public string _trigger = null;
+        string _trigger = null;
         [SerializeField]
-        public float _time;
+        float _time;
         [SerializeField]
-        public bool isTargeting;
+        bool isTargeting;
         [SerializeField]
-        public float distance;
+        float distance;
+
+        public string Name => _name;
+        public Sprite Sprite => _sprite;
+        public int Range => _range;
+        public float CoolDown => _coolDown;
+        public string Content => _content;
+        public string Trigger => _trigger;
+        public float Time => _time;
+        public bool IsTargeting => isTargeting;
+
+        public float Distance => distance;
 
     }
 }

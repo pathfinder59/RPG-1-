@@ -22,13 +22,13 @@ public class PlayerStatus : Status
         skillLevels = new Dictionary<string, int>();
 
         foreach (var skillData in databases[0].SkillList)
-            skillLevels.Add(skillData._name, 0);
+            skillLevels.Add(skillData.Name, 0);
 
         SkillDatabase database = databases.FirstOrDefault(c => c.ClassName == _classType) ?? null;
         if (database)
         {
             foreach (var skillData in database.SkillList)
-                skillLevels.Add(skillData._name, 0);
+                skillLevels.Add(skillData.Name, 0);
         }
     }
     public IDictionary<string, int> SkillLevels { get { return skillLevels; } }

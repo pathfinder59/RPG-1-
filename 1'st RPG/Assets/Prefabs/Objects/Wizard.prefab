@@ -92,10 +92,9 @@ MonoBehaviour:
   findDistance: 10
   moveDistance: 15
   attackDistance: 5
-  attackPower: 5
   attackDelay: 2
   maxHp: 10
-  criticalHit: 5
+  atk: 2
   hitTime: 0.5
   dieTime: 4.2
   _hpBar: {fileID: 5096732872782758119}

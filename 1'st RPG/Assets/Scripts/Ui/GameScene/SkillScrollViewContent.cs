@@ -26,7 +26,7 @@ public class SkillScrollViewContent : MonoBehaviour
             go.GetComponent<Skill_Icon>().data = skillData;
         }
 
-        SkillDatabase database = databaseList.FirstOrDefault(c => c.ClassName == PlayerManager.Instance._playerStatus.ClassType) ?? null;
+        SkillDatabase database = databaseList.FirstOrDefault(c => c.ClassName == PlayerManager.Instance._playerStat.ClassType) ?? null;
         if (database)
         {
             foreach (var skillData in database.SkillList)
@@ -41,6 +41,6 @@ public class SkillScrollViewContent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _skillPointText.text = "Skill Point: " + PlayerManager.Instance._playerStatus.SkillPoint.ToString();
+        _skillPointText.text = "Skill Point: " + PlayerManager.Instance._playerStat.SkillPoint.ToString();
     }
 }

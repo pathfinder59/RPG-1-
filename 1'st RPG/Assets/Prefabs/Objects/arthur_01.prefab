@@ -3413,6 +3413,7 @@ GameObject:
   - component: {fileID: 5930651934207234998}
   - component: {fileID: 877161804}
   - component: {fileID: 877161803}
+  - component: {fileID: -8589756739761636918}
   - component: {fileID: 380393973468996350}
   - component: {fileID: 2059571213471084016}
   m_Layer: 8
@@ -3488,6 +3489,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d95f85d23647f4d8cdc088aff51187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8589756739761636918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5930651934574334247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b661d0056cbd0846804b0194d903fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Player
+  _maxHp: 150
+  _level: 1
+  _maxExp: 100
+  _atk: 5
+  _moveSpeed: 4
+  _classType: Warrior
 --- !u!114 &380393973468996350
 MonoBehaviour:
   m_ObjectHideFlags: 0

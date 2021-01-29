@@ -10,34 +10,36 @@ namespace common
 
         public SkillData skillData;
 
-        public PlayerStatus _playerStatus;
+        public PlayerStat _playerStat;
 
         [SerializeField]
         GameObject prefab;
         
         private void Awake()
         {
-  
-            _playerStatus = new PlayerStatus();
+            var go = ObjectPoolManager.Instance.Spawn(GameManager.Instance.playerClass);
+            //여기서 플레이어 컨트롤러 획득을 위한 playermove컴포넌트가 go에 추가될 것임.
+            //여기서 플레이어의 위치도 업데이트할 필요가 있음.
+            _playerStat = go.GetComponentInParent<PlayerStat>();
 
-            _playerStatus.Hp = 150;
-            _playerStatus.MaxHp = 150;
-            _playerStatus.Level = 1;
-            _playerStatus.Name = "Player";
+            _playerStat.Hp = 150;
+            _playerStat.MaxHp = 150;
+            _playerStat.Level = 1;
+            _playerStat.Name = "Player";
 
 
-            _playerStatus.ClassType = "Warrior"; // 임시로 클래스는 자동으로 워리어를 갖도록 함 이후
+            _playerStat.ClassType = "Warrior"; // 임시로 클래스는 자동으로 워리어를 갖도록 함 이후
                                                  // 캐릭터 추가까지 완성된다면 이부분은 바뀔것임
 
-            _playerStatus.SkillPoint = 3;
+            _playerStat.SkillPoint = 3;
 
 
-            _playerStatus.Exp = 0;
-            _playerStatus.MaxExp = 100;
+            _playerStat.Exp = 0;
+            _playerStat.MaxExp = 100;
 
-            _playerStatus.SetSkillLevels();
+            _playerStat.SetSkillLevels();
 
-            Instantiate(prefab).name = "Player"; // 캐릭터의 클래스타입에 따라 캐릭터 모델 결정
+            go.name = "Player"; // 캐릭터의 클래스타입에 따라 캐릭터 모델 결정
         }
         // Start is called before the first frame update
         void Start()

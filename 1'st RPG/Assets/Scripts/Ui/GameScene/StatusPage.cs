@@ -10,7 +10,7 @@ namespace GameScene.Ui
     public class StatusPage : MonoBehaviour
     {
         
-        PlayerStatus _playerStatus;
+        PlayerStat _playerStat;
 
         [SerializeField]
         Text _nameText;
@@ -29,15 +29,15 @@ namespace GameScene.Ui
             _settingPage = GameObject.Find("GameSceneCanvas").transform.Find("SettingPage").gameObject;
 
 
-            _playerStatus = PlayerManager.Instance._playerStatus;
-            _nameText.text =  "Name: " + _playerStatus.Name;
+            _playerStat = PlayerManager.Instance._playerStat;
+            _nameText.text =  "Name: " + _playerStat.Name;
         }
 
         void Update()
         {
-            _levelText.text = string.Format("Level: {0}", _playerStatus.Level);
-            _hpText.text = string.Format("Hp {0}/{1}",_playerStatus.Hp,_playerStatus.MaxHp);
-            _expText.text = string.Format("Exp {0}/{1}", _playerStatus.Exp, _playerStatus.MaxExp);
+            _levelText.text = string.Format("Level: {0}", _playerStat.Level);
+            _hpText.text = string.Format("Hp {0}/{1}", _playerStat.Hp, _playerStat.MaxHp);
+            _expText.text = string.Format("Exp {0}/{1}", _playerStat.Exp, _playerStat.MaxExp);
         }
 
         public void OnClickBack()

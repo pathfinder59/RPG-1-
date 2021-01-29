@@ -29,11 +29,11 @@ public class Skill_Icon : MonoBehaviour
 
     void Update()
     {
-        _skillLevel.text = PlayerManager.Instance._playerStatus.SkillLevels[data.Name].ToString();
+        _skillLevel.text = PlayerManager.Instance._playerStat.SkillLevels[data.Name].ToString();
     }
     public void OnClickIcon()
     {
-        if (PlayerManager.Instance._playerStatus.SkillLevels[data.Name] == 0)
+        if (PlayerManager.Instance._playerStat.SkillLevels[data.Name] == 0)
             return;
         if (!_coverImage.activeInHierarchy)
         {
@@ -43,12 +43,12 @@ public class Skill_Icon : MonoBehaviour
     }
     public void OnClickLevelUpBtn()
     {
-        if (PlayerManager.Instance._playerStatus.SkillPoint != 0)
+        if (PlayerManager.Instance._playerStat.SkillPoint != 0)
         {
-            PlayerManager.Instance._playerStatus.SkillLevels[data.Name]++;
-            PlayerManager.Instance._playerStatus.SkillPoint--;
+            PlayerManager.Instance._playerStat.SkillLevels[data.Name]++;
+            PlayerManager.Instance._playerStat.SkillPoint--;
 
-            if (PlayerManager.Instance._playerStatus.SkillLevels[data.Name] >= 3)
+            if (PlayerManager.Instance._playerStat.SkillLevels[data.Name] >= 3)
                 levelUpBtn.SetActive(false);
         }
     }

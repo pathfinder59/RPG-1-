@@ -7,8 +7,8 @@ namespace common
 {
     public class GameManager : Singleton<GameManager>
     {
-
-        string playerClass;
+        //씬이 변경되어도 이 객체는 항상 값을 유지할 필요가 있음 
+        public string playerClass;
         enum GameState
         {
             Start,Loading,Play

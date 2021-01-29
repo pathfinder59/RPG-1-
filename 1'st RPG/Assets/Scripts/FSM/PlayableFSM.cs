@@ -12,11 +12,11 @@ public abstract class PlayableFSM : FSM, IDamagable
 
     PlayerMove _move;
 
-    PlayerStatus _status;
-    public PlayerStatus Status { get { return _status; } set { _status = value; } }
+    PlayerStat _stat;
+    public PlayerStat Status { get { return _stat; } set { _stat = value; } }
 
-    public int Hp { get { return _status.Hp; } set { _status.Hp = value; } }
-    public int MaxHp { get { return _status.MaxHp; }}
+    public int Hp { get { return _stat.Hp; } set { _stat.Hp = value; } }
+    public int MaxHp { get { return _stat.MaxHp; }}
 
     public enum FuncState
     {
@@ -49,7 +49,7 @@ public abstract class PlayableFSM : FSM, IDamagable
     {
         if (gameObject.name == "Player")
         {
-            _status = PlayerManager.Instance._playerStatus;
+            _stat = PlayerManager.Instance._playerStat;
             _move = gameObject.GetComponent<PlayerMove>();
         }
         else
@@ -62,27 +62,27 @@ public abstract class PlayableFSM : FSM, IDamagable
         gameObject.layer = LayerMask.NameToLayer("Player");
         _target = null;
         currentTime = 0.0f;
-        if(_status != null)
+        if(_stat != null)
             Hp = MaxHp;
     }
 
     void LoadData()
     {
-        _status = new PlayerStatus();
+        //_stat = new PlayerStatus();
 
         //로그파일 없으면 아래 기본값으로, 있으면 로그파일에 저장된 값으로 데이터 저장
         Hp = 150;
-        _status.MaxHp = 150;
-        _status.Level = 1;
-        _status.Name = "player";
+        _stat.MaxHp = 150;
+        _stat.Level = 1;
+        _stat.Name = "player";
 
-        _status.ClassType = "Warrior"; // 임시로 클래스는 자동으로 워리어를 갖도록 함 이후
+        _stat.ClassType = "Warrior"; // 임시로 클래스는 자동으로 워리어를 갖도록 함 이후
         // 캐릭터 추가까지 완성된다면 이부분은 바뀔것임
 
-        _status.SkillPoint = 3;
+        _stat.SkillPoint = 3;
 
-        _status.Exp = 0;
-        _status.MaxExp = 100;
+        _stat.Exp = 0;
+        _stat.MaxExp = 100;
     }
 
     void Update()
@@ -247,7 +247,7 @@ public abstract class PlayableFSM : FSM, IDamagable
 
     public override void AddExp(float exp)
     {
-        _status.Exp += exp;
+        _stat.Exp += exp;
     }
 
     IEnumerator DieProcess(Transform enemy)

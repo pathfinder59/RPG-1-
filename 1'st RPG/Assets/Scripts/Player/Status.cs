@@ -13,8 +13,8 @@ namespace common
         int _hp;
         int _level;
 
-        int _exp;
-        int _maxExp;
+        float _exp;
+        float _maxExp;
 
         int _atk;
         float _moveSpeed;
@@ -24,8 +24,8 @@ namespace common
         public int Level { get { return _level; } set { _level = value; } }
         public string Name { get { return _name; } set { _name = value; } }
 
-        public int MaxExp { get { return _maxExp; } set { _maxExp = value; } }
-        public int Exp { get { return _exp; } set { _exp = value; } }
+        public float MaxExp { get { return _maxExp; } set { _maxExp = value; } }
+        public float Exp { get { return _exp; } set { _exp = value; } }
 
         public int Atk { get { return _atk;} set { _atk = value; } }
 

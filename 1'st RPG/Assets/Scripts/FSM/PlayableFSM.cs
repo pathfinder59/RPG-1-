@@ -41,6 +41,10 @@ public abstract class PlayableFSM : FSM, IDamagable
 
     [SerializeField]
     Slider _hpBar;
+    void Awake()
+    {      
+        _animator = GetComponent<Animator>();
+    }
     void Start()
     {
         if (gameObject.name == "Player")
@@ -50,13 +54,11 @@ public abstract class PlayableFSM : FSM, IDamagable
         }
         else
             LoadData();
-        _animator = GetComponent<Animator>();
-        
     }
 
     void OnEnable()
     {
-        _animator.SetTrigger("Reset");
+        //_animator.SetTrigger("Reset");
         gameObject.layer = LayerMask.NameToLayer("Player");
         _target = null;
         currentTime = 0.0f;
@@ -242,6 +244,12 @@ public abstract class PlayableFSM : FSM, IDamagable
             Die(enemy);
         }
     }
+
+    public override void AddExp(float exp)
+    {
+        _status.Exp += exp;
+    }
+
     IEnumerator DieProcess(Transform enemy)
     {
         yield return new WaitForSeconds(dieTime);

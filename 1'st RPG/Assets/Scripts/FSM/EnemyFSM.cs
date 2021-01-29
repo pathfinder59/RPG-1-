@@ -39,6 +39,9 @@ public abstract class EnemyFSM : FSM, IDamagable
     [SerializeField]
     int maxHp;
     public int MaxHp { get { return maxHp; } }
+    [SerializeField]
+    float exp;
+    
 
 
     [SerializeField]
@@ -55,18 +58,21 @@ public abstract class EnemyFSM : FSM, IDamagable
     [SerializeField]
     Slider _hpBar;
 
-    void Start()
+    void Awake()
     {
         cc = GetComponent<CharacterController>();
+        _animator = transform.GetComponentInChildren<Animator>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
 
         _originPos = transform.position;
         _originRot = transform.rotation;
 
-        _animator = transform.GetComponentInChildren<Animator>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-
-        string str = name.Substring(0,name.IndexOf('('));
+        string str = name.Substring(0, name.IndexOf('('));
         str += "Status";
+    }
+    void Start()
+    {
+
     }
 
     void OnEnable()
@@ -225,8 +231,6 @@ public abstract class EnemyFSM : FSM, IDamagable
         }
         else
         {
-
-
             _state = FuncState.Die;
             print("상태 전환: Any State -> Die");
             _animator.SetTrigger("Die");
@@ -251,9 +255,17 @@ public abstract class EnemyFSM : FSM, IDamagable
         print("소멸!");
         gameObject.SetActive(false);
     }
+
+    
     void Die(Transform enemy)
     {
         StopAllCoroutines();
+        enemy.GetComponent<FSM>().AddExp(exp);
+        gameObject.layer = LayerMask.NameToLayer("Die");
+        var fsm = enemy.GetComponent<FSM>();
+        if (fsm != null)
+            fsm.FindTarget(5, 1 << LayerMask.NameToLayer("Enemy"));
+
         StartCoroutine(LateDie(enemy));
         StartCoroutine(DieProcess());
     }

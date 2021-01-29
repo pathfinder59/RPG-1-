@@ -94,6 +94,7 @@ MonoBehaviour:
   attackDistance: 5
   attackDelay: 2
   maxHp: 10
+  exp: 15
   atk: 2
   hitTime: 0.5
   dieTime: 4.2

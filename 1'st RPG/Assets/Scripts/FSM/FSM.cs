@@ -21,4 +21,7 @@ public abstract class FSM : MonoBehaviour
         Target = colliders[0].gameObject.transform;
     }
 
+    public virtual void AddExp(float exp)
+    { }
+
 }

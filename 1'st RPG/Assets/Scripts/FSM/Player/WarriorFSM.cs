@@ -27,5 +27,8 @@ public class WarriorFSM : PlayableFSM
     {
         yield return null;
     }
-
+    public override void AttackEvent()
+    {
+        Target.GetComponent<EnemyFSM>().Damaged(5, gameObject.transform);
+    }
 }

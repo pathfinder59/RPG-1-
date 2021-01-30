@@ -33,8 +33,7 @@ public abstract class PlayableFSM : FSM, IDamagable
 
     [SerializeField]
     float attackDistance;
-    [SerializeField]
-    float movePower;
+
 
     [SerializeField]
     float dieTime;
@@ -115,7 +114,7 @@ public abstract class PlayableFSM : FSM, IDamagable
             return;
         if (name == "Player")
         {
-            if (_move.Move(movePower))
+            if (_move.Move(_stat.MoveSpeed))
             {
                 _state = FuncState.Move;
                 _animator.SetTrigger("Move");
@@ -135,7 +134,7 @@ public abstract class PlayableFSM : FSM, IDamagable
             return;
         if (name == "Player")  //플레이어인 경우에만
         {
-            if (!_move.Move(movePower))
+            if (!_move.Move(_stat.MoveSpeed))
             {
                 if (_target == null)
                 {
@@ -192,7 +191,6 @@ public abstract class PlayableFSM : FSM, IDamagable
                 currentTime = attackDelay;
                 gameObject.transform.LookAt(_target.transform);
                 _animator.SetTrigger("AttackStart");
-                StartCoroutine("AttackEffect");
             }
         }
         else
@@ -201,7 +199,7 @@ public abstract class PlayableFSM : FSM, IDamagable
             _animator.SetTrigger("Move");
         }
     }
-
+    public abstract void AttackEvent();
     abstract public IEnumerator AttackEffect();
     
 
@@ -222,12 +220,17 @@ public abstract class PlayableFSM : FSM, IDamagable
         StartCoroutine(data.Trigger); //각 자식 클래스에서 스킬이 있을경우 스킬 이름과 동일한 코루틴을 만들어 둘것! , 공통 스킬은 여기에 만들어 둔다
 
         yield return new WaitForSeconds(data.Time);
+        TurnOffSkill();
+    }
+
+    public void TurnOffSkill()
+    {
         isUsingSkill = false;
     }
 
     public void Damaged(int hitPower, Transform enemy)
     {
-        if (_state == FuncState.Damaged || _state == FuncState.Die)
+        if ( _state == FuncState.Die)
         {
             return;
         }
@@ -236,6 +239,8 @@ public abstract class PlayableFSM : FSM, IDamagable
 
         _move.Agent.isStopped = true;
         _move.Agent.ResetPath();
+        if (_target == null)
+            _target = enemy;
         if (Hp <= 0)
         {
             _state = FuncState.Die;
@@ -247,7 +252,10 @@ public abstract class PlayableFSM : FSM, IDamagable
 
     public override void AddExp(float exp)
     {
-        _stat.Exp += exp;
+        if(_stat.AddExp(exp))
+        {
+            //참은 곧 레벨업을 의미하니 오브젝트 풀링을 통해 레벨업 이펙트 인스턴싱 생성할것
+        }
     }
 
     IEnumerator DieProcess(Transform enemy)

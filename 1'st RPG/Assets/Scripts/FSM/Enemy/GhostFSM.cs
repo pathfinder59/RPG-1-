@@ -9,6 +9,10 @@ public class GhostFSM : EnemyFSM
         yield break;
     }
 
+    public override void AttackEvent()
+    {
+        Target.GetComponent<PlayableFSM>().Damaged(5, gameObject.transform);
+    }
 
     public override IEnumerator LateDie(Transform enemy)
     {      

@@ -158,11 +158,11 @@ public abstract class EnemyFSM : FSM, IDamagable
         {           
             if (currentTime == 0)
             {
-                //player.GetComponent<PlayerMove>().DamageAction(attackPower);
+                transform.LookAt(_target);
                 print("공격");
                 currentTime = attackDelay;
                 _animator.SetTrigger("StartAttack");
-                StartCoroutine("AttackEffect");
+                //StartCoroutine("AttackEffect");
             }
         }
         else
@@ -173,6 +173,7 @@ public abstract class EnemyFSM : FSM, IDamagable
         }
     }
 
+    public abstract void AttackEvent();
     abstract public IEnumerator AttackEffect();
 
     void Return()

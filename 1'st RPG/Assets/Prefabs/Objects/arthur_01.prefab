@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 170050979}
   - component: {fileID: 170050981}
   - component: {fileID: 170050980}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 470744032}
   - component: {fileID: 470744033}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: HpSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 558561927}
   - component: {fileID: 558561929}
   - component: {fileID: 558561928}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 671890302}
   - component: {fileID: 671890301}
   - component: {fileID: 671890304}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: HpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1685621879}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3412,7 +3412,6 @@ GameObject:
   - component: {fileID: 5930651934574693639}
   - component: {fileID: 5930651934207234998}
   - component: {fileID: 877161804}
-  - component: {fileID: 877161803}
   - component: {fileID: -8589756739761636918}
   - component: {fileID: 380393973468996350}
   - component: {fileID: 2059571213471084016}
@@ -3477,18 +3476,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.5, z: 0}
---- !u!114 &877161803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5930651934574334247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7d95f85d23647f4d8cdc088aff51187, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-8589756739761636918
 MonoBehaviour:
   m_ObjectHideFlags: 0

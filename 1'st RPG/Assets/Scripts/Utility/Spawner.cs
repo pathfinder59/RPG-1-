@@ -15,12 +15,14 @@ public class Spawner : MonoBehaviour
     {
 
         EventManager.On("Respawn", Spawn); //리스폰 이벤트 발생시 존재하는 오브젝트가 유지해야 하는 수 미만일 경우 스폰이 실행  
+        prefabs = new List<GameObject>();
 
-        for(int i = 0; i<nSpawn;++i)
+        for (int i = 0; i<nSpawn;++i)
         {
             var go = Instantiate(prefab);
-            prefab.transform.position = transform.position;
+            prefab.transform.position = transform.position + new Vector3(Random.Range(-0.3f, 0.3f), 0f, Random.Range(-0.3f, 0.3f));
             prefab.transform.forward = transform.forward;
+            prefabs.Add(prefab);
         }
     }
 
@@ -30,14 +32,15 @@ public class Spawner : MonoBehaviour
         
     }
 
-    void Spawn(object obj)
+    void Spawn(object obj = null)
     {
         var founded = prefabs.FirstOrDefault(_ => !_.activeInHierarchy);
         if (founded != null)
         {
             founded.SetActive(true);
-            founded.transform.position = transform.position;
+            founded.transform.position = transform.position + new Vector3(Random.Range(-0.3f,0.3f),0f, Random.Range(-0.3f, 0.3f));
             founded.transform.forward = transform.forward;
+            founded.gameObject.SetActive(true);
         }
     }
 

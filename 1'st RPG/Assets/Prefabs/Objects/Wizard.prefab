@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 421360031659673104}
   - component: {fileID: 421360031659673119}
   - component: {fileID: 421360031659673118}
-  - component: {fileID: 4103226844483890286}
+  - component: {fileID: -1887052664144946083}
   m_Layer: 9
   m_Name: Wizard
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 421360031659673117}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 1.0326848, y: 0, z: 6.654164}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 420749334585387329}
@@ -94,13 +94,13 @@ MonoBehaviour:
   attackDistance: 5
   attackDelay: 2
   maxHp: 10
-  exp: 15
+  exp: 100
   atk: 2
   hitTime: 0.5
   dieTime: 4.2
   _hpBar: {fileID: 5096732872782758119}
---- !u!143 &4103226844483890286
-CharacterController:
+--- !u!136 &-1887052664144946083
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -109,14 +109,10 @@ CharacterController:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 6.5
-  m_Radius: 1.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 3.5, z: 0}
+  m_Radius: 1
+  m_Height: 6
+  m_Direction: 1
+  m_Center: {x: 0, y: 3, z: 0}
 --- !u!1 &422819602117120224
 GameObject:
   m_ObjectHideFlags: 0

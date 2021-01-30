@@ -18,6 +18,7 @@ namespace common
         private void Awake()
         {
             var go = ObjectPoolManager.Instance.Spawn(GameManager.Instance.playerClass);
+            go.AddComponent<PlayerMove>();
             //여기서 플레이어 컨트롤러 획득을 위한 playermove컴포넌트가 go에 추가될 것임.
             //여기서 플레이어의 위치도 업데이트할 필요가 있음.
             _playerStat = go.GetComponentInParent<PlayerStat>();
@@ -44,7 +45,7 @@ namespace common
         // Start is called before the first frame update
         void Start()
         {
-            ObjectPoolManager.Instance.Spawn("Wizard");
+            //ObjectPoolManager.Instance.Spawn("Wizard");
         }
 
         // Update is called once per frame

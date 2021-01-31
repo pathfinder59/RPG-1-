@@ -176,13 +176,23 @@ public abstract class PlayableFSM : FSM, IDamagable
     {
         if (isUsingSkill)
             return;
-        if (_target == null || !Vector3.Equals(_move.ValueInputMove(), new Vector3(0, 0, 0)))
+        if (_target == null)
+        {
+            _state = FuncState.Idle;
+            _animator.ResetTrigger("AttackStart");
+            _animator.SetTrigger("Idle");
+            _move.StopChase();
+            return;
+        }
+        else if(!Vector3.Equals(_move.ValueInputMove(), new Vector3(0, 0, 0)))
         {
             _state = FuncState.Move;
+            _animator.ResetTrigger("AttackStart");
             _animator.SetTrigger("Move");
             _move.StopChase();
             return;
         }
+
         if (Vector3.Distance(gameObject.transform.position, _target.transform.position) <= attackDistance)
         {
             if (currentTime == 0.0f)
@@ -254,7 +264,9 @@ public abstract class PlayableFSM : FSM, IDamagable
     {
         if(_stat.AddExp(exp))
         {
-            //참은 곧 레벨업을 의미하니 오브젝트 풀링을 통해 레벨업 이펙트 인스턴싱 생성할것
+            var go = ParticlePoolManager.Instance.Spawn("LevelUp");
+            go.transform.position = transform.position;
+            go.GetComponent<ParticleTime>().SetTarget(transform);
         }
     }
 

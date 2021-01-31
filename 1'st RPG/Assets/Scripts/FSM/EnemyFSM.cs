@@ -249,11 +249,8 @@ public abstract class EnemyFSM : FSM, IDamagable
         //데미지 애니메이션이 실행될 경우 끝나면 바로 무브로 넘어가기때문에 트리거를 따로 설정하지 않아도 됨
         //이 부분을 바꿀 필요가 잇음
     }
-    IEnumerator DieProcess()
+    void DieProcess()
     {
-        
-        yield return new WaitForSeconds(dieTime);
-        print("소멸!");
         gameObject.SetActive(false);
     }
 
@@ -268,7 +265,7 @@ public abstract class EnemyFSM : FSM, IDamagable
             fsm.FindTarget(5, 1 << LayerMask.NameToLayer("Enemy"));
 
         StartCoroutine(LateDie(enemy));
-        StartCoroutine(DieProcess());
+        //StartCoroutine(DieProcess());
     }
 
     abstract public IEnumerator LateDie(Transform enemy);

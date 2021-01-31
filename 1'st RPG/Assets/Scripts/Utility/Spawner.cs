@@ -20,9 +20,10 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i<nSpawn;++i)
         {
             var go = Instantiate(prefab);
-            prefab.transform.position = transform.position + new Vector3(Random.Range(-0.3f, 0.3f), 0f, Random.Range(-0.3f, 0.3f));
-            prefab.transform.forward = transform.forward;
-            prefabs.Add(prefab);
+            go.transform.position = transform.position + new Vector3(Random.Range(-0.3f, 0.3f), 0f, Random.Range(-0.3f, 0.3f));
+            go.transform.forward = transform.forward;
+            go.gameObject.SetActive(true);
+            prefabs.Add(go);
         }
     }
 

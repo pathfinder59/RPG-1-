@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using common;
 public class WarriorFSM : PlayableFSM
 {
     public override IEnumerator AttackEffect()
@@ -18,14 +19,18 @@ public class WarriorFSM : PlayableFSM
         yield break;
     }
     
-    public IEnumerator Active()
+    public void Active()
     {
-        yield return null;
+        var go = ParticlePoolManager.Instance.Spawn("WarriorActive");
+        go.transform.position = transform.position;
+        go.transform.forward = transform.forward;
     }
 
-    public IEnumerator Passive()
+    public void Passive()
     {
-        yield return null;
+        var go = ParticlePoolManager.Instance.Spawn("WarriorPassive");
+        go.transform.position = transform.position;
+        go.transform.forward = transform.forward;
     }
     public override void AttackEvent()
     {

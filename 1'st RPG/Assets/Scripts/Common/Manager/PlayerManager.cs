@@ -19,6 +19,7 @@ namespace common
         {
             var go = ObjectPoolManager.Instance.Spawn(GameManager.Instance.playerClass);
             go.AddComponent<PlayerMove>();
+            //go.transform.position = GameObject.Find("Map").transform.Find("PlayerSpawn").position;
             //여기서 플레이어 컨트롤러 획득을 위한 playermove컴포넌트가 go에 추가될 것임.
             //여기서 플레이어의 위치도 업데이트할 필요가 있음.
             _playerStat = go.GetComponentInParent<PlayerStat>();

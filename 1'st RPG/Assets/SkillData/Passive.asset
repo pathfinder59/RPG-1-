@@ -19,6 +19,6 @@ MonoBehaviour:
   _coolDown: 7
   _content: "\uC8FC\uBCC0 \uC801\uB4E4\uC744 \uAE30\uC808\uC2DC\uD0A8\uB2E4."
   _trigger: Passive
-  _time: 3
+  _time: 3.2
   isTargeting: 0
   distance: 0

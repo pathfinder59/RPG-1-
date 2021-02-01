@@ -34,6 +34,6 @@ public class WarriorFSM : PlayableFSM
     }
     public override void AttackEvent()
     {
-        Target.GetComponent<EnemyFSM>().Damaged(5, gameObject.transform);
+        Target.GetComponent<EnemyFSM>().Damaged(Status.Atk, gameObject.transform);
     }
 }

@@ -17,7 +17,7 @@ public abstract class FSM : MonoBehaviour
             return;
         }
         Array.Sort<Collider>(colliders,
-            (x, y) => (Vector3.Distance(x.transform.position, transform.position) > Vector3.Distance(y.transform.position, transform.position)) ? -1 : 1);
+            (x, y) => (Vector3.Distance(x.transform.position, transform.position) < Vector3.Distance(y.transform.position, transform.position)) ? -1 : 1);
         Target = colliders[0].gameObject.transform;
     }
 

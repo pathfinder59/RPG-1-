@@ -11,6 +11,12 @@ public class PlayerStat : Stat
     [SerializeField]
     string _classType;
 
+    [SerializeField]
+    int hpRisingValue;
+
+    [SerializeField]
+    int atkRisingValue;
+
     int _skillPoint;
 
 
@@ -48,11 +54,16 @@ public class PlayerStat : Stat
         if (Level != 10) //만렙 아닐경우
         {
             Exp += exp;
-            if (Exp == MaxExp)
+            if (Exp >= MaxExp)
             {
                 Level += 1;
-                Exp = 0;
+                Exp = Exp - MaxExp;
                 //MaxExp증가
+                MaxExp = Mathf.Floor(MaxExp * 1.5f);
+                Atk += atkRisingValue;
+                MaxHp += hpRisingValue;
+
+                SkillPoint++;
                 return true;
             }
         }

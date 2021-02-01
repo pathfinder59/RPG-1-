@@ -13,7 +13,7 @@ public abstract class PlayableFSM : FSM, IDamagable
     PlayerMove _move;
 
     PlayerStat _stat;
-    public PlayerStat Status { get { return _stat; } set { _stat = value; } }
+    public PlayerStat Status { get => _stat;}
 
     public int Hp { get { return _stat.Hp; } set { _stat.Hp = value; } }
     public int MaxHp { get { return _stat.MaxHp; }}
@@ -40,6 +40,7 @@ public abstract class PlayableFSM : FSM, IDamagable
 
     [SerializeField]
     Slider _hpBar;
+
     void Awake()
     {      
         _animator = GetComponent<Animator>();
@@ -63,6 +64,7 @@ public abstract class PlayableFSM : FSM, IDamagable
         currentTime = 0.0f;
         if(_stat != null)
             Hp = MaxHp;
+        StartCoroutine("HealPerSecond");
     }
 
     void LoadData()
@@ -217,8 +219,11 @@ public abstract class PlayableFSM : FSM, IDamagable
     {
 
         //이부분에서 스킬 동작 함수 변경하는게 맞는듯 startegy 패턴
-        _state = FuncState.Idle;
-        _animator.SetTrigger("Idle");
+        if (_state != FuncState.Idle)
+        {
+            _state = FuncState.Idle;
+            _animator.SetTrigger("Idle");
+        }
         _move.StopChase();
 
         isUsingSkill = true;
@@ -284,5 +289,14 @@ public abstract class PlayableFSM : FSM, IDamagable
     }
 
     abstract public IEnumerator LateDie(Transform enemy);
+
+    IEnumerator HealPerSecond()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1.0f);
+            Hp = Mathf.Clamp(Hp + MaxHp/100, 0, MaxHp);
+        }
+    }
 
 }

@@ -33,7 +33,7 @@ public class Spawner : MonoBehaviour
         
     }
 
-    void Spawn(object obj = null)
+    void Spawn(GameObject obj = null)
     {
         var founded = prefabs.FirstOrDefault(_ => !_.activeInHierarchy);
         if (founded != null)

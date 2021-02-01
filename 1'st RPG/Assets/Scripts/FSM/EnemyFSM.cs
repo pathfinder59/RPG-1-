@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
+using common;
 public abstract class EnemyFSM : FSM, IDamagable
 {
 
@@ -60,6 +61,7 @@ public abstract class EnemyFSM : FSM, IDamagable
 
     void Awake()
     {
+        
         cc = GetComponent<CharacterController>();
         _animator = transform.GetComponentInChildren<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -72,7 +74,7 @@ public abstract class EnemyFSM : FSM, IDamagable
     }
     void Start()
     {
-
+        EventManager.On("TrackEnemy",TrackEnemy);
     }
 
     void OnEnable()
@@ -202,6 +204,7 @@ public abstract class EnemyFSM : FSM, IDamagable
 
     public void Damaged(int hitPower,Transform enemy) // 이부분에 매개변수로 데미지를 주는 객체를 넣도록 해서 쫒아가도록 하자(_target에 대입)
     {
+        EventManager.Emit("TrackEnemy",enemy.gameObject);
         if (_state == FuncState.Damaged || _state == FuncState.Die || _state == FuncState.Return)
         {
             return;
@@ -269,4 +272,14 @@ public abstract class EnemyFSM : FSM, IDamagable
     }
 
     abstract public IEnumerator LateDie(Transform enemy);
+
+    void TrackEnemy(GameObject enemy)
+    {
+        if(Target != null)
+            return;
+
+        if(Vector3.Distance(enemy.transform.position, transform.position) < 5.0f)
+            Target = enemy.transform;
+        
+    }
 }

@@ -9,6 +9,10 @@ public class ParticleTime : MonoBehaviour
 
     Transform target;
 
+    private void Start()
+    {
+        target = null;
+    }
     void OnEnable()
     {
         StartCoroutine("On");

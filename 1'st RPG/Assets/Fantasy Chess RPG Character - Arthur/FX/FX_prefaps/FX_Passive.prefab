@@ -14455,8 +14455,10 @@ GameObject:
   m_Component:
   - component: {fileID: 437214}
   - component: {fileID: 4667761291544093501}
+  - component: {fileID: -3272292316700357111}
   - component: {fileID: 19890620}
   - component: {fileID: 19982702}
+  - component: {fileID: -252288078457652705}
   m_Layer: 0
   m_Name: FX_Passive
   m_TagString: Untagged
@@ -14496,7 +14498,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25954d1fb378754b831342ead21c7a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 1
+  time: 1.8
+--- !u!114 &-3272292316700357111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3d1eebbbc0da14d8dad08b4314fe1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reactTime: 0.5
 --- !u!198 &19890620
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -19219,6 +19234,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!65 &-252288078457652705
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139598}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 4, z: 20}
+  m_Center: {x: 0, y: 2, z: 10}
 --- !u!1 &146322
 GameObject:
   m_ObjectHideFlags: 0

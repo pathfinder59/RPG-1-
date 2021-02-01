@@ -24,6 +24,8 @@ public class WarriorFSM : PlayableFSM
         var go = ParticlePoolManager.Instance.Spawn("WarriorActive");
         go.transform.position = transform.position;
         go.transform.forward = transform.forward;
+        go.GetComponent<OneTouchSkill>().Caster = gameObject.transform;
+        go.GetComponent<OneTouchSkill>().Atk = Status.Atk;
     }
 
     public void Passive()
@@ -31,6 +33,8 @@ public class WarriorFSM : PlayableFSM
         var go = ParticlePoolManager.Instance.Spawn("WarriorPassive");
         go.transform.position = transform.position;
         go.transform.forward = transform.forward;
+        go.GetComponent<OneTouchSkill>().Caster = gameObject.transform;
+        go.GetComponent<OneTouchSkill>().Atk = Status.Atk;
     }
     public override void AttackEvent()
     {

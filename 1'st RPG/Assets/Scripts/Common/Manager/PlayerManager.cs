@@ -14,9 +14,13 @@ namespace common
 
         [SerializeField]
         GameObject prefab;
-        
+
+        public int Money{get;set;}
+        public int NumHp { get; set; }
         private void Awake()
         {
+            NumHp = 0;
+            Money = 100000;
             var go = ObjectPoolManager.Instance.Spawn(GameManager.Instance.playerClass);
             go.AddComponent<PlayerMove>();
             //go.transform.position = GameObject.Find("Map").transform.Find("PlayerSpawn").position;
@@ -46,6 +50,7 @@ namespace common
         // Start is called before the first frame update
         void Start()
         {
+            
         }
 
         // Update is called once per frame

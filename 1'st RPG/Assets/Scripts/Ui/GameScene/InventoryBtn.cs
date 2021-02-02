@@ -12,7 +12,7 @@ public class InventoryBtn : MonoBehaviour
     
     public ItemData Data{get;set;}
 
-    void Start()
+    void Awake()
     {
         Data = null;
         EventManager.On("UpdateInventory", UpdateInform);

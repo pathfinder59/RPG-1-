@@ -21,7 +21,7 @@ public class EquipBtn : MonoBehaviour
         
     }
 
-    void OnClick()
+    public void OnClick()
     {
         if (Data == null)
             return;
@@ -33,7 +33,7 @@ public class EquipBtn : MonoBehaviour
         }
     }
 
-    void UpdateInform(GameObject obj = null)
+    public void UpdateInform(GameObject obj = null)
     {
         Button btn = GetComponent<Button>();
         btn.image.sprite = (Data == null ? null : Data.Sprite);

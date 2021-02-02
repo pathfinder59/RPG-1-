@@ -7,9 +7,10 @@ public class EquipmentPage : MonoBehaviour
     
     public List<EquipBtn> EquipUis;
 
+
     void Start()
     {
-        
+        //gameObject.SetActive(false);
     }
 
     

@@ -8,7 +8,13 @@ public class InventoryPage : MonoBehaviour
 {
     [SerializeField]
     List<InventoryBtn> gameObjects;
-
+    private void Awake()
+    {
+    }
+    private void OnEnable()
+    {
+        EventManager.Emit("UpdateInventory");
+    }
     void Start()
     {
         
@@ -21,12 +27,11 @@ public class InventoryPage : MonoBehaviour
 
     public bool AddItem(ItemData data)
     {
-        var item = gameObjects.FirstOrDefault(_ => _.Data == null);
+        var item = gameObjects.FirstOrDefault(_ => _.Data == null)?? null;
         if (item == null)
             return false;
 
         item.Data = data;
-              
         return true;
     }
 }

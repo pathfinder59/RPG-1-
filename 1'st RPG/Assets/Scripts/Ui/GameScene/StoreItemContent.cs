@@ -26,4 +26,9 @@ public class StoreItemContent : MonoBehaviour
         _itemIcon.sprite = data.Sprite;
         _itemPrice.text = data.Price.ToString();
     }
+
+    public void OnClick()
+    {
+        transform.GetComponentInParent<StorePage>().SelectItem(data);
+    }
 }

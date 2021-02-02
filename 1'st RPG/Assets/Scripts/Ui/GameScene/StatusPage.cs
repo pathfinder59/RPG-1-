@@ -22,13 +22,8 @@ namespace GameScene.Ui
         Text _hpText;
 
 
-        GameObject _settingPage;
-
         void Start()
         {
-            _settingPage = GameObject.Find("GameSceneCanvas").transform.Find("SettingPage").gameObject;
-
-
             _playerStat = PlayerManager.Instance._playerStat;
             _nameText.text =  "Name: " + _playerStat.Name;
         }
@@ -40,10 +35,5 @@ namespace GameScene.Ui
             _expText.text = string.Format("Exp {0}/{1}", _playerStat.Exp, _playerStat.MaxExp);
         }
 
-        public void OnClickBack()
-        {
-            _settingPage.SetActive(true);
-            gameObject.SetActive(false);
-        }
     }
 }

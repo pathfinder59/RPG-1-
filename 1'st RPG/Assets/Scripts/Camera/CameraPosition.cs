@@ -16,12 +16,12 @@ public class CameraPosition : MonoBehaviour
 
     float yRotate = 0;
 
+    [SerializeField]
     GameObject _settingButton;
 
     private void Start()
     {
         _player = GameObject.Find("Player");
-        _settingButton = GameObject.Find("GameSceneCanvas").transform.Find("SettingButton").gameObject;
     }
     void Update()
     {

@@ -42,10 +42,6 @@ public class SkillSlot : MonoBehaviour
         }
     }
 
-    public void OnClickAttackBtn()
-    {
-
-    }
     public void OnClickBtn()
     {
         if(_coverImage.activeInHierarchy)

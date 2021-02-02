@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5105b2b627e2fc54f9811002f1cbc6f0, type: 3}
+  m_Name: Jean
+  m_EditorClassIdentifier: 
+  _name: Jean
+  _sprite: {fileID: 8148082419769405078, guid: 649b98d366d2a8f4188aef10cb072c5d, type: 3}
+  _category: 2
+  _price: 2000
+  _atk: 0
+  _def: 5

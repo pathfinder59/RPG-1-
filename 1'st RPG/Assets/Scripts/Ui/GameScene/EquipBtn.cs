@@ -31,6 +31,7 @@ public class EquipBtn : MonoBehaviour
             GetComponent<Button>().image.sprite = null;
             EventManager.Emit("UpdateInventory", null);
             EventManager.Emit("UpdatePlayerEquip", null);
+            EventManager.Emit("UpdateStatus");
         }
     }
 

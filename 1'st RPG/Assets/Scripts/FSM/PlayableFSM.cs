@@ -272,6 +272,7 @@ public abstract class PlayableFSM : FSM, IDamagable
             _animator.SetTrigger("Die");
             Die(enemy);
         }
+        EventManager.Emit("UpdateStatus");
     }
 
     public override void AddExp(float exp)
@@ -282,6 +283,7 @@ public abstract class PlayableFSM : FSM, IDamagable
             go.transform.position = transform.position;
             go.GetComponent<ParticleTime>().SetTarget(transform);
         }
+        EventManager.Emit("UpdateStatus");
     }
 
     IEnumerator DieProcess(Transform enemy)

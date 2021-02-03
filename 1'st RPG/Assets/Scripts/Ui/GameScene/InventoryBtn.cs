@@ -41,6 +41,7 @@ public class InventoryBtn : MonoBehaviour
         }
         EventManager.Emit("UpdateInventory", null);
         EventManager.Emit("UpdatePlayerEquip", null);
+        EventManager.Emit("UpdateStatus");
     }
 
     public void UpdateInform(GameObject obj = null)

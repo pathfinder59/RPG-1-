@@ -7,7 +7,8 @@ namespace common
     using GameScene.Skill;
     public class PlayerManager : Singleton<PlayerManager>
     {
-        int _addtiveAtk;
+        public int AddtiveAtk { get; set; }
+        public int AddtiveDef { get; set; }
         int _addtiveDef;
 
 
@@ -22,8 +23,8 @@ namespace common
         public int NumHp { get; set; }
         private void Awake()
         {
-            _addtiveAtk = 0;
-            _addtiveDef = 0;
+            AddtiveAtk = 0;
+            AddtiveDef = 0;
 
             NumHp = 0;
             Money = 100000;
@@ -67,18 +68,18 @@ namespace common
 
         void UpdatePlayerEquipment(GameObject obj = null)
         {
-            _addtiveAtk = 0;
-            _addtiveDef = 0;
+            AddtiveAtk = 0;
+            AddtiveDef = 0;
             foreach(EquipBtn btn in _equipmentPage.EquipUis)
             {
                 Equipment data = btn.Data as Equipment;
                 if (data == null)
                     continue;
-                _addtiveAtk += data.Atk;
-                _addtiveDef += data.Def;
+                AddtiveAtk += data.Atk;
+                AddtiveDef += data.Def;
             }
-            _playerStat.transform.GetComponent<PlayableFSM>().AddAtk = _addtiveAtk;
-            _playerStat.transform.GetComponent<PlayableFSM>().AddDef = _addtiveDef;
+            _playerStat.transform.GetComponent<PlayableFSM>().AddAtk = AddtiveAtk;
+            _playerStat.transform.GetComponent<PlayableFSM>().AddDef = AddtiveDef;
         }
     }
 }

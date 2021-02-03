@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GameScene.Skill;
-
+using GameScene.Ui;
 namespace common
 {
     public class GameManager : Singleton<GameManager>
@@ -12,7 +12,8 @@ namespace common
         InventoryPage inventoryPage;
         [SerializeField]
         EquipmentPage equipmentPage;
-
+        [SerializeField]
+        StatusPage statusPage;
         public string playerClass;
 
         float spawnTime;
@@ -34,6 +35,8 @@ namespace common
             inventoryPage.gameObject.SetActive(false);
             equipmentPage.gameObject.SetActive(true);
             equipmentPage.gameObject.SetActive(false);
+            statusPage.gameObject.SetActive(true);
+            statusPage.gameObject.SetActive(false);
         }
 
         void Update()

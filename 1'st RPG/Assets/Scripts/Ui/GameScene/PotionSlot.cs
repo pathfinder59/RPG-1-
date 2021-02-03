@@ -45,5 +45,6 @@ public class PotionSlot : MonoBehaviour
             curTime = coolDown;
             UpdatePotion();
         }
+        EventManager.Emit("UpdateStatus");
     }
 }

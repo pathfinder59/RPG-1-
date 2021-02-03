@@ -272,6 +272,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &327121748 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1084324626, guid: 8072ad45b920f374b8d17d256101545b,
+    type: 3}
+  m_PrefabInstance: {fileID: 8686664962889927385}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d371fe50ac42a65458136e1ac0285cbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &394750715
 GameObject:
   m_ObjectHideFlags: 0
@@ -5801,6 +5813,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryPage: {fileID: 1277113656}
   equipmentPage: {fileID: 798654336}
+  statusPage: {fileID: 327121748}
   playerClass: Warrior
 --- !u!1 &1694547142
 GameObject:

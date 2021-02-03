@@ -13,7 +13,7 @@ public class EquipBtn : MonoBehaviour
     void Start()
     {
         Data = null;
-        EventManager.On("UpdateInventory", UpdateInform);
+        EventManager.On("UpdatePlayerEquip", UpdateInform);
     }
 
     void Update()
@@ -30,6 +30,7 @@ public class EquipBtn : MonoBehaviour
             Data = null;
             GetComponent<Button>().image.sprite = null;
             EventManager.Emit("UpdateInventory", null);
+            EventManager.Emit("UpdatePlayerEquip", null);
         }
     }
 

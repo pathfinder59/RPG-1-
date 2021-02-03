@@ -18,6 +18,9 @@ public class Stat : MonoBehaviour
     [SerializeField]
     int _atk;
     [SerializeField]
+    int _def;
+
+    [SerializeField]
     float _moveSpeed;
 
     public int MaxHp { get { return _maxHp; } set { _maxHp = value; } }
@@ -29,7 +32,7 @@ public class Stat : MonoBehaviour
     public float Exp { get; set; }
 
     public int Atk { get { return _atk; } set { _atk = value; } }
-
+    public int Def { get { return _def; } set { _def = value; } }
     public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
 
 

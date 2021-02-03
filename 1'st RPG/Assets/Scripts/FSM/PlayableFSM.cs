@@ -15,6 +15,8 @@ public abstract class PlayableFSM : FSM, IDamagable
     PlayerStat _stat;
     public PlayerStat Status { get => _stat;}
 
+    public int AddAtk { get; set; }
+    public int AddDef { get; set; }
     public int Hp { get { return _stat.Hp; } set { _stat.Hp = value; } }
     public int MaxHp { get { return _stat.MaxHp; }}
 
@@ -42,7 +44,9 @@ public abstract class PlayableFSM : FSM, IDamagable
     Slider _hpBar;
 
     void Awake()
-    {      
+    {
+        AddAtk = 0;
+        AddDef = 0;
         _animator = GetComponent<Animator>();
     }
     void Start()
@@ -249,13 +253,18 @@ public abstract class PlayableFSM : FSM, IDamagable
         {
             return;
         }
-
+        hitPower -= (AddDef + _stat.Def);
         Hp -= hitPower;
 
         _move.Agent.isStopped = true;
         _move.Agent.ResetPath();
+
         if (_target == null)
             _target = enemy;
+
+        var go = ParticlePoolManager.Instance.Spawn("PopUpText", transform.position + new Vector3(0, 3, 0));
+        go.GetComponentInChildren<TextMesh>().text = hitPower.ToString();
+        
         if (Hp <= 0)
         {
             _state = FuncState.Die;

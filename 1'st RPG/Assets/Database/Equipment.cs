@@ -10,5 +10,5 @@ public class Equipment : ItemData
     [SerializeField]
     int _def;
     public int Atk => _atk;
-    public float Def => _def;
+    public int Def => _def;
 }

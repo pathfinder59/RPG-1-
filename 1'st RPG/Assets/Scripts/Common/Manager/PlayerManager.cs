@@ -7,18 +7,24 @@ namespace common
     using GameScene.Skill;
     public class PlayerManager : Singleton<PlayerManager>
     {
+        int _addtiveAtk;
+        int _addtiveDef;
+
 
         public SkillData skillData;
 
         public PlayerStat _playerStat;
 
         [SerializeField]
-        GameObject prefab;
+        EquipmentPage _equipmentPage;
 
         public int Money{get;set;}
         public int NumHp { get; set; }
         private void Awake()
         {
+            _addtiveAtk = 0;
+            _addtiveDef = 0;
+
             NumHp = 0;
             Money = 100000;
             var go = ObjectPoolManager.Instance.Spawn(GameManager.Instance.playerClass);
@@ -50,13 +56,29 @@ namespace common
         // Start is called before the first frame update
         void Start()
         {
-            
+            EventManager.On("UpdatePlayerEquip", UpdatePlayerEquipment);
         }
 
         // Update is called once per frame
         void Update()
         {
 
+        }
+
+        void UpdatePlayerEquipment(GameObject obj = null)
+        {
+            _addtiveAtk = 0;
+            _addtiveDef = 0;
+            foreach(EquipBtn btn in _equipmentPage.EquipUis)
+            {
+                Equipment data = btn.Data as Equipment;
+                if (data == null)
+                    continue;
+                _addtiveAtk += data.Atk;
+                _addtiveDef += data.Def;
+            }
+            _playerStat.transform.GetComponent<PlayableFSM>().AddAtk = _addtiveAtk;
+            _playerStat.transform.GetComponent<PlayableFSM>().AddDef = _addtiveDef;
         }
     }
 }

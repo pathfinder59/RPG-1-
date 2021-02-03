@@ -25,7 +25,7 @@ public class WarriorFSM : PlayableFSM
         go.transform.position = transform.position;
         go.transform.forward = transform.forward;
         go.GetComponent<OneTouchSkill>().Caster = gameObject.transform;
-        go.GetComponent<OneTouchSkill>().Atk = Status.Atk;
+        go.GetComponent<OneTouchSkill>().Atk = Status.SkillLevels["Active"] * 10 + (int)((Status.Atk + AddAtk) * 0.3);
     }
 
     public void Passive()
@@ -34,10 +34,10 @@ public class WarriorFSM : PlayableFSM
         go.transform.position = transform.position;
         go.transform.forward = transform.forward;
         go.GetComponent<OneTouchSkill>().Caster = gameObject.transform;
-        go.GetComponent<OneTouchSkill>().Atk = Status.Atk;
+        go.GetComponent<OneTouchSkill>().Atk = Status.SkillLevels["Passive"] * 20 + (int)((Status.Atk + AddAtk) * 0.7);
     }
     public override void AttackEvent()
     {
-        Target.GetComponent<EnemyFSM>().Damaged(Status.Atk, gameObject.transform);
+        Target.GetComponent<EnemyFSM>().Damaged(Status.Atk + AddAtk , gameObject.transform);
     }
 }

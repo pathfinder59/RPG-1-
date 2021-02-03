@@ -3524,11 +3524,11 @@ MonoBehaviour:
   _level: 1
   _maxExp: 100
   _atk: 5
+  _def: 2
   _moveSpeed: 4
   _classType: Warrior
   hpRisingValue: 50
   atkRisingValue: 10
-  hpPerSecondRisingValue: 1
 --- !u!114 &380393973468996350
 MonoBehaviour:
   m_ObjectHideFlags: 0

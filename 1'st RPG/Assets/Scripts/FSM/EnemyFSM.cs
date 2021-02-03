@@ -214,6 +214,10 @@ public abstract class EnemyFSM : FSM, IDamagable
 
         _navMeshAgent.isStopped = true;
         _navMeshAgent.ResetPath();
+
+        var go = ParticlePoolManager.Instance.Spawn("PopUpText", transform.position + new Vector3(0,3,0));
+        go.GetComponentInChildren<TextMesh>().text = hitPower.ToString();
+
         if (hp > 0)
         {
             _target = enemy;

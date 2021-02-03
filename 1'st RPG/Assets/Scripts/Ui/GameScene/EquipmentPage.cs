@@ -5,7 +5,7 @@ using UnityEngine;
 public class EquipmentPage : MonoBehaviour
 {
     
-    public List<EquipBtn> EquipUis;
+    public List<GameObject> EquipSlots;
 
 
     void Start()

@@ -25,6 +25,7 @@ public class InventoryBtn : MonoBehaviour
 
     public void OnClick()
     {
+        /*
         if (Data == null) return;
 
         EquipBtn btn = equipmentPage.EquipUis[Data.Category];
@@ -42,6 +43,7 @@ public class InventoryBtn : MonoBehaviour
         EventManager.Emit("UpdateInventory", null);
         EventManager.Emit("UpdatePlayerEquip", null);
         EventManager.Emit("UpdateStatus");
+        */
     }
 
     public void UpdateInform(GameObject obj = null)

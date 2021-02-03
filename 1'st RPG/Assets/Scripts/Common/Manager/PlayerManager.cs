@@ -58,6 +58,7 @@ namespace common
         void Start()
         {
             EventManager.On("UpdatePlayerEquip", UpdatePlayerEquipment);
+
         }
 
         // Update is called once per frame
@@ -70,9 +71,11 @@ namespace common
         {
             AddtiveAtk = 0;
             AddtiveDef = 0;
-            foreach(EquipBtn btn in _equipmentPage.EquipUis)
+            foreach(GameObject slot in _equipmentPage.EquipSlots)
             {
-                Equipment data = btn.Data as Equipment;
+                if (slot.transform.childCount == 0)
+                    continue;
+                Equipment data = slot.GetComponentInChildren<ItemUi>().Data as Equipment ?? null;
                 if (data == null)
                     continue;
                 AddtiveAtk += data.Atk;
@@ -80,6 +83,7 @@ namespace common
             }
             _playerStat.transform.GetComponent<PlayableFSM>().AddAtk = AddtiveAtk;
             _playerStat.transform.GetComponent<PlayableFSM>().AddDef = AddtiveDef;
+            EventManager.Emit("UpdateStatus");
         }
     }
 }

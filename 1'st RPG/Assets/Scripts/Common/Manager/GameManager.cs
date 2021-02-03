@@ -16,6 +16,9 @@ namespace common
         StatusPage statusPage;
         public string playerClass;
 
+        public InventoryPage Inventory => inventoryPage;
+        public EquipmentPage EquipPage => equipmentPage;
+
         float spawnTime;
         enum GameState
         {

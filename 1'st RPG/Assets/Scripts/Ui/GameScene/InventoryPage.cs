@@ -7,7 +7,9 @@ using UnityEngine;
 public class InventoryPage : MonoBehaviour
 {
     [SerializeField]
-    List<InventoryBtn> gameObjects;
+    List<Transform> _itemSlotList;
+    [SerializeField]
+    GameObject ItemUiPrefab;
     private void Awake()
     {
     }
@@ -27,11 +29,15 @@ public class InventoryPage : MonoBehaviour
 
     public bool AddItem(ItemData data)
     {
-        var item = gameObjects.FirstOrDefault(_ => _.Data == null)?? null;
-        if (item == null)
+        var itemSlot = _itemSlotList.FirstOrDefault(_ => _.childCount == 0)?? null;
+        if (itemSlot == null)
             return false;
 
-        item.Data = data;
+        var go = Instantiate(ItemUiPrefab);
+        go.GetComponent<ItemUi>().Data = data;
+        go.GetComponent<ItemUi>().UpdateData();
+        go.transform.SetParent(itemSlot);
+        
         return true;
     }
 }

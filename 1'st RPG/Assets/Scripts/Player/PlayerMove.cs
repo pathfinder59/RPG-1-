@@ -36,6 +36,10 @@ public class PlayerMove : MonoBehaviour
             _characterController.Move(dir * movePower * Time.deltaTime);
             transform.forward = dir;
             fsm.IsMoving = true;
+           
+            RaycastHit hit;
+            DialogManager.Instance.ActionObject = Physics.Raycast(new Ray(transform.position, transform.forward), out hit, 4f) ? hit.transform.gameObject : null;
+            
             return;
         }
         fsm.IsMoving = false;

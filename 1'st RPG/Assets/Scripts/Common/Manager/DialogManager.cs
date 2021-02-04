@@ -10,13 +10,15 @@ public class DialogManager : Singleton<DialogManager>
 
     GameObject _actionObject;
 
-    //int dialogIdx;
+    int dialogIdx;
+    public bool isAction;
     public GameObject ActionObject { get { return _actionObject; } set { _actionObject = value; } }
 
     IDictionary<int, List<string>> dialogDatas;
     void Start()
     {
-        //dialogIdx = 0;
+        isAction = false;
+        dialogIdx = 0;
         _actionObject = null;
         dialogDatas = new Dictionary<int, List<string>>();
 
@@ -31,32 +33,52 @@ public class DialogManager : Singleton<DialogManager>
     // Update is called once per frame
     void Update()
     {
-        /*
-        if(Input.GetKeyDown("Jump"))
+        
+        if(Input.GetAxis("Jump") > 0)
         {
+            
             if(_actionObject != null)
             {
-                if(_actionObject.layer == LayerMask.NameToLayer("Object"))
+                ObjData data = _actionObject.GetComponent<ObjData>();
+
+                if (_actionObject.layer == LayerMask.NameToLayer("Object"))
                 {
 
                 }
                 else if(_actionObject.layer == LayerMask.NameToLayer("Npc"))
                 {
-                    //
-                    //string txt = getData()    
+                    Action(data.id);
                 }
                 
             }
         }
-        */
+        
     }
-
-    public string getData(int key,int idx)
+    void Action(int id)
     {
-        if (!dialogDatas.ContainsKey(key))
+        Communicate(id);
+        _dialogPage.gameObject.SetActive(isAction);
+    }
+    void Communicate(int id)
+    {
+        string textData = GetData(id, dialogIdx);
+        if (textData == null)
+        {
+            isAction = false;
+            return;
+        }
+        _dialogPage._text.text = textData;
+        isAction = true;
+        dialogIdx++;
+    }
+    string GetData(int key,int idx)
+    {
+        if (idx == dialogDatas[key].Count)
             return null;
         else
             return dialogDatas[key][idx];
     }
+    
 
+    
 }

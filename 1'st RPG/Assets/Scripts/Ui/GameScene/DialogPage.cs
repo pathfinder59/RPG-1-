@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class DialogPage : MonoBehaviour
 {
-    [SerializeField]
-    Text _text;
+
+    public Text _text;
     void Start()
     {
         

@@ -14,6 +14,7 @@ public class GameSceneManager : Singleton<GameSceneManager>
     EquipmentPage equipmentPage;
     [SerializeField]
     StatusPage statusPage;
+
     public string playerClass;
 
     public InventoryPage Inventory => inventoryPage;

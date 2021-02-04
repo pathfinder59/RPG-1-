@@ -5,6 +5,7 @@ using UnityEngine;
 namespace common
 {
     using GameScene.Skill;
+
     public class PlayerManager : Singleton<PlayerManager>
     {
         public int AddtiveAtk { get; set; }

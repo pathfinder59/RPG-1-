@@ -11,15 +11,12 @@ namespace GameScene.Skill
         [SerializeField]
         string _name;
         [SerializeField]
+        int _id;
+
+        [SerializeField]
         Sprite _sprite;
         [SerializeField]
-        int _range;
-        [SerializeField]
         float _coolDown;
-        [SerializeField]
-        string _content;
-        [SerializeField]
-        string _trigger = null;
         [SerializeField]
         float _time;
         [SerializeField]
@@ -29,10 +26,7 @@ namespace GameScene.Skill
 
         public string Name => _name;
         public Sprite Sprite => _sprite;
-        public int Range => _range;
         public float CoolDown => _coolDown;
-        public string Content => _content;
-        public string Trigger => _trigger;
         public float Time => _time;
         public bool IsTargeting => isTargeting;
 

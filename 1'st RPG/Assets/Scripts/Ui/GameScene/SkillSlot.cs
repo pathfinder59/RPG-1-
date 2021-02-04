@@ -89,6 +89,7 @@ public class SkillSlot : MonoBehaviour
         }
 
     }
+
     IEnumerator InDistance()
     {
         while(true)

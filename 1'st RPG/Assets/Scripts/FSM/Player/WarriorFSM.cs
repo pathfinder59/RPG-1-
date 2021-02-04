@@ -24,6 +24,7 @@ public class WarriorFSM : PlayableFSM
         var go = ParticlePoolManager.Instance.Spawn("WarriorActive");
         go.transform.position = transform.position;
         go.transform.forward = transform.forward;
+        go.GetComponent<OneTouchSkill>().target = "Enemy";
         go.GetComponent<OneTouchSkill>().Caster = gameObject.transform;
         go.GetComponent<OneTouchSkill>().Atk = Status.SkillLevels["Active"] * 10 + (int)((Status.Atk + AddAtk) * 0.3);
     }
@@ -33,6 +34,7 @@ public class WarriorFSM : PlayableFSM
         var go = ParticlePoolManager.Instance.Spawn("WarriorPassive");
         go.transform.position = transform.position;
         go.transform.forward = transform.forward;
+        go.GetComponent<OneTouchSkill>().target = "Enemy";
         go.GetComponent<OneTouchSkill>().Caster = gameObject.transform;
         go.GetComponent<OneTouchSkill>().Atk = Status.SkillLevels["Passive"] * 20 + (int)((Status.Atk + AddAtk) * 0.7);
     }

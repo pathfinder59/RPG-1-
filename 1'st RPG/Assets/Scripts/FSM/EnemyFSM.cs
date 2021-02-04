@@ -17,48 +17,39 @@ public abstract class EnemyFSM : FSM, IDamagable
         Damaged,
         Die
     }
-    FuncState _state;
+    protected FuncState _state;
+
+    protected float currentTime = 0;
+    Stat _stat;
+    CharacterController cc;
+    protected Animator _animator;
+    NavMeshAgent _navMeshAgent;
 
     [SerializeField]
     float findDistance;   //탐색 범위
+
     [SerializeField]
     float moveDistance;  //추적 범위
-    [SerializeField]
-    float attackDistance; //공격 범위
-
-    CharacterController cc;
-
-    float currentTime = 0;
-    [SerializeField]
-    float attackDelay;
-
-    Vector3 _originPos;
-    Quaternion _originRot;
-
-    int hp;
-    public int Hp { get { return hp; } set { hp = value; } }
-    [SerializeField]
-    int maxHp;
-    public int MaxHp { get { return maxHp; } }
-    [SerializeField]
-    float exp;
-    
-
 
     [SerializeField]
-    int atk; // 데미지
-    public int Atk => atk;
+    protected float attackDistance; //공격 범위
+
+    [SerializeField]
+    protected float attackDelay;
+
     [SerializeField]
     float hitTime;
-    [SerializeField]
-    float dieTime;
-
-    Animator _animator;
-    NavMeshAgent _navMeshAgent;
 
     [SerializeField]
     Slider _hpBar;
 
+    Vector3 _originPos;
+    Quaternion _originRot;
+
+    public int Hp { get { return _stat.Hp; } set { _stat.Hp = value; } }
+    public int MaxHp { get { return _stat.MaxHp; } }
+    public int Atk => _stat.Atk;
+    
     void Awake()
     {
         
@@ -66,11 +57,9 @@ public abstract class EnemyFSM : FSM, IDamagable
         _animator = transform.GetComponentInChildren<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        _originPos = transform.position;
-        _originRot = transform.rotation;
-
-        string str = name.Substring(0, name.IndexOf('('));
-        str += "Status";
+        _stat = GetComponent<Stat>();
+        //string str = name.Substring(0, name.IndexOf('('));
+        //str += "Status";
     }
     void Start()
     {
@@ -82,14 +71,21 @@ public abstract class EnemyFSM : FSM, IDamagable
         _animator.SetTrigger("Reset");
         gameObject.layer = LayerMask.NameToLayer("Enemy");
         _state = FuncState.Idle;
-        hp = maxHp;
+        Hp = MaxHp;
 
         _target = null;  //변경할것임
+
+        SetOriginTransform();
+    }
+    public void SetOriginTransform()
+    {
+        _originPos = transform.position;
+        _originRot = transform.rotation;
     }
 
     void Update()
     {
-        _hpBar.value = (float)hp / maxHp;
+        _hpBar.value = (float)Hp / MaxHp;
         
 
         currentTime = Mathf.Clamp(currentTime - Time.deltaTime, 0, attackDelay);
@@ -113,8 +109,6 @@ public abstract class EnemyFSM : FSM, IDamagable
             case FuncState.Die:
                 break;
         }
-
-        //hpSlider.value = (float)hp / (float)maxHp;
     }
 
     void Idle()
@@ -136,11 +130,11 @@ public abstract class EnemyFSM : FSM, IDamagable
             print("상태 전환: Move -> Return");
             _target = null;
         }
-        else if (Vector3.Distance(transform.position, _target.position) > attackDistance)
+        else if (Vector3.Distance(transform.position, _target.position) > attackDistance + enemyWidth)
         {
             _navMeshAgent.isStopped = true;
             _navMeshAgent.ResetPath();
-            _navMeshAgent.stoppingDistance = attackDistance;
+            _navMeshAgent.stoppingDistance = attackDistance + enemyWidth;
 
             _navMeshAgent.destination = _target.position;
         }
@@ -154,9 +148,9 @@ public abstract class EnemyFSM : FSM, IDamagable
         }
     }
 
-    void Attack()
+    public virtual void Attack()
     {
-        if (Vector3.Distance(transform.position, _target.position) < attackDistance)
+        if (Vector3.Distance(transform.position, _target.position) < attackDistance + enemyWidth)
         {           
             if (currentTime == 0)
             {
@@ -176,7 +170,6 @@ public abstract class EnemyFSM : FSM, IDamagable
     }
 
     public abstract void AttackEvent();
-    abstract public IEnumerator AttackEffect();
 
     void Return()
     {
@@ -193,7 +186,7 @@ public abstract class EnemyFSM : FSM, IDamagable
             transform.position = _originPos;
             transform.rotation = _originRot;
 
-            hp = maxHp;
+            Hp = MaxHp;
 
             _state = FuncState.Idle;
             print("상태 전환: Return -> Idle");
@@ -210,7 +203,7 @@ public abstract class EnemyFSM : FSM, IDamagable
             return;
         }
 
-        hp -= hitPower;
+        Hp -= hitPower;
 
         _navMeshAgent.isStopped = true;
         _navMeshAgent.ResetPath();
@@ -218,7 +211,7 @@ public abstract class EnemyFSM : FSM, IDamagable
         var go = ParticlePoolManager.Instance.Spawn("PopUpText", transform.position + new Vector3(0,3,0));
         go.GetComponentInChildren<TextMesh>().text = hitPower.ToString();
 
-        if (hp > 0)
+        if (Hp > 0)
         {
             _target = enemy;
             if(hitPower == 0)
@@ -229,7 +222,7 @@ public abstract class EnemyFSM : FSM, IDamagable
                     _animator.SetTrigger("Move");
                 }
             }
-            else if (maxHp/5 <= hitPower)
+            else if (MaxHp/5 <= hitPower)
             {
                 _state = FuncState.Damaged;
                 print("상태 전환: Any State -> Damaged");
@@ -265,7 +258,7 @@ public abstract class EnemyFSM : FSM, IDamagable
     void Die(Transform enemy)
     {
         StopAllCoroutines();
-        enemy.GetComponent<FSM>().AddExp(exp);
+        enemy.GetComponent<FSM>().AddExp(_stat.MaxExp);
         gameObject.layer = LayerMask.NameToLayer("Die");
         var fsm = enemy.GetComponent<FSM>();
         if (fsm != null)

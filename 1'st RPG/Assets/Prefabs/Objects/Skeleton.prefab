@@ -195,6 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8355602470674567874}
+  - component: {fileID: 4586803324712094218}
   - component: {fileID: 4524687380284111296}
   - component: {fileID: -4800046866685164556}
   - component: {fileID: -2507352825480124225}
@@ -222,6 +223,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4586803324712094218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3328014442826946976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac739f5e65fbc44ea99ed7e1b01a099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Skeleton
+  _maxHp: 150
+  _level: 1
+  _maxExp: 50
+  _atk: 30
+  _def: 20
+  _moveSpeed: 5
 --- !u!114 &4524687380284111296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,11 +258,7 @@ MonoBehaviour:
   moveDistance: 15
   attackDistance: 5
   attackDelay: 2
-  maxHp: 10
-  exp: 100
-  atk: 2
   hitTime: 0.5
-  dieTime: 4.2
   _hpBar: {fileID: 677637387401719295}
 --- !u!195 &-4800046866685164556
 NavMeshAgent:

@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class GhostFSM : EnemyFSM
 {
-    public override IEnumerator AttackEffect()
-    {
-        yield break;
-    }
-
     public override void AttackEvent()
     {
         Target.GetComponent<PlayableFSM>().Damaged(5, gameObject.transform);

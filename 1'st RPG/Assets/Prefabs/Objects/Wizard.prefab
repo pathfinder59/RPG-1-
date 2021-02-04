@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 421360031659673105}
   - component: {fileID: 421360031659673104}
-  - component: {fileID: 421360031659673119}
+  - component: {fileID: -5976310698059413396}
   - component: {fileID: 421360031659673118}
+  - component: {fileID: 421360031659673119}
   - component: {fileID: 6424781693801695802}
   m_Layer: 9
   m_Name: Wizard
@@ -55,6 +56,43 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-5976310698059413396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421360031659673117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac739f5e65fbc44ea99ed7e1b01a099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Wizard
+  _maxHp: 10
+  _level: 1
+  _maxExp: 50
+  _atk: 30
+  _def: 20
+  _moveSpeed: 5
+--- !u!114 &421360031659673118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421360031659673117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8310695621526334aa139c8b97242ca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  findDistance: 10
+  moveDistance: 15
+  attackDistance: 5
+  attackDelay: 2
+  hitTime: 0.5
+  _hpBar: {fileID: 5096732872782758119}
 --- !u!195 &421360031659673119
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -77,28 +115,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &421360031659673118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 421360031659673117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8310695621526334aa139c8b97242ca5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  findDistance: 10
-  moveDistance: 15
-  attackDistance: 5
-  attackDelay: 2
-  maxHp: 10
-  exp: 100
-  atk: 2
-  hitTime: 0.5
-  dieTime: 4.2
-  _hpBar: {fileID: 5096732872782758119}
 --- !u!143 &6424781693801695802
 CharacterController:
   m_ObjectHideFlags: 0

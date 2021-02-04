@@ -34,8 +34,7 @@ public abstract class PlayableFSM : FSM, IDamagable
     float attackDelay;  //공격 딜레이 길이
 
     [SerializeField]
-    float attackDistance;
-
+    float attackDistance;   
 
     [SerializeField]
     float dieTime;
@@ -168,13 +167,13 @@ public abstract class PlayableFSM : FSM, IDamagable
         }
         else
         {
-            if (Vector3.Distance(gameObject.transform.position, _target.transform.position) <= attackDistance)
+            if (Vector3.Distance(gameObject.transform.position, _target.transform.position) <= attackDistance + enemyWidth)
             {
                 _state = FuncState.Attack;
                 _animator.SetTrigger("Attack");
             }
             else
-                _move.Chase(_target.transform.position, attackDistance);
+                _move.Chase(_target.transform.position, attackDistance + enemyWidth);
         }
     }
 
@@ -199,7 +198,7 @@ public abstract class PlayableFSM : FSM, IDamagable
             return;
         }
 
-        if (Vector3.Distance(gameObject.transform.position, _target.transform.position) <= attackDistance)
+        if (Vector3.Distance(gameObject.transform.position, _target.transform.position) <= attackDistance + enemyWidth)
         {
             if (currentTime == 0.0f)
             {
@@ -260,8 +259,10 @@ public abstract class PlayableFSM : FSM, IDamagable
         _move.Agent.ResetPath();
 
         if (_target == null)
+        {
             _target = enemy;
-
+            enemyWidth = _target.GetComponent<CharacterController>().radius;
+        }
         var go = ParticlePoolManager.Instance.Spawn("PopUpText", transform.position + new Vector3(0, 3, 0));
         go.GetComponentInChildren<TextMesh>().text = hitPower.ToString();
         

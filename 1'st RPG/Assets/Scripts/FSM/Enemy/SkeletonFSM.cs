@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class SkeletonFSM : EnemyFSM
 {
-    public override IEnumerator AttackEffect()
-    {
-        yield break;
-    }
 
     public override void AttackEvent()
     {

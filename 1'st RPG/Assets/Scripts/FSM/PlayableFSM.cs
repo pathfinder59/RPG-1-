@@ -4,15 +4,16 @@ using UnityEngine;
 using GameScene.Skill;
 using common;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public abstract class PlayableFSM : FSM, IDamagable
 {
 
     protected Animator _animator;
 
-    PlayerMove _move;
-
     PlayerStat _stat;
+    NavMeshAgent _navMeshAgent;
+
     public PlayerStat Status { get => _stat;}
 
     public int AddAtk { get; set; }
@@ -48,13 +49,13 @@ public abstract class PlayableFSM : FSM, IDamagable
         AddAtk = 0;
         AddDef = 0;
         _animator = GetComponent<Animator>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
     }
     void Start()
     {
-        if (gameObject.name == "Player")
+        if (gameObject.name == PlayerManager.Instance._playerStat.Name)
         {
             _stat = PlayerManager.Instance._playerStat;
-            _move = gameObject.GetComponent<PlayerMove>();
         }
         else
             LoadData();
@@ -63,8 +64,8 @@ public abstract class PlayableFSM : FSM, IDamagable
     void OnEnable()
     {
         IsMoving = false;
-        //_animator.SetTrigger("Reset");
-        gameObject.layer = LayerMask.NameToLayer("Player");
+        _animator.SetTrigger("Reset");
+    
         _target = null;
         currentTime = 0.0f;
         if(_stat != null)
@@ -119,15 +120,14 @@ public abstract class PlayableFSM : FSM, IDamagable
     {
         if (isUsingSkill)
             return;
-        if (name == "Player")
+
+        if (IsMoving)
         {
-            if (_move.Move(_stat.MoveSpeed,_move.ValueInputMove()))
-            {
-                _state = FuncState.Move;
-                _animator.SetTrigger("Move");
-                return;
-            }
+            _state = FuncState.Move;
+            _animator.SetTrigger("Move");
+            return;
         }
+        
 
         if (_target != null)
         {
@@ -139,31 +139,30 @@ public abstract class PlayableFSM : FSM, IDamagable
     {
         if (isUsingSkill)
             return;
-        if (name == "Player")  //플레이어인 경우에만
-        {
-            if (!_move.Move(_stat.MoveSpeed, _move.ValueInputMove()))
-            {
-                if (_target == null)
-                {
-                    _state = FuncState.Idle;
-                    _animator.SetTrigger("Idle");
 
-                }
-                else
-                    _state = FuncState.Chase;
-                return;
+        if (!IsMoving)
+        {
+            if (_target == null)
+            {
+                _state = FuncState.Idle;
+                _animator.SetTrigger("Idle");
+
             }
+            else
+                _state = FuncState.Chase;
+            return;
         }
+        
     }
 
     void Chase()
     {
         if (isUsingSkill)
             return;
-        if (_target == null || !_move.ValueInputMove().Equals( new Vector3(0, 0, 0)))  //플레이어인 경우에만
+        if (_target == null || IsMoving)  //플레이어인 경우에만
         {
             _state = FuncState.Move;
-            _move.StopChase();
+            StopChase();
             return;
 
         }
@@ -175,7 +174,7 @@ public abstract class PlayableFSM : FSM, IDamagable
                 _animator.SetTrigger("Attack");
             }
             else
-                _move.Chase(_target.transform.position, attackDistance + enemyWidth);
+                Chase(_target.transform.position, attackDistance + enemyWidth);
         }
     }
 
@@ -188,15 +187,15 @@ public abstract class PlayableFSM : FSM, IDamagable
             _state = FuncState.Idle;
             _animator.ResetTrigger("AttackStart");
             _animator.SetTrigger("Idle");
-            _move.StopChase();
+            StopChase();
             return;
         }
-        else if(!Vector3.Equals(_move.ValueInputMove(), new Vector3(0, 0, 0)))
+        else if(IsMoving)
         {
             _state = FuncState.Move;
             _animator.ResetTrigger("AttackStart");
             _animator.SetTrigger("Move");
-            _move.StopChase();
+            StopChase();
             return;
         }
 
@@ -229,7 +228,7 @@ public abstract class PlayableFSM : FSM, IDamagable
             _state = FuncState.Idle;
             _animator.SetTrigger("Idle");
         }
-        _move.StopChase();
+        StopChase();
 
         isUsingSkill = true;
 
@@ -257,8 +256,8 @@ public abstract class PlayableFSM : FSM, IDamagable
         hitPower -= (AddDef + _stat.Def);
         Hp -= hitPower;
 
-        _move.Agent.isStopped = true;
-        _move.Agent.ResetPath();
+        _navMeshAgent.isStopped = true;
+        _navMeshAgent.ResetPath();
 
         if (_target == null)
         {
@@ -311,6 +310,20 @@ public abstract class PlayableFSM : FSM, IDamagable
             yield return new WaitForSeconds(1.0f);
             Hp = Mathf.Clamp(Hp + MaxHp/100, 0, MaxHp);
         }
+    }
+
+    public void Chase(Vector3 target, float distance)
+    {
+        _navMeshAgent.isStopped = true;
+        _navMeshAgent.ResetPath();
+        _navMeshAgent.stoppingDistance = distance;
+        _navMeshAgent.destination = target;
+    }
+
+    public void StopChase()
+    {
+        _navMeshAgent.isStopped = true;
+        _navMeshAgent.ResetPath();
     }
 
 }

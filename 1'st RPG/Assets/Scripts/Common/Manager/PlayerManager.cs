@@ -9,10 +9,6 @@ namespace common
     {
         public int AddtiveAtk { get; set; }
         public int AddtiveDef { get; set; }
-        int _addtiveDef;
-
-
-        public SkillData skillData;
 
         public PlayerStat _playerStat;
 
@@ -20,7 +16,8 @@ namespace common
         EquipmentPage _equipmentPage;
 
         public int Money{get;set;}
-        public int NumHp { get; set; }
+        public int NumHp { get; set; } //포션 개수
+
         private void Awake()
         {
             AddtiveAtk = 0;
@@ -28,7 +25,8 @@ namespace common
 
             NumHp = 0;
             Money = 100000;
-            var go = ObjectPoolManager.Instance.Spawn(GameManager.Instance.playerClass);
+            
+            var go = ObjectPoolManager.Instance.Spawn(GameSceneManager.Instance.playerClass);
             go.AddComponent<PlayerMove>();
             //go.transform.position = GameObject.Find("Map").transform.Find("PlayerSpawn").position;
             //여기서 플레이어 컨트롤러 획득을 위한 playermove컴포넌트가 go에 추가될 것임.

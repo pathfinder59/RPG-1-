@@ -20,6 +20,7 @@ public abstract class PlayableFSM : FSM, IDamagable
     public int Hp { get { return _stat.Hp; } set { _stat.Hp = value; } }
     public int MaxHp { get { return _stat.MaxHp; }}
 
+    public bool IsMoving { get; set; }
     public enum FuncState
     {
         Idle, Move, Chase, Attack, Damaged,Die
@@ -61,6 +62,7 @@ public abstract class PlayableFSM : FSM, IDamagable
 
     void OnEnable()
     {
+        IsMoving = false;
         //_animator.SetTrigger("Reset");
         gameObject.layer = LayerMask.NameToLayer("Player");
         _target = null;
@@ -119,7 +121,7 @@ public abstract class PlayableFSM : FSM, IDamagable
             return;
         if (name == "Player")
         {
-            if (_move.Move(_stat.MoveSpeed))
+            if (_move.Move(_stat.MoveSpeed,_move.ValueInputMove()))
             {
                 _state = FuncState.Move;
                 _animator.SetTrigger("Move");
@@ -139,7 +141,7 @@ public abstract class PlayableFSM : FSM, IDamagable
             return;
         if (name == "Player")  //플레이어인 경우에만
         {
-            if (!_move.Move(_stat.MoveSpeed))
+            if (!_move.Move(_stat.MoveSpeed, _move.ValueInputMove()))
             {
                 if (_target == null)
                 {

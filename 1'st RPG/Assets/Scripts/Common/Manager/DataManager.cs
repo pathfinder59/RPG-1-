@@ -9,6 +9,7 @@ namespace common
     {
         public List<SkillDatabase> skillDatabases;
         public List<StatusData> statusDatabase;
+        public List<DialogData> dialogDatabase;
         void Start()
         {
             

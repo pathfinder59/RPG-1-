@@ -12,16 +12,17 @@ public class PlayerMove : MonoBehaviour
 
     NavMeshAgent _navMeshAgent;
     public NavMeshAgent Agent => _navMeshAgent;
-    
+
+    PlayableFSM fsm;
+
 
     public CharacterController CharacterController => _characterController;
     void Start()
     {
-        
-
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        fsm = GetComponent<PlayableFSM>();
     }
 
     // Update is called once per frame
@@ -38,9 +39,8 @@ public class PlayerMove : MonoBehaviour
         Vector3 dir = Camera.main.transform.right * xMove + Camera.main.transform.forward * yMove;
         return dir;
     }
-    public bool Move(float movePower)
+    public bool Move(float movePower, Vector3 dir)
     {
-        Vector3 dir = ValueInputMove();
         dir = new Vector3(dir.x, 0.0f, dir.z).normalized;
         if (!dir.Equals(new Vector3(0, 0, 0)))
         {

@@ -14,7 +14,8 @@ namespace common
 
         [SerializeField]
         EquipmentPage _equipmentPage;
-
+        [SerializeField]
+        Transform spawnRegion;
         public int Money{get;set;}
         public int NumHp { get; set; } //포션 개수
 
@@ -26,7 +27,7 @@ namespace common
             NumHp = 0;
             Money = 100000;
             
-            var go = ObjectPoolManager.Instance.Spawn(GameSceneManager.Instance.playerClass);
+            var go = ObjectPoolManager.Instance.Spawn(GameSceneManager.Instance.playerClass, spawnRegion.position, spawnRegion.rotation);
             go.AddComponent<PlayerMove>();
             //go.transform.position = GameObject.Find("Map").transform.Find("PlayerSpawn").position;
             //여기서 플레이어 컨트롤러 획득을 위한 playermove컴포넌트가 go에 추가될 것임.

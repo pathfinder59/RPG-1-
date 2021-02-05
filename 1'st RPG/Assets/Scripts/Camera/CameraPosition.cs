@@ -28,9 +28,9 @@ public class CameraPosition : MonoBehaviour
         if (_settingButton.activeSelf)
         {
             if(Input.GetMouseButton(0))
-                yRotate += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
+                yRotate += Input.GetAxis("Mouse X") * rotateSpeed;
 
-            transform.rotation = new Quaternion(0, yRotate, 0, 1);
+            transform.rotation = Quaternion.Euler(0, yRotate, 0);
 
             Camera.main.transform.position = _player.transform.position + (transform.up.normalized * yOffset) + (transform.forward.normalized * zOffset);
 

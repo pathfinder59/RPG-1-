@@ -21,10 +21,13 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (DialogManager.Instance.isAction)
+            return;
         Move(fsm.Status.MoveSpeed);
     }
     public void Move(float movePower)
     {
+
         float xMove = Input.GetAxis("Horizontal");
         float yMove = Input.GetAxis("Vertical");
 

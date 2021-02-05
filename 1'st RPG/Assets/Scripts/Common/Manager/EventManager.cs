@@ -18,6 +18,12 @@ namespace common
                 Instance.EventDatabase.Add(eventName,new List<Action<GameObject>>());
             Instance.EventDatabase[eventName].Add(subscriber);
         }
+        public static void Remove(string eventName, Action<GameObject> subscriber)
+        {
+            if (!Instance.EventDatabase.ContainsKey(eventName))
+                return;
+            Instance.EventDatabase[eventName].Remove(subscriber);
+        }
 
         public static void Emit(string eventName, GameObject parameter = null)
         {

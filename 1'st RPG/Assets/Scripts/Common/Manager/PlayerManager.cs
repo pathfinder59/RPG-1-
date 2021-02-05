@@ -12,6 +12,7 @@ namespace common
         public int AddtiveDef { get; set; }
 
         public PlayerStat _playerStat;
+        public QuestManager _questManager;
 
         [SerializeField]
         EquipmentPage _equipmentPage;
@@ -30,6 +31,7 @@ namespace common
             
             var go = ObjectPoolManager.Instance.Spawn(GameSceneManager.Instance.playerClass, spawnRegion.position, spawnRegion.rotation);
             go.AddComponent<PlayerMove>();
+            _questManager = go.AddComponent<QuestManager>();
             //go.transform.position = GameObject.Find("Map").transform.Find("PlayerSpawn").position;
             //여기서 플레이어 컨트롤러 획득을 위한 playermove컴포넌트가 go에 추가될 것임.
             //여기서 플레이어의 위치도 업데이트할 필요가 있음.

@@ -23,7 +23,7 @@ public abstract class FSM : MonoBehaviour
         enemyWidth = Target.GetComponent<CharacterController>().radius;
     }
 
-    public virtual void AddExp(float exp)
+    public virtual void AddExp(float exp,GameObject obj = null)
     { }
 
 }

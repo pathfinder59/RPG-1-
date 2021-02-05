@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questIdx: 1
   client: 1000
-  name: "\"\uAC8C\uC784 \uD29C\uD1A0\uB9AC\uC5BC\""
+  target: 1000
   _type: 48
-  id: 100
   num: 3
   exp: 200

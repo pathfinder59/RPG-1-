@@ -21,7 +21,7 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (DialogManager.Instance.isAction)
+        if (DialogManager.Instance.isAction || fsm.isUsingSkill)
             return;
         Move(fsm.Status.MoveSpeed);
     }

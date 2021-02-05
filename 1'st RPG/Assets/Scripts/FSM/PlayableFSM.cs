@@ -236,7 +236,7 @@ public abstract class PlayableFSM : FSM, IDamagable
         {
             _animator.SetTrigger(data.Name);
         }
-        //StartCoroutine(data.Trigger); //각 자식 클래스에서 스킬이 있을경우 스킬 이름과 동일한 코루틴을 만들어 둘것! , 공통 스킬은 여기에 만들어 둔다
+        //StartCoroutine(data.Name); //각 자식 클래스에서 스킬이 있을경우 스킬 이름과 동일한 코루틴을 만들어 둘것! , 공통 스킬은 여기에 만들어 둔다
 
         yield return new WaitForSeconds(data.Time);
         TurnOffSkill();
@@ -277,7 +277,7 @@ public abstract class PlayableFSM : FSM, IDamagable
         EventManager.Emit("UpdateStatus");
     }
 
-    public override void AddExp(float exp)
+    public override void AddExp(float exp, GameObject obj = null)
     {
         if(_stat.AddExp(exp))
         {
@@ -286,6 +286,21 @@ public abstract class PlayableFSM : FSM, IDamagable
             go.GetComponent<ParticleTime>().SetTarget(transform);
         }
         EventManager.Emit("UpdateStatus");
+
+        if (obj != null)
+        {
+            if (obj.layer != LayerMask.NameToLayer("Enemy"))
+                return;
+            QuestManager mgr = gameObject.GetComponent<QuestManager>();
+
+
+            foreach (KeyValuePair<int,Quest> valuePair in mgr.currentQuests[0])
+            {
+                if (valuePair.Value.targetId == obj.GetComponent<ObjData>().id)
+                    valuePair.Value.DecreaseNum(1);
+            }
+        }
+
     }
 
     IEnumerator DieProcess(Transform enemy)

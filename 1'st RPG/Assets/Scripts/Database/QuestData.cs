@@ -12,7 +12,6 @@ public class QuestData : ScriptableObject
     public int target;
 
     public char _type; // 0:토벌, 1:대화, 2:재료
-    public int id; // 대상 오브젝트 id
     public int num; //갯수 1경우에는 제외
     public int exp; //보상 경험치
     //public int[] npcId;   //대화 순서 루틴

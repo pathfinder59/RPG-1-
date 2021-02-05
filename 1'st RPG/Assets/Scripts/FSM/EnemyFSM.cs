@@ -258,7 +258,7 @@ public abstract class EnemyFSM : FSM, IDamagable
     void Die(Transform enemy)
     {
         StopAllCoroutines();
-        enemy.GetComponent<FSM>().AddExp(_stat.MaxExp);
+        enemy.GetComponent<FSM>().AddExp(_stat.MaxExp,gameObject);
         gameObject.layer = LayerMask.NameToLayer("Die");
         var fsm = enemy.GetComponent<FSM>();
         if (fsm != null)

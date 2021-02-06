@@ -89,6 +89,10 @@ public class DialogManager : Singleton<DialogManager>
         {
             idx = currentQuests[data.questIdx + data.client].processRate;
             idx = data.questIdx - 1 + idx;
+            if(data._type == '1' && data.target != id)
+            {
+                idx = data.questIdx - 1 + 2; //진행중으로 이동
+            }
         }
         else
             idx = data.questIdx;
@@ -101,6 +105,12 @@ public class DialogManager : Singleton<DialogManager>
             switch(idx)
             {
                 case 0:  //퀘스트 완료
+                    if (data._type == '1')
+                    {
+                        DataManager.Instance.questList[data.target].Remove(data);
+                        if (data.target != id)
+                            return;
+                    }
                     DataManager.Instance.questList[data.client].Remove(data);
                     currentQuests.Remove(data.questIdx + data.client);
                     PlayerManager.Instance._playerStat.AddExp(data.exp);
@@ -109,12 +119,15 @@ public class DialogManager : Singleton<DialogManager>
                     //말걸기 퀘스트일 경우에는 완료타겟의 아이디를 키값으로 datamager의 퀘스트리스트에도 완료형 퀘스트를 등록하도록 하자.
                     if (data._type == '1')
                     {
-                        //DataManager.Instance.questList[data.target].Add(new QuestData(data.questIdx,data.client,data.target,data._type,data.num,data.exp));
+                        if (!DataManager.Instance.questList.ContainsKey(data.target))
+                            DataManager.Instance.questList[data.target] = new List<QuestData>();
+                        DataManager.Instance.questList[data.target].Add(data);
                         currentQuests.Add(data.questIdx + data.client, new Quest(data,true));
                     }
                     else
                         currentQuests.Add(data.questIdx + data.client, new Quest(data));
                     break;
+
                 case 2: //퀘스트 진행중
                     break;
             }

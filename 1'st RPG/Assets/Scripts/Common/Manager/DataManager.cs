@@ -13,13 +13,11 @@ namespace common
 
 
         public Dictionary<int, List<QuestData>> questList;   //key : npc id, Value: 해당되는 퀘스트들
-        public Dictionary<int, int> currentQuests;
         public List<QuestData> questDatabase;
 
         private void Awake()
         {
             questList = new Dictionary<int, List<QuestData>>();
-            currentQuests = new Dictionary<int, int>();
         }
         void Start()
         {

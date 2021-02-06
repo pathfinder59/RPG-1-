@@ -57,34 +57,43 @@ public class DialogManager : Singleton<DialogManager>
     }
     void Action(int id)
     {
-        //QuestManager.Instance.questList.
+
         int questIdx = 0;
+        QuestData questData;
+
+        //완료된 말걸기 퀘스트가 존재하지않는 경우 호출되어야함.
+        //말걸기 퀘스트 같은경우에는 키값이 클라이언트 - 타겟인 데이터베이스 두곳에 존재함.
+        //완료 시에는 두 데이터베이스에서 삭제하도록한다. 
+        //여기서 퀘스트 처리를 할때마다 모든 npc들이 자기 키값에 해당하는 리스트를 확인해서 있을경우 머리위에 아이콘이 생성되도록 하자!.
+        //우선 순위는 완료> 시작> 진행중
         Dictionary<int, List<QuestData>> database = DataManager.Instance.questList;
         if (database.ContainsKey(id))
         {
             questIdx = database[id].Count != 0 ? database[id][0].questIdx : 0;
-            
+
         }
 
         if (questIdx != 0)
             CommunicateForQuest(id, database[id][0]);
         else
             Communicate(id);
+
         _dialogPage.gameObject.SetActive(isAction);
     }
     void CommunicateForQuest(int id, QuestData data)
     {
         int idx;
-        Dictionary<int, Quest> dict = PlayerManager.Instance._questManager.currentQuests[data._type - '0'];
+        Dictionary<int, Quest> currentQuests = PlayerManager.Instance._questManager.currentQuests[data._type - '0'];
 
-        if (dict.ContainsKey(data.questIdx + id))
+        if (currentQuests.ContainsKey(data.questIdx + data.client))
         {
-            idx = dict[data.questIdx + id].processRate;
+            idx = currentQuests[data.questIdx + data.client].processRate;
+            idx = data.questIdx - 1 + idx;
         }
         else
             idx = data.questIdx;
 
-        string textData = GetData(id+idx, dialogIdx);
+        string textData = GetData(data.client + idx, dialogIdx);
         
         if (textData == null)
         {
@@ -92,12 +101,19 @@ public class DialogManager : Singleton<DialogManager>
             switch(idx)
             {
                 case 0:  //퀘스트 완료
-                    DataManager.Instance.questList[id].Remove(data);
-                    dict.Remove(data.questIdx + id);
+                    DataManager.Instance.questList[data.client].Remove(data);
+                    currentQuests.Remove(data.questIdx + data.client);
                     PlayerManager.Instance._playerStat.AddExp(data.exp);
                     break;
                 case 1: //퀘스트 시작
-                    dict.Add(data.questIdx + id, new Quest(data));
+                    //말걸기 퀘스트일 경우에는 완료타겟의 아이디를 키값으로 datamager의 퀘스트리스트에도 완료형 퀘스트를 등록하도록 하자.
+                    if (data._type == '1')
+                    {
+                        //DataManager.Instance.questList[data.target].Add(new QuestData(data.questIdx,data.client,data.target,data._type,data.num,data.exp));
+                        currentQuests.Add(data.questIdx + data.client, new Quest(data,true));
+                    }
+                    else
+                        currentQuests.Add(data.questIdx + data.client, new Quest(data));
                     break;
                 case 2: //퀘스트 진행중
                     break;

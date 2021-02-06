@@ -7,11 +7,12 @@ public class Quest
     public int targetId;
     public int num;
     public int processRate;
-    public Quest(QuestData data)
+    public Quest(QuestData data,bool isClear = false)
     {
         targetId = data.target;
         num = data.num;
-        processRate = 2;
+         
+        processRate = isClear ? 3 : 2;
     }
 
     public void DecreaseNum(int n)

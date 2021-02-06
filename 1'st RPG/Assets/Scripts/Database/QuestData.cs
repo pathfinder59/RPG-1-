@@ -5,9 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Quest Data", menuName = "Scriptable Object/QuestData")]
 public class QuestData : ScriptableObject
 {
-    
-
-    public int questIdx;
+    public int questIdx; //대화 번호
     public int client; //퀘스트를 주는 npc
     public int target;
 
@@ -15,5 +13,15 @@ public class QuestData : ScriptableObject
     public int num; //갯수 1경우에는 제외
     public int exp; //보상 경험치
     //public int[] npcId;   //대화 순서 루틴
+
+    public QuestData(int iQuestidx,int iClient,int iTarget,char cType,int iNum,int iExp) 
+    {
+        questIdx = iQuestidx;
+        client = iClient;
+        target = iTarget;
+        _type = cType;
+        num = iNum;
+        exp = iExp;
+    }
 }
 

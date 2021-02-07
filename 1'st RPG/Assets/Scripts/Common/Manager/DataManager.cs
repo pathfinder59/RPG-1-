@@ -43,6 +43,8 @@ namespace common
                 questList[data.client] = new List<QuestData>();
             
             questList[data.client].Add(Instantiate<QuestData>(data));
+            if(data.isActive)
+                GameObject.Find(data.client.ToString()).GetComponent<Npc>().SetQuestImage(1);
         }
     }
 }

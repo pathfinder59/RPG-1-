@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Quest
 {
+    public int client;
     public int targetId;
     public int num;
     public int processRate;
     public Quest(QuestData data,bool isClear = false)
     {
+        client = data.client;
         targetId = data.target;
         num = data.num;
          
@@ -19,7 +21,9 @@ public class Quest
     {
         num = Mathf.Clamp(num-n,0,1000);
         if (num == 0)
+        {
+            GameObject.Find(client.ToString()).GetComponent<Npc>().SetQuestImage(3);
             processRate = 3;
-            
+        }  
     }
 }

@@ -24,9 +24,10 @@ public class Npc : MonoBehaviour
     {
         
     }
-    void SetQuestImage(int pattern)
+    public void SetQuestImage(int pattern)
     {
-        switch(pattern)
+        SetImageActive(true);
+        switch (pattern)
         {
             case 1:
                 questImage.sprite = questStart;
@@ -38,5 +39,9 @@ public class Npc : MonoBehaviour
                 questImage.sprite = questFinish;
                 break;
         }
+    }
+    public void SetImageActive(bool value)
+    {
+        questImage.gameObject.SetActive(value);
     }
 }

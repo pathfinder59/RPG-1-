@@ -43,11 +43,10 @@ public class DialogManager : Singleton<DialogManager>
 
                 if (_actionObject.layer == LayerMask.NameToLayer("Object"))
                 {
-
+                    //오브젝트 상호작용용 ex)채집
                 }
                 else if(_actionObject.layer == LayerMask.NameToLayer("Npc"))
                 {
-                    //찾아가는 퀘스트이면 여기서 처리해야함
                     Action(data.id);
                 }
                 
@@ -57,24 +56,16 @@ public class DialogManager : Singleton<DialogManager>
     }
     void Action(int id)
     {
-
-        int questIdx = 0;
         QuestData questData;
 
-        //완료된 말걸기 퀘스트가 존재하지않는 경우 호출되어야함.
-        //말걸기 퀘스트 같은경우에는 키값이 클라이언트 - 타겟인 데이터베이스 두곳에 존재함.
-        //완료 시에는 두 데이터베이스에서 삭제하도록한다. 
-        //여기서 퀘스트 처리를 할때마다 모든 npc들이 자기 키값에 해당하는 리스트를 확인해서 있을경우 머리위에 아이콘이 생성되도록 하자!.
-        //우선 순위는 완료> 시작> 진행중
         Dictionary<int, List<QuestData>> database = DataManager.Instance.questList;
+        QuestData data = null;
+
         if (database.ContainsKey(id))
-        {
-            questIdx = database[id].Count != 0 ? database[id][0].questIdx : 0;
+            data = database[id].Find(_ => _.isActive == true);
 
-        }
-
-        if (questIdx != 0)
-            CommunicateForQuest(id, database[id][0]);
+        if (data != null)
+            CommunicateForQuest(id, data);
         else
             Communicate(id);
 
@@ -82,52 +73,24 @@ public class DialogManager : Singleton<DialogManager>
     }
     void CommunicateForQuest(int id, QuestData data)
     {
-        int idx;
+        int processRate;
         Dictionary<int, Quest> currentQuests = PlayerManager.Instance._questManager.currentQuests[data._type - '0'];
 
-        if (currentQuests.ContainsKey(data.questIdx + data.client))
-        {
-            idx = currentQuests[data.questIdx + data.client].processRate;
-            idx = data.questIdx - 1 + idx;
-            if(data._type == '1' && data.target != id)
-            {
-                idx = data.questIdx - 1 + 2; //진행중으로 이동
-            }
-        }
-        else
-            idx = data.questIdx;
+        getQuestProceesRate(out processRate, id, currentQuests, data);
 
-        string textData = GetData(data.client + idx, dialogIdx);
+        string textData = GetData(data.client + processRate, dialogIdx);
         
         if (textData == null)
         {
-            idx %= 3;
-            switch(idx)
+            processRate %= 3;
+            switch(processRate)
             {
                 case 0:  //퀘스트 완료
-                    if (data._type == '1')
-                    {
-                        DataManager.Instance.questList[data.target].Remove(data);
-                        if (data.target != id)
-                            return;
-                    }
-                    DataManager.Instance.questList[data.client].Remove(data);
-                    currentQuests.Remove(data.questIdx + data.client);
-                    PlayerManager.Instance._playerStat.AddExp(data.exp);
+                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().ClearQuest(currentQuests, data, id);
                     break;
                 case 1: //퀘스트 시작
-                    //말걸기 퀘스트일 경우에는 완료타겟의 아이디를 키값으로 datamager의 퀘스트리스트에도 완료형 퀘스트를 등록하도록 하자.
-                    if (data._type == '1')
-                    {
-                        if (!DataManager.Instance.questList.ContainsKey(data.target))
-                            DataManager.Instance.questList[data.target] = new List<QuestData>();
-                        DataManager.Instance.questList[data.target].Add(data);
-                        currentQuests.Add(data.questIdx + data.client, new Quest(data,true));
-                    }
-                    else
-                        currentQuests.Add(data.questIdx + data.client, new Quest(data));
+                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().StartQuest(currentQuests, data, id);
                     break;
-
                 case 2: //퀘스트 진행중
                     break;
             }
@@ -164,6 +127,18 @@ public class DialogManager : Singleton<DialogManager>
             return dialogDatas[key][idx];
     }
     
-
-    
+    void getQuestProceesRate(out int idx, int id, Dictionary<int, Quest> QuestList, QuestData data)
+    {
+        if (QuestList.ContainsKey(data.questIdx + data.client))
+        {
+            idx = QuestList[data.questIdx + data.client].processRate;
+            idx = data.questIdx - 1 + idx;
+            if (data._type == '1' && data.target != id)
+            {
+                idx = data.questIdx - 1 + 2; //진행중으로 이동
+            }
+        }
+        else
+            idx = data.questIdx;
+    }
 }

@@ -5868,9 +5868,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f55c2d7ff85d72544a545f46dd13d5de, type: 2}
   - {fileID: 11400000, guid: c5b1eaeb2854ae34c9567d178931dbf4, type: 2}
   - {fileID: 11400000, guid: 3636f6c1a8e4bf74990a23f03dec5943, type: 2}
+  - {fileID: 11400000, guid: a3484579f29d2eb47b4d8916364a8620, type: 2}
+  - {fileID: 11400000, guid: b47cdfc51ae72c846944c2247a466154, type: 2}
+  - {fileID: 11400000, guid: 62be389e7458e7f4685fd6b4c8926c57, type: 2}
   questDatabase:
   - {fileID: 11400000, guid: b1e26263cfc1f1341a9e5deef971f414, type: 2}
   - {fileID: 11400000, guid: 267b541bb3a3f7d4dbfc3e09d26fd545, type: 2}
+  - {fileID: 11400000, guid: 8c2243a72d2f3dc43b6246338914bd64, type: 2}
 --- !u!4 &1753118833
 Transform:
   m_ObjectHideFlags: 0

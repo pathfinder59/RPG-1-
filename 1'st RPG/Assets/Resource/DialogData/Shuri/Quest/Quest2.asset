@@ -18,3 +18,6 @@ MonoBehaviour:
   _type: 49
   num: 0
   exp: 400
+  child: d1070000
+  nParent: 1
+  isActive: 0

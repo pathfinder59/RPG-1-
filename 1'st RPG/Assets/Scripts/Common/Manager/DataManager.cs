@@ -21,17 +21,26 @@ namespace common
         }
         void Start()
         {
+            //처음엔 다 불러오지 않고 활성화된 퀘스트만 리스트에 넣도록 한다.
+            // 그런 다음에 퀘스트가 클리어 될때마다
             foreach (QuestData data in DataManager.Instance.questDatabase)
             {
-                if (!questList.ContainsKey(data.client))
-                    questList[data.client] = new List<QuestData>();
-                questList[data.client].Add(data);
+                AddQuestData(data);
             }
         }
 
         void Update()
         {
 
+        }
+
+        public void AddQuestData(QuestData data)
+        {
+            
+            if (!questList.ContainsKey(data.client))
+                questList[data.client] = new List<QuestData>();
+            
+            questList[data.client].Add(Instantiate<QuestData>(data));
         }
     }
 }

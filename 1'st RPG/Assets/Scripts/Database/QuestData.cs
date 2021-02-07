@@ -13,15 +13,24 @@ public class QuestData : ScriptableObject
     public int num; //갯수 1경우에는 제외
     public int exp; //보상 경험치
     //public int[] npcId;   //대화 순서 루틴
+    public List<int> child;
+    public int nParent;
 
-    public QuestData(int iQuestidx,int iClient,int iTarget,char cType,int iNum,int iExp) 
+    public bool isActive;
+    public QuestData(QuestData data)
     {
-        questIdx = iQuestidx;
-        client = iClient;
-        target = iTarget;
-        _type = cType;
-        num = iNum;
-        exp = iExp;
+        questIdx = data.questIdx;
+        client = data.client;
+        target = data.target;
+        _type = data._type;
+        num = data.num;
+        exp = data.exp;
+
+        child = new List<int>();
+        child = data.child.GetRange(0, data.child.Count);
+
+        nParent = data.nParent;
+        isActive = data.isActive;
     }
 }
 

@@ -56,8 +56,6 @@ public class DialogManager : Singleton<DialogManager>
     }
     void Action(int id)
     {
-        QuestData questData;
-
         Dictionary<int, List<QuestData>> database = DataManager.Instance.questList;
         QuestData data = null;
 

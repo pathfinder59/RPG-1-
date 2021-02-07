@@ -52,7 +52,6 @@ public abstract class EnemyFSM : FSM, IDamagable
     
     void Awake()
     {
-        
         cc = GetComponent<CharacterController>();
         _animator = transform.GetComponentInChildren<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();

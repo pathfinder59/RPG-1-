@@ -300,7 +300,7 @@ public abstract class PlayableFSM : FSM, IDamagable
                     valuePair.Value.DecreaseNum(1);
             }
         }
-
+        
     }
 
     IEnumerator DieProcess(Transform enemy)

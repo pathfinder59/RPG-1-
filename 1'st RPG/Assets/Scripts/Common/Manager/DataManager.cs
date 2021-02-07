@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using GameScene.Skill;
+
+
 namespace common
 {
     public class DataManager : Singleton<DataManager>
@@ -31,7 +33,7 @@ namespace common
 
         void Update()
         {
-
+            
         }
 
         public void AddQuestData(QuestData data)

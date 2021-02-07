@@ -15,6 +15,8 @@ public class Billboard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.forward = target.forward;
+        transform.LookAt(target);
+        transform.forward = new Vector3(-transform.forward.x,0, -transform.forward.z);
+        //transform.forward = 0;
     }
 }

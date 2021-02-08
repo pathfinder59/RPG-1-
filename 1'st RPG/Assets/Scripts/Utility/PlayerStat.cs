@@ -54,6 +54,9 @@ public class PlayerStat : Stat
         if (Level != 10) //만렙 아닐경우
         {
             Exp += exp;
+            var go = ParticlePoolManager.Instance.Spawn("PopUpText", transform.position + new Vector3(0, 3, 0));
+            go.GetComponentInChildren<TextMesh>().text = "+" + exp.ToString();
+            go.GetComponentInChildren<TextMesh>().color = new Color(0, 1, 0, 1);
             if (Exp >= MaxExp)
             {
                 Level += 1;

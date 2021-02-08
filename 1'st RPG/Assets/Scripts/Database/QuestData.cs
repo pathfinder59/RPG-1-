@@ -16,6 +16,8 @@ public class QuestData : ScriptableObject
     public List<int> child;
     public int nParent;
 
+
+    public string descript;
     public bool isActive;
     public QuestData(QuestData data)
     {

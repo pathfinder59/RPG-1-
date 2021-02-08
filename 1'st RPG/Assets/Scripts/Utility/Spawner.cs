@@ -20,9 +20,7 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i<nSpawn;++i)
         {
             var go = Instantiate(prefab, transform.position + new Vector3(Random.Range(-0.3f, 0.3f), 0f, Random.Range(-0.3f, 0.3f)), transform.rotation);
-            //go.transform.position = transform.position + new Vector3(Random.Range(-0.3f, 0.3f), 0f, Random.Range(-0.3f, 0.3f));
             go.transform.forward = transform.forward;
-            go.gameObject.SetActive(true);
             prefabs.Add(go);
         }
     }
@@ -38,7 +36,6 @@ public class Spawner : MonoBehaviour
         var founded = prefabs.FirstOrDefault(_ => !_.activeInHierarchy);
         if (founded != null)
         {
-            founded.SetActive(true);
             founded.transform.position = transform.position + new Vector3(Random.Range(-0.3f,0.3f),0f, Random.Range(-0.3f, 0.3f));
             founded.transform.forward = transform.forward;
             founded.gameObject.SetActive(true);

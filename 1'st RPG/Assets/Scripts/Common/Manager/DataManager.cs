@@ -14,12 +14,12 @@ namespace common
         public List<DialogData> dialogDatabase;
 
 
-        public Dictionary<int, List<QuestData>> questList;   //key : npc id, Value: 해당되는 퀘스트들
+        public Dictionary<int, List<QuestData>> questDict;   //key : npc id, Value: 해당되는 퀘스트들
         public List<QuestData> questDatabase;
 
         private void Awake()
         {
-            questList = new Dictionary<int, List<QuestData>>();
+            questDict = new Dictionary<int, List<QuestData>>();
         }
         void Start()
         {
@@ -39,10 +39,10 @@ namespace common
         public void AddQuestData(QuestData data)
         {
             
-            if (!questList.ContainsKey(data.client))
-                questList[data.client] = new List<QuestData>();
-            
-            questList[data.client].Add(Instantiate<QuestData>(data));
+            if (!questDict.ContainsKey(data.client))
+                questDict[data.client] = new List<QuestData>();
+
+            questDict[data.client].Add(Instantiate<QuestData>(data));
             if(data.isActive)
                 GameObject.Find(data.client.ToString()).GetComponent<Npc>().SetQuestImage(1);
         }

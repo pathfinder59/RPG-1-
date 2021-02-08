@@ -51,12 +51,13 @@ public class SkillSlot : MonoBehaviour
                 return;
             SkillSlot[] slotList = _parent.GetComponentsInChildren<SkillSlot>();
             float time = 0.0f;
+
             foreach(var slot in slotList)
             {
                 if (slot._data == Skill_Icon.ClickedData)
                 {
                     slot._data = null;
-                    slot.gameObject.GetComponent<Button>().image.sprite = null;
+                    slot.GetComponent<Button>().image.sprite = null;
                     time = slot.coolDown;
                     slot.coolDown = 0;
                     slot._text.text = "";
@@ -74,12 +75,10 @@ public class SkillSlot : MonoBehaviour
         }
         else
         {
-            if (_data == null)
+            if (_data == null || coolDown != 0)
                 return;
             if (!_playerFsm.isUsingSkill)
             {
-                if (coolDown != 0)
-                    return;
                 if (_data.IsTargeting)
                 {
                     if (_playerFsm.Target == null)

@@ -10,7 +10,7 @@ public class QuestListPage : MonoBehaviour
     Transform _questContents;
     void Start()
     {
-        EventManager.On("CloseQuestPage", SetActivePage);
+        EventManager.On("CloseQuestPage", ClosePage);
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class QuestListPage : MonoBehaviour
         content.data = data;
         content.transform.SetParent(_questContents);
     }
-    public void SetActivePage(GameObject obj = null)
+    public void ClosePage(GameObject obj = null)
     {
         gameObject.SetActive(false);
     }

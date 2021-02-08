@@ -8,11 +8,7 @@ namespace common
 
     public class PlayerManager : Singleton<PlayerManager>
     {
-        public int AddtiveAtk { get; set; }
-        public int AddtiveDef { get; set; }
-
         public PlayerStat _playerStat;
-        public QuestManager _questManager;
 
         [SerializeField]
         EquipmentPage _equipmentPage;
@@ -23,18 +19,12 @@ namespace common
 
         private void Awake()
         {
-            AddtiveAtk = 0;
-            AddtiveDef = 0;
-
             NumHp = 0;
             Money = 100000;
             
             var go = ObjectPoolManager.Instance.Spawn(GameSceneManager.Instance.playerClass, spawnRegion.position, spawnRegion.rotation);
             go.AddComponent<PlayerMove>();
-            _questManager = go.AddComponent<QuestManager>();
-            //go.transform.position = GameObject.Find("Map").transform.Find("PlayerSpawn").position;
-            //여기서 플레이어 컨트롤러 획득을 위한 playermove컴포넌트가 go에 추가될 것임.
-            //여기서 플레이어의 위치도 업데이트할 필요가 있음.
+            go.AddComponent<QuestManager>();
             _playerStat = go.GetComponentInParent<PlayerStat>();
 
             _playerStat.Hp = 150;
@@ -71,8 +61,8 @@ namespace common
 
         void UpdatePlayerEquipment(GameObject obj = null)
         {
-            AddtiveAtk = 0;
-            AddtiveDef = 0;
+            int AddtiveAtk = 0;
+            int AddtiveDef = 0;
             foreach(GameObject slot in _equipmentPage.EquipSlots)
             {
                 if (slot.transform.childCount == 0)
@@ -83,8 +73,8 @@ namespace common
                 AddtiveAtk += data.Atk;
                 AddtiveDef += data.Def;
             }
-            _playerStat.transform.GetComponent<PlayableFSM>().AddAtk = AddtiveAtk;
-            _playerStat.transform.GetComponent<PlayableFSM>().AddDef = AddtiveDef;
+            _playerStat.GetComponent<PlayableFSM>().AddAtk = AddtiveAtk;
+            _playerStat.GetComponent<PlayableFSM>().AddDef = AddtiveDef;
             EventManager.Emit("UpdateStatus");
         }
     }

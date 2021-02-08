@@ -10,14 +10,18 @@ public class PotionSlot : MonoBehaviour
     Text _text;
     [SerializeField]
     float coolDown;
+
     float curTime;
 
     PlayerStat playerStat;
+    private void Awake()
+    {
+        curTime = 0;
+        EventManager.On("UpdatePotion", UpdatePotion);
+    }
     void Start()
     {
         _text.text = PlayerManager.Instance.NumHp.ToString();
-        EventManager.On("UpdatePotion", UpdatePotion);
-        curTime = 0;
         playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
     }
 
@@ -44,7 +48,7 @@ public class PotionSlot : MonoBehaviour
             playerStat.Hp = Mathf.Clamp(playerStat.Hp + 50, 0, playerStat.MaxHp);
             curTime = coolDown;
             UpdatePotion();
+            EventManager.Emit("UpdateStatus");
         }
-        EventManager.Emit("UpdateStatus");
     }
 }

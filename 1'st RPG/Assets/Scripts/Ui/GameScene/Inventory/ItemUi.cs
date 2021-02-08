@@ -15,18 +15,16 @@ public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     [SerializeField]
     Image _image;
 
-    int numItem;
-
     Transform InventoryPage;
     
     void Start()
     {
-        InventoryPage = GameManager.Instance.Inventory.transform;
+        InventoryPage = GameSceneManager.Instance.Inventory.transform;
         canvasGroup = GetComponent<CanvasGroup>();
     }
     private void OnEnable()
     {
-        numItem = 0;
+
     }
     void Update()
     {

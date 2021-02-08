@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using common;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,11 +22,11 @@ public class CameraPosition : MonoBehaviour
 
     private void Start()
     {
-        _player = GameObject.Find("Player");
+        _player = GameObject.Find(PlayerManager.Instance._playerStat.Name);
     }
     void Update()
     {
-        if (_settingButton.activeSelf)
+        if (_settingButton.activeSelf && !DialogManager.Instance.isAction)
         {
             if(Input.GetMouseButton(0))
                 yRotate += Input.GetAxis("Mouse X") * rotateSpeed;

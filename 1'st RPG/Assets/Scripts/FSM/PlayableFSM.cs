@@ -232,13 +232,11 @@ public abstract class PlayableFSM : FSM, IDamagable
 
         isUsingSkill = true;
 
-        if (data.Name != null)
-        {
-            _animator.SetTrigger(data.Name);
-        }
+        _animator.SetTrigger(data.Name);
+
         //StartCoroutine(data.Name); //각 자식 클래스에서 스킬이 있을경우 스킬 이름과 동일한 코루틴을 만들어 둘것! , 공통 스킬은 여기에 만들어 둔다
 
-        yield return new WaitForSeconds(data.Time);
+        yield return new WaitForSeconds(data.Time);  //스킬 애니메이션 길이
         TurnOffSkill();
     }
 
@@ -279,14 +277,8 @@ public abstract class PlayableFSM : FSM, IDamagable
 
     public override void AddExp(float exp, GameObject obj = null)
     {
-        if(_stat.AddExp(exp))
-        {
-            var go = ParticlePoolManager.Instance.Spawn("LevelUp");
-            go.transform.position = transform.position;
-            go.GetComponent<ParticleTime>().SetTarget(transform);
-        }
-        EventManager.Emit("UpdateStatus");
-
+        _stat.AddExp(exp);      
+       
         if (obj != null)
         {
             if (obj.layer != LayerMask.NameToLayer("Enemy"))

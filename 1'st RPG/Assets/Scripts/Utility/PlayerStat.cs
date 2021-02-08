@@ -19,7 +19,8 @@ public class PlayerStat : Stat
 
     int _skillPoint;
 
-
+    float sumExp = 0f;
+    
     IDictionary<string, int> skillLevels;
 
 
@@ -27,6 +28,11 @@ public class PlayerStat : Stat
     {
         
             
+    }
+    void LateUpdate()
+    {
+        CalculateExp();
+        sumExp = 0f;
     }
 
     public void SetSkillLevels()
@@ -49,28 +55,40 @@ public class PlayerStat : Stat
     public string ClassType {get{return _classType; } set { _classType = value; } }
     public int SkillPoint { get { return _skillPoint; } set { _skillPoint = value; } }
 
-    public override bool AddExp(float exp)
+    public override void AddExp(float exp)
     {
-        if (Level != 10) //만렙 아닐경우
-        {
-            Exp += exp;
-            var go = ParticlePoolManager.Instance.Spawn("PopUpText", transform.position + new Vector3(0, 3, 0));
-            go.GetComponentInChildren<TextMesh>().text = "+" + exp.ToString();
-            go.GetComponentInChildren<TextMesh>().color = new Color(0, 1, 0, 1);
-            if (Exp >= MaxExp)
-            {
-                Level += 1;
-                Exp = Exp - MaxExp;
-                //MaxExp증가
-                MaxExp = Mathf.Floor(MaxExp * 1.5f);
-                Atk += atkRisingValue;
-                MaxHp += hpRisingValue;
+        if (Level == 10) //만렙 아닐경우
+            return;
 
-                SkillPoint++;
-                return true;
-            }
-        }
-        return false;
+        sumExp += exp;
+        return;
     }
 
+    void CalculateExp()
+    {
+        if (sumExp == 0f)
+            return;
+        Exp += sumExp;
+        var popupText = ParticlePoolManager.Instance.Spawn("PopUpText", transform.position + new Vector3(0, 3, 0));
+        popupText.GetComponentInChildren<TextMesh>().text = "+" + sumExp.ToString();
+        popupText.GetComponentInChildren<TextMesh>().color = new Color(0, 1, 0, 1);
+        if (Exp >= MaxExp)
+        {
+            Level += 1;
+            Exp = Exp - MaxExp;
+            //MaxExp증가
+            MaxExp = Mathf.Floor(MaxExp * 1.5f);
+            Atk += atkRisingValue;
+            MaxHp += hpRisingValue;
+
+            SkillPoint++;
+
+            var levelUpParticle = ParticlePoolManager.Instance.Spawn("LevelUp");
+            levelUpParticle.transform.position = transform.position;
+            levelUpParticle.GetComponent<ParticleTime>().SetTarget(transform);
+            EventManager.Emit("UpdateStatus");
+            return;
+        }
+    }
+    
 }

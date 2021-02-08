@@ -22,6 +22,7 @@ public class DialogManager : Singleton<DialogManager>
         isAction = false;
         dialogIdx = 0;
         _actionObject = null;
+
         dialogDatas = new Dictionary<int, List<string>>();
 
         foreach(DialogData data in DataManager.Instance.dialogDatabase)
@@ -63,7 +64,7 @@ public class DialogManager : Singleton<DialogManager>
     }
     void Action(int id)
     {
-        Dictionary<int, List<QuestData>> database = DataManager.Instance.questList;
+        Dictionary<int, List<QuestData>> database = DataManager.Instance.questDict;
         QuestData questData = null;
 
         if (database.ContainsKey(id))
@@ -83,12 +84,14 @@ public class DialogManager : Singleton<DialogManager>
         else
         {
             questListPage.gameObject.SetActive(true);
-            Dictionary<int, List<QuestData>> database = DataManager.Instance.questList;
+            Dictionary<int, List<QuestData>> database = DataManager.Instance.questDict;
+
             foreach(QuestData data in database[id])
             {
                 if (data.isActive)
                     questListPage.AddContent(data);
             }
+
             EventManager.Emit("UpdataQuestPage");
             return true;
         }
@@ -96,14 +99,16 @@ public class DialogManager : Singleton<DialogManager>
     void CommunicateForQuest(int id)
     {
         int processRate;
+
         if (OpenQuestList(id))
             return;
-        QuestData questData = QuestContent.clickedContent.data;
-        Dictionary<int, Quest> currentQuests = PlayerManager.Instance._questManager.currentQuests[questData._type - '0'];
 
-        getQuestProceesRate(out processRate, id, currentQuests, questData);
+        QuestData clickedQuestData = QuestContent.clickedContent.data;
+        Dictionary<int, Quest> currentQuests = QuestManager.Instance.currentQuests[clickedQuestData._type - '0'];
 
-        string textData = GetData(questData.client + processRate, dialogIdx);
+        getQuestProceesRate(out processRate, id, currentQuests, clickedQuestData);
+
+        string textData = GetData(clickedQuestData.client + processRate, dialogIdx);
         
         if (textData == null)
         {
@@ -112,10 +117,10 @@ public class DialogManager : Singleton<DialogManager>
             switch(processRate)
             {
                 case 0:  //퀘스트 완료
-                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().ClearQuest(currentQuests, questData, id);
+                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().ClearQuest(currentQuests, clickedQuestData, id);
                     break;
                 case 1: //퀘스트 시작
-                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().StartQuest(currentQuests, questData, id);
+                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().StartQuest(currentQuests, clickedQuestData, id);
                     break;
                 case 2: //퀘스트 진행중
                     break;
@@ -128,7 +133,6 @@ public class DialogManager : Singleton<DialogManager>
         _dialogPage._text.text = textData;
         isAction = true;
         dialogIdx++;
-        //여기서 갈랫길 진행도에 따라서 출력할 텍스트 인덱스 결정
 
     }
     void Communicate(int id)

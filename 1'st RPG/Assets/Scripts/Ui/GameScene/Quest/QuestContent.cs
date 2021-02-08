@@ -49,10 +49,9 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
     }
     public void UpdateContent(GameObject obj = null)
     {
-        QuestManager questMgr = PlayerManager.Instance._questManager;
         Quest quest = null;
-        if (questMgr.currentQuests[data._type-'0'].ContainsKey(data.client + data.questIdx))
-            quest = questMgr.currentQuests[data._type-'0'][data.client + data.questIdx];
+        if (QuestManager.Instance.currentQuests[data._type-'0'].ContainsKey(data.client + data.questIdx))
+            quest = QuestManager.Instance.currentQuests[data._type-'0'][data.client + data.questIdx];
         int id = DialogManager.Instance.ActionObject.GetComponent<ObjData>().id;
         string str = quest == null? "수락가능" : (quest.processRate == 2? "진행중": data._type == '1' && data.client == id? "진행중" : "완료");
 

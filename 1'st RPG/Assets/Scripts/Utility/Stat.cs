@@ -45,8 +45,8 @@ public class Stat : MonoBehaviour
     {
         Hp = _maxHp;
     }
-    public virtual bool AddExp(float exp)
+    public virtual void AddExp(float exp)
     {
-        return false;
+        
     }
 }

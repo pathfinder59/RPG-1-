@@ -18,7 +18,7 @@ MonoBehaviour:
   _type: 48
   num: 3
   exp: 200
-  child: ec030000
+  child: 
   nParent: 0
   descript: "\uC2A4\uCF08\uB808\uD1A4 3\uB9C8\uB9AC \uCC98\uCE58\uD558\uAE30"
   isActive: 1

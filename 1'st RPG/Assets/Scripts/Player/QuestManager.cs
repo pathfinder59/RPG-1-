@@ -28,7 +28,7 @@ public class QuestManager : MonoBehaviour
     {
 
     }
-
+    //퀘스트 클리어 했을시 무조건 이미지가 삭제되도록 되어있었는데 이제 하나의 캐릭터가 여러 퀘스트를 보유 할 수 있기 때문에 이부분 수정해야함.
     public void ClearQuest(Dictionary<int, Quest> currentQuests, QuestData data,int clientID)
     {
         if (data._type == '1')

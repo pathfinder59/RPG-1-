@@ -32,10 +32,14 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         EventManager.On("UpdataQuestPage", UpdateContent);
         EventManager.On("CloseQuestPage", SetActiveContent);
+    }
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame
@@ -45,9 +49,12 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
     }
     public void UpdateContent(GameObject obj = null)
     {
-        Quest quest = PlayerManager.Instance.gameObject.GetComponent<QuestManager>().currentQuests[data._type][data.client + data.questIdx] ?? null;
+        QuestManager questMgr = PlayerManager.Instance._questManager;
+        Quest quest = null;
+        if (questMgr.currentQuests[data._type-'0'].ContainsKey(data.client + data.questIdx))
+            quest = questMgr.currentQuests[data._type-'0'][data.client + data.questIdx];
 
-        string str = quest != null? "수락가능" : (quest.processRate == 2? "진행중":"완료");
+        string str = quest == null? "수락가능" : (quest.processRate == 2? "진행중":"완료");
 
         _text.text = str + (data.client + data.questIdx).ToString();
     }

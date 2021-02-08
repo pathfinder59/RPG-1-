@@ -8,7 +8,7 @@ public class DialogManager : Singleton<DialogManager>
     [SerializeField]
     DialogPage _dialogPage;
     [SerializeField]
-    GameObject questList;
+    QuestListPage questListPage;
 
     GameObject _actionObject;
 
@@ -38,23 +38,28 @@ public class DialogManager : Singleton<DialogManager>
         
         if(Input.GetButtonDown("Jump") )
         {
-            
+            if (questListPage.gameObject.activeInHierarchy)
+            {
+                return;
+            }
             if(_actionObject != null)
             {
-                ObjData objData = _actionObject.GetComponent<ObjData>();
-
-                if (_actionObject.layer == LayerMask.NameToLayer("Object"))
-                {
-                    //오브젝트 상호작용용 ex)채집
-                }
-                else if(_actionObject.layer == LayerMask.NameToLayer("Npc"))
-                {
-                    Action(objData.id);
-                }
-                
+                Interact();
             }
         }
-        
+    }
+    public void Interact()
+    {
+        ObjData objData = _actionObject.GetComponent<ObjData>();
+
+        if (_actionObject.layer == LayerMask.NameToLayer("Object"))
+        {
+            //오브젝트 상호작용용 ex)채집
+        }
+        else if (_actionObject.layer == LayerMask.NameToLayer("Npc"))
+        {
+            Action(objData.id);
+        }
     }
     void Action(int id)
     {
@@ -65,15 +70,35 @@ public class DialogManager : Singleton<DialogManager>
             questData = database[id].Find(_ => _.isActive == true);
 
         if (questData != null)
-            CommunicateForQuest(id, questData);
+            CommunicateForQuest(id);
         else
             Communicate(id);
 
         _dialogPage.gameObject.SetActive(isAction);
     }
-    void CommunicateForQuest(int id, QuestData questData)
+    public bool OpenQuestList(int id)
+    {
+        if (QuestContent.clickedContent != null)
+            return false;
+        else
+        {
+            questListPage.gameObject.SetActive(true);
+            Dictionary<int, List<QuestData>> database = DataManager.Instance.questList;
+            foreach(QuestData data in database[id])
+            {
+                if (data.isActive)
+                    questListPage.AddContent(data);
+            }
+            EventManager.Emit("UpdataQuestPage");
+            return true;
+        }
+    }
+    void CommunicateForQuest(int id)
     {
         int processRate;
+        if (OpenQuestList(id))
+            return;
+        QuestData questData = QuestContent.clickedContent.data;
         Dictionary<int, Quest> currentQuests = PlayerManager.Instance._questManager.currentQuests[questData._type - '0'];
 
         getQuestProceesRate(out processRate, id, currentQuests, questData);
@@ -82,6 +107,7 @@ public class DialogManager : Singleton<DialogManager>
         
         if (textData == null)
         {
+            QuestContent.clickedContent = null;
             processRate %= 3;
             switch(processRate)
             {

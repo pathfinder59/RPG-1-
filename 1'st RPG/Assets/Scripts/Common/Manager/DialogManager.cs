@@ -7,6 +7,8 @@ public class DialogManager : Singleton<DialogManager>
 {
     [SerializeField]
     DialogPage _dialogPage;
+    [SerializeField]
+    GameObject questList;
 
     GameObject _actionObject;
 
@@ -39,7 +41,7 @@ public class DialogManager : Singleton<DialogManager>
             
             if(_actionObject != null)
             {
-                ObjData data = _actionObject.GetComponent<ObjData>();
+                ObjData objData = _actionObject.GetComponent<ObjData>();
 
                 if (_actionObject.layer == LayerMask.NameToLayer("Object"))
                 {
@@ -47,7 +49,7 @@ public class DialogManager : Singleton<DialogManager>
                 }
                 else if(_actionObject.layer == LayerMask.NameToLayer("Npc"))
                 {
-                    Action(data.id);
+                    Action(objData.id);
                 }
                 
             }
@@ -57,26 +59,26 @@ public class DialogManager : Singleton<DialogManager>
     void Action(int id)
     {
         Dictionary<int, List<QuestData>> database = DataManager.Instance.questList;
-        QuestData data = null;
+        QuestData questData = null;
 
         if (database.ContainsKey(id))
-            data = database[id].Find(_ => _.isActive == true);
+            questData = database[id].Find(_ => _.isActive == true);
 
-        if (data != null)
-            CommunicateForQuest(id, data);
+        if (questData != null)
+            CommunicateForQuest(id, questData);
         else
             Communicate(id);
 
         _dialogPage.gameObject.SetActive(isAction);
     }
-    void CommunicateForQuest(int id, QuestData data)
+    void CommunicateForQuest(int id, QuestData questData)
     {
         int processRate;
-        Dictionary<int, Quest> currentQuests = PlayerManager.Instance._questManager.currentQuests[data._type - '0'];
+        Dictionary<int, Quest> currentQuests = PlayerManager.Instance._questManager.currentQuests[questData._type - '0'];
 
-        getQuestProceesRate(out processRate, id, currentQuests, data);
+        getQuestProceesRate(out processRate, id, currentQuests, questData);
 
-        string textData = GetData(data.client + processRate, dialogIdx);
+        string textData = GetData(questData.client + processRate, dialogIdx);
         
         if (textData == null)
         {
@@ -84,10 +86,10 @@ public class DialogManager : Singleton<DialogManager>
             switch(processRate)
             {
                 case 0:  //퀘스트 완료
-                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().ClearQuest(currentQuests, data, id);
+                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().ClearQuest(currentQuests, questData, id);
                     break;
                 case 1: //퀘스트 시작
-                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().StartQuest(currentQuests, data, id);
+                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().StartQuest(currentQuests, questData, id);
                     break;
                 case 2: //퀘스트 진행중
                     break;

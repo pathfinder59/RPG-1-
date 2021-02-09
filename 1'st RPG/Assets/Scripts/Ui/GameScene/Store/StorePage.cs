@@ -8,16 +8,15 @@ public class StorePage : MonoBehaviour
 {
     [SerializeField]
     GameObject _prefab;
+
     [SerializeField]
     List<ItemData> _datas;
-    [SerializeField]
-    InventoryPage inventoryPage;
+
     [SerializeField]
     Transform _content;
-    ItemData selectedData;
+
     private void OnEnable()
     {
-        selectedData = null;
     }
     void Start()
     {
@@ -35,18 +34,13 @@ public class StorePage : MonoBehaviour
         
     }
 
-    public void SelectItem(ItemData data)
-    {
-        selectedData = data;
-    }
     public void BuyItem()
     {
+        ItemData selectedData = StoreItemContent.selectedStoreItem.data;
         if (selectedData == null)
             return;
         if(selectedData.Price <= PlayerManager.Instance.Money)
         {
-            PlayerManager.Instance.Money -= selectedData.Price;
-            EventManager.Emit("UpdateMoney");
             if(selectedData.Category >= 100)
             {
                 //물약 처리
@@ -55,9 +49,21 @@ public class StorePage : MonoBehaviour
             }
             else
             {
-                inventoryPage.AddItem(selectedData);
+                if (!GameSceneManager.Instance.Inventory.AddItem(selectedData))
+                    return;
                     
             }
+            PlayerManager.Instance.Money -= selectedData.Price;
+            EventManager.Emit("UpdateMoney");
+        }
+    }
+
+    public void ClickExitBtn()
+    {
+        if (StoreItemContent.selectedStoreItem != null)
+        {
+            StoreItemContent.selectedStoreItem.GetComponent<Image>().color = new Color(0.9f, 0.3f, 0.3f);
+            StoreItemContent.selectedStoreItem = null;
         }
     }
 }

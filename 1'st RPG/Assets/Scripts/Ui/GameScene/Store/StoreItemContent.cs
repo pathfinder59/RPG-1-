@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class StoreItemContent : MonoBehaviour
+using UnityEngine.EventSystems;
+public class StoreItemContent : MonoBehaviour,IPointerClickHandler
 {
     [SerializeField]
     Image _itemIcon;
@@ -12,6 +12,7 @@ public class StoreItemContent : MonoBehaviour
 
     public ItemData data;
 
+    static public StoreItemContent selectedStoreItem;
     void Start()
     {
         
@@ -27,8 +28,11 @@ public class StoreItemContent : MonoBehaviour
         _itemPrice.text = data.Price.ToString();
     }
 
-    public void OnClick()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        transform.GetComponentInParent<StorePage>().SelectItem(data);
+        if (selectedStoreItem != null)
+            selectedStoreItem.GetComponent<Image>().color = new Color(0.9f, 0.3f, 0.3f);
+        selectedStoreItem = this;
+        selectedStoreItem.GetComponent<Image>().color = new Color(0.5f, 0.3f, 0.3f);
     }
 }

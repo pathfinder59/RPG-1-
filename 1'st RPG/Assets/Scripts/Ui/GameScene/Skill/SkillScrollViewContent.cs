@@ -10,15 +10,14 @@ using UnityEngine.UI;
 
 public class SkillScrollViewContent : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField]
     GameObject _panelPrefab;
     [SerializeField]
     Text _skillPointText;
-    [SerializeField]
-    List<SkillDatabase> databaseList;
+
     void Start()
     {
+        List<SkillDatabase> databaseList = DataManager.Instance.skillDatabases;
         foreach(var skillData in databaseList[0].SkillList)
         {
             var go = Instantiate(_panelPrefab);
@@ -38,8 +37,12 @@ public class SkillScrollViewContent : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
+    {
+        
+    }
+
+    private void LateUpdate()
     {
         _skillPointText.text = "Skill Point: " + PlayerManager.Instance._playerStat.SkillPoint.ToString();
     }

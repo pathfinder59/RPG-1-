@@ -10,7 +10,6 @@ public class EquipmentPage : MonoBehaviour
 
     void Start()
     {
-        //gameObject.SetActive(false);
     }
 
     

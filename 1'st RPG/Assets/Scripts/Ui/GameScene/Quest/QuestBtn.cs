@@ -27,5 +27,6 @@ public class QuestBtn : MonoBehaviour
     {
         QuestContent.clickedContent = null;
         EventManager.Emit("CloseQuestPage");
+        PlayerManager.Instance.SetIsControl(true);
     }
 }

@@ -80,15 +80,14 @@ public class PlayerStat : Stat
             MaxExp = Mathf.Floor(MaxExp * 1.5f);
             Atk += atkRisingValue;
             MaxHp += hpRisingValue;
-
+            Hp = MaxHp;
             SkillPoint++;
 
             var levelUpParticle = ParticlePoolManager.Instance.Spawn("LevelUp");
             levelUpParticle.transform.position = transform.position;
             levelUpParticle.GetComponent<ParticleTime>().SetTarget(transform);
-            EventManager.Emit("UpdateStatus");
-            return;
         }
+        EventManager.Emit("UpdateStatus");
     }
     
 }

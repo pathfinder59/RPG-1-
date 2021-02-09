@@ -11,6 +11,12 @@ using UnityEngine.UI;
 public class SkillScrollViewContent : MonoBehaviour
 {
     [SerializeField]
+    GameObject _SkillPage;
+
+    [SerializeField]
+    GameObject _SettingPage;
+
+    [SerializeField]
     GameObject _panelPrefab;
     [SerializeField]
     Text _skillPointText;
@@ -45,5 +51,14 @@ public class SkillScrollViewContent : MonoBehaviour
     private void LateUpdate()
     {
         _skillPointText.text = "Skill Point: " + PlayerManager.Instance._playerStat.SkillPoint.ToString();
+    }
+
+    public void ClickCloseBtn()
+    {
+        if(Skill_Icon.ClickedData == null)
+        {
+            _SettingPage.SetActive(true);
+            _SkillPage.SetActive(false);
+        }
     }
 }

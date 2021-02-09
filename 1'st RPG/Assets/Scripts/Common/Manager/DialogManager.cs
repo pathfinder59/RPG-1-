@@ -93,6 +93,7 @@ public class DialogManager : Singleton<DialogManager>
             }
 
             EventManager.Emit("UpdataQuestPage");
+            PlayerManager.Instance.SetIsControl(false);
             return true;
         }
     }
@@ -125,7 +126,7 @@ public class DialogManager : Singleton<DialogManager>
                 case 2: //퀘스트 진행중
                     break;
             }
-
+            PlayerManager.Instance.SetIsControl(true);
             isAction = false;
             dialogIdx = 0;
             return;
@@ -141,11 +142,13 @@ public class DialogManager : Singleton<DialogManager>
         if (textData == null)
         {
             isAction = false;
+            PlayerManager.Instance.SetIsControl(true);
             dialogIdx = 0;
             return;
         }
         _dialogPage._text.text = textData;
         isAction = true;
+        PlayerManager.Instance.SetIsControl(false);
         dialogIdx++;
     }
 

@@ -17,7 +17,8 @@ public class Skill_Icon : MonoBehaviour
 
     public SkillData data;
 
-    public static SkillData ClickedData; 
+    public static SkillData ClickedData;
+
     void Start()
     {
         _coverImage = GameObject.Find("GameSceneCanvas").transform.GetChild(0).gameObject;

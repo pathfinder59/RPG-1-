@@ -71,6 +71,7 @@ public class SkillSlot : MonoBehaviour
             coolDown = time;
             GetComponent<Button>().image.sprite = _data.Sprite;
             _Background.sprite = _data.Sprite;
+            Skill_Icon.ClickedData = null;
 
         }
         else

@@ -17,8 +17,11 @@ namespace common
         public int Money{get;set;}
         public int NumHp { get; set; } //포션 개수
 
+        bool _isControl;
+        public bool IsControl => _isControl;
         private void Awake()
         {
+            _isControl = true;
             NumHp = 0;
             Money = 100000;
             
@@ -76,6 +79,11 @@ namespace common
             _playerStat.GetComponent<PlayableFSM>().AddAtk = AddtiveAtk;
             _playerStat.GetComponent<PlayableFSM>().AddDef = AddtiveDef;
             EventManager.Emit("UpdateStatus");
+        }
+
+        public void SetIsControl(bool value)
+        {
+            _isControl = value;
         }
     }
 }

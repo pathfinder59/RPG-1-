@@ -43,7 +43,6 @@ public class QuestManager : Singleton<QuestManager>
             {
                 child.isActive = true;
                 SetQuestImage(child.client);
-                //GameObject.Find(child.client.ToString()).GetComponent<Npc>().SetQuestImage(1);
             }
         }
 
@@ -66,7 +65,7 @@ public class QuestManager : Singleton<QuestManager>
             questDictionary[data.target].Add(data);
             currentQuests.Add(data.questIdx + data.client, new Quest(data, true));
 
-            GameObject.Find(data.target.ToString()).GetComponent<Npc>().SetQuestImage(3);
+            GameObject.Find("Environment").transform.Find("Npcs").Find(data.target.ToString()).GetComponent<Npc>().SetQuestImage(3);
         }
         else
             currentQuests.Add(data.questIdx + data.client, new Quest(data));
@@ -118,7 +117,7 @@ public class QuestManager : Singleton<QuestManager>
                     }
                 }
             }
-            GameObject.Find(client.ToString()).GetComponent<Npc>().SetQuestImage(n);
+            GameObject.Find("Environment").transform.Find("Npcs").Find(client.ToString()).GetComponent<Npc>().SetQuestImage(n);
         }
     }
 }

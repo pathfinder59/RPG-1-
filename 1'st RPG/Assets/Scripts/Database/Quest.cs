@@ -22,7 +22,7 @@ public class Quest
         num = Mathf.Clamp(num-n,0,1000);
         if (num == 0)
         {
-            GameObject.Find(client.ToString()).GetComponent<Npc>().SetQuestImage(3);
+            GameObject.Find("Environment").transform.Find("Npcs").Find(client.ToString()).GetComponent<Npc>().SetQuestImage(3);
             processRate = 3;
         }  
     }

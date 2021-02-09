@@ -26,7 +26,7 @@ public class CameraPosition : MonoBehaviour
     }
     void Update()
     {
-        if (_settingButton.activeSelf && !DialogManager.Instance.isAction)
+        if (_settingButton.activeSelf && PlayerManager.Instance.IsControl)
         {
             if(Input.GetMouseButton(0))
                 yRotate += Input.GetAxis("Mouse X") * rotateSpeed;

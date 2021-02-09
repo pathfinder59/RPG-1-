@@ -44,7 +44,9 @@ namespace common
 
             questDict[data.client].Add(Instantiate<QuestData>(data));
             if(data.isActive)
-                GameObject.Find(data.client.ToString()).GetComponent<Npc>().SetQuestImage(1);
+                GameObject.Find("Environment").transform.Find("Npcs").Find(data.client.ToString()).GetComponent<Npc>().SetQuestImage(1);
+            //위 부분은 현재 맵이 하나만 있다는 가정하에 작성한 코드이기 때문에 이후 맵이 여러개가 된다면, 플레이어 매니저에서
+            //플레이어가 위치한 맵이름을 기억하게 해두고 Npcs자식은 맵에 동일하게 존재하니 두 데이터를 통해서 transform을 찾아 호출해주는 함수를 플레이어 매니저에 만들어 두자.
         }
     }
 }

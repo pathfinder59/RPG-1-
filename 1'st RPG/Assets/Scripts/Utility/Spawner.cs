@@ -22,6 +22,7 @@ public class Spawner : MonoBehaviour
             var go = Instantiate(prefab, transform.position + new Vector3(Random.Range(-0.3f, 0.3f), 0f, Random.Range(-0.3f, 0.3f)), transform.rotation);
             go.transform.forward = transform.forward;
             prefabs.Add(go);
+            go.transform.SetParent(transform.parent.parent.Find("Monsters"));
         }
     }
 

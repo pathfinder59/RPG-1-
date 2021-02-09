@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9cbda8d80ac604b9307107e838e322, type: 3}
   m_Name: Quest3
   m_EditorClassIdentifier: 
-  questIdx: 1
-  client: 2000
-  target: 1000
+  questIdx: 7
+  client: 1000
+  target: 2000
   _type: 49
   num: 0
   exp: 200
-  child: 
+  child: d1070000
   nParent: 1
-  descript: "1000\uC5D0\uAC8C 2000\uC758 \uC548\uBD80 \uC804\uD558\uAE30"
+  descript: "2000 \uB3C4\uC640\uC8FC\uAE30"
   isActive: 0

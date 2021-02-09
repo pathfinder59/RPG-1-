@@ -46,6 +46,10 @@ public class PlayerMove : MonoBehaviour
                 RaycastHit hit;
                 DialogManager.Instance.ActionObject = Physics.Raycast(new Ray(transform.position, transform.forward), out hit, 4f) ? hit.transform.gameObject : null;
 
+                if (DialogManager.Instance.ActionObject == null)
+                    GameSceneManager.Instance._interactBtn.SetActive(false);
+                else if(DialogManager.Instance.ActionObject.layer == LayerMask.NameToLayer("Npc") || DialogManager.Instance.ActionObject.layer == LayerMask.NameToLayer("Store"))
+                    GameSceneManager.Instance._interactBtn.SetActive(true);
                 return;
             }
         }

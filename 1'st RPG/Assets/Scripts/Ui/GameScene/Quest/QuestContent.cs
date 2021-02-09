@@ -31,7 +31,6 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
         contentImage.color = contentImage.color - new Color(0.1f, 0.1f, 0.1f);
     }
 
-    // Start is called before the first frame update
     void Awake()
     {
         EventManager.On("UpdataQuestPage", UpdateContent);
@@ -42,7 +41,6 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -53,7 +51,7 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
         if (QuestManager.Instance.currentQuests[data._type-'0'].ContainsKey(data.client + data.questIdx))
             quest = QuestManager.Instance.currentQuests[data._type-'0'][data.client + data.questIdx];
         int id = DialogManager.Instance.ActionObject.GetComponent<ObjData>().id;
-        string str = quest == null? "수락가능" : (quest.processRate == 2? "진행중": data._type == '1' && data.client == id? "진행중" : "완료");
+        string str = quest == null? "수락가능" : (quest.processRate == 2? "진행중": !(data._type == '1' && data.client == id)? "완료"  : data.client == data.target? "완료": "진행중");
 
         _text.text = str + (data.client + data.questIdx).ToString();
     }

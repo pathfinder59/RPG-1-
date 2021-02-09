@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questIdx: 4
   client: 1000
-  target: 2000
-  _type: 49
+  target: 1000
+  _type: 48
   num: 0
-  exp: 400
-  child: d1070000
-  nParent: 0
-  descript: "2000\uC5D0\uAC8C \uC704\uD5D8\uC744 \uC54C\uB9AC\uAE30"
-  isActive: 1
+  exp: 150
+  child: ef030000
+  nParent: 1
+  descript: "\uC2A4\uCF08\uB808\uD1A4 3\uB9C8\uB9AC \uCC98\uCE58\uD558\uAE30"
+  isActive: 0

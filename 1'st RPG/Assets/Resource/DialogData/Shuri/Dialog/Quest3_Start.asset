@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 2001
   _dialogs:
-  - "\"\uC55E\uC73C\uB860 \uC870\uC2EC\uD560\uAC8C\""
-  - "\"1000\uD55C\uD14C \uACE0\uB9D9\uB2E4\uACE0 \uC804\uD574\uC904\uB798?\""
+  - "\"\uB2E4\uC74C \uC9C0\uC5ED\uC5D0\uC11C 2000\uC774 \uAE30\uB2E4\uB9AC\uACE0
+    \uC788\uC5B4\uC694.\""
+  - "\"\uAC00\uC11C 2000\uC744 \uB3C4\uC640\uC8FC\uC138\uC694\""

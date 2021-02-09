@@ -8,6 +8,7 @@ public class QuestListPage : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     Transform _questContents;
+
     void Start()
     {
         EventManager.On("CloseQuestPage", ClosePage);
@@ -28,5 +29,6 @@ public class QuestListPage : MonoBehaviour
     public void ClosePage(GameObject obj = null)
     {
         gameObject.SetActive(false);
+        
     }
 }

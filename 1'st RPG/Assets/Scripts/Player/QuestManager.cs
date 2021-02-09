@@ -59,10 +59,13 @@ public class QuestManager : Singleton<QuestManager>
 
         if (data._type == '1')
         {
-            if (!questDictionary.ContainsKey(data.target))
-                questDictionary[data.target] = new List<QuestData>();
+            if (data.target != data.client)
+            {
+                if (!questDictionary.ContainsKey(data.target))
+                    questDictionary[data.target] = new List<QuestData>();
 
-            questDictionary[data.target].Add(data);
+                questDictionary[data.target].Add(data);
+            }
             currentQuests.Add(data.questIdx + data.client, new Quest(data, true));
 
             GameObject.Find("Environment").transform.Find("Npcs").Find(data.target.ToString()).GetComponent<Npc>().SetQuestImage(3);
@@ -110,6 +113,11 @@ public class QuestManager : Singleton<QuestManager>
                     if (QuestManager.Instance.currentQuests[questData._type - '0'][questData.questIdx + client].processRate == 3)
                     {
                         if (!(questData._type == '1' && questData.client == client))
+                        {
+                            n = 3;
+                            break;
+                        }
+                        else if(questData.client == questData.target)
                         {
                             n = 3;
                             break;

@@ -15,14 +15,16 @@ public class GameSceneManager : Singleton<GameSceneManager>
     [SerializeField]
     StatusPage statusPage;
 
+    public GameObject _interactBtn;
     public string playerClass;
-
+    public bool isSetting;
     public InventoryPage Inventory => inventoryPage;
 
     float spawnTime;
 
     void Start()
     {
+        isSetting = false;
         spawnTime = 5.0f;
         playerClass = "Warrior"; // 완성시에는 이 값은 캐릭터 선택화면에서 결정할것
 
@@ -52,5 +54,10 @@ public class GameSceneManager : Singleton<GameSceneManager>
     void Loading()
     {
 
+    }
+
+    public void SetValueIsSetting(bool value)
+    {
+        isSetting = value;
     }
 }

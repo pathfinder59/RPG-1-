@@ -37,7 +37,7 @@ public class DialogManager : Singleton<DialogManager>
     void Update()
     {
         
-        if(Input.GetButtonDown("Jump") )
+        if(Input.GetButtonDown("Jump") && !GameSceneManager.Instance._interactBtn.activeInHierarchy)
         {
             if (questListPage.gameObject.activeInHierarchy)
             {
@@ -129,6 +129,8 @@ public class DialogManager : Singleton<DialogManager>
             PlayerManager.Instance.SetIsControl(true);
             isAction = false;
             dialogIdx = 0;
+
+            GameSceneManager.Instance._interactBtn.SetActive(true);
             return;
         }
         _dialogPage._text.text = textData;

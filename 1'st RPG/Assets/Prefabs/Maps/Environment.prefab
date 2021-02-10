@@ -5474,6 +5474,36 @@ MonoBehaviour:
   questStart: {fileID: 21300000, guid: 9bf7d4a6ee904034d888dcc0522f3975, type: 3}
   questReady: {fileID: 21300000, guid: a06fc930d3ce8b8459ab6d4a29dd7806, type: 3}
   questFinish: {fileID: 21300000, guid: 639c1478b323d6a41ad2539b928d8010, type: 3}
+--- !u!1 &1397573420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1397573421}
+  m_Layer: 0
+  m_Name: LargeMapCameraPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1397573421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397573420}
+  m_LocalRotation: {x: -0.5051049, y: 0.49489516, z: -0.500278, w: -0.49966973}
+  m_LocalPosition: {x: 93.060005, y: 146.11383, z: 98.899994}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1963890691932623953}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1772378222
 GameObject:
   m_ObjectHideFlags: 0
@@ -5883,7 +5913,7 @@ GameObject:
   - component: {fileID: 1963890691272816124}
   - component: {fileID: 1963890691272816126}
   - component: {fileID: 1963890691272816127}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6147,6 +6177,7 @@ Transform:
   - {fileID: 2061785739}
   - {fileID: 700590757}
   - {fileID: 811009071}
+  - {fileID: 1397573421}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

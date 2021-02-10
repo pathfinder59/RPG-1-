@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7579055310126550647}
   - component: {fileID: 7579055310126550646}
+  - component: {fileID: 3159844254712241002}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -44,6 +45,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3159844254712241002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7579055310126550644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3d1eebbbc0da14d8dad08b4314fe1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reactTime: 1
 --- !u!1 &7579055311481307983
 GameObject:
   m_ObjectHideFlags: 0
@@ -53,7 +67,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7579055311481307982}
-  - component: {fileID: 8985780227629365527}
   - component: {fileID: -8361817481672987058}
   m_Layer: 0
   m_Name: Attackhorn
@@ -77,19 +90,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8985780227629365527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7579055311481307983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be3d1eebbbc0da14d8dad08b4314fe1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reactTime: 1
 --- !u!114 &-8361817481672987058
 MonoBehaviour:
   m_ObjectHideFlags: 0

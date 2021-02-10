@@ -62,9 +62,9 @@ public class BossFSM : EnemyFSM
         var go = ParticlePoolManager.Instance.Spawn("AttackClaw");
         go.transform.position = transform.position;
         go.transform.forward = transform.forward;
-        go.GetComponent<OneTouchSkill>().target = "Player";
-        go.GetComponent<OneTouchSkill>().Caster = gameObject.transform;
-        go.GetComponent<OneTouchSkill>().Atk = 150;
+        go.GetComponentInChildren<OneTouchSkill>().target = "Player";
+        go.GetComponentInChildren<OneTouchSkill>().Caster = gameObject.transform;
+        go.GetComponentInChildren<OneTouchSkill>().Atk = 150;
     }
     public void AttackJump()
     {
@@ -79,9 +79,9 @@ public class BossFSM : EnemyFSM
         var go = ParticlePoolManager.Instance.Spawn("AttackHorn");
         go.transform.position = transform.position;
         go.transform.forward = transform.forward;
-        go.GetComponent<OneTouchSkill>().target = "Player";
-        go.GetComponent<OneTouchSkill>().Caster = gameObject.transform;
-        go.GetComponent<OneTouchSkill>().Atk = 100;
+        go.GetComponentInChildren<OneTouchSkill>().target = "Player";
+        go.GetComponentInChildren<OneTouchSkill>().Caster = gameObject.transform;
+        go.GetComponentInChildren<OneTouchSkill>().Atk = 100;
     }
     public override void AttackEvent()
     {

@@ -13,7 +13,7 @@ public class OneTouchSkill : MonoBehaviour
     bool isOn;
     void Start()
     {
-        Atk = 10;
+        //Atk = 10;
     }
     private void OnEnable()
     {
@@ -25,22 +25,16 @@ public class OneTouchSkill : MonoBehaviour
 
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (!isOn)
-            return;
-        if (other.gameObject.layer == LayerMask.NameToLayer(target))
-        {
-            other.gameObject.GetComponent<PlayableFSM>().Damaged(Atk, Caster);
-        }
-    }
     void OnTriggerEnter(Collider other)
     {
         if (!isOn)
             return;
         if (other.gameObject.layer == LayerMask.NameToLayer(target))
         {
-            other.gameObject.GetComponent<PlayableFSM>().Damaged(Atk, Caster);
+            if(target == "Player")
+                other.gameObject.GetComponent<PlayableFSM>().Damaged(Atk, Caster);
+            else if (target == "Enemy")
+                other.gameObject.GetComponent<EnemyFSM>().Damaged(Atk, Caster);
         }
     }
     

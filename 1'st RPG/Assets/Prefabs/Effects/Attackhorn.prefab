@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3d1eebbbc0da14d8dad08b4314fe1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reactTime: 0.3
+  reactTime: 1
 --- !u!114 &-8361817481672987058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,4 +102,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25954d1fb378754b831342ead21c7a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.3
+  time: 1

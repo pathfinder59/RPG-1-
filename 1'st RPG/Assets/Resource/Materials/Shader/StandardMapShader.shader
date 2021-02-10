@@ -4,7 +4,6 @@
     {
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("RenderTex", 2D) = "white" {}
-        _AlphaTex("Alpha", 2D) = "white" {}
         _Glossiness("Smoothness", Range(0,1)) = 0.5
     }
     SubShader
@@ -42,10 +41,10 @@
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
+            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
             o.Albedo = c.rgb;
             o.Smoothness = _Glossiness;
-            o.Alpha = tex2D(_AlphaTex, IN.uv_MainTex).a;
+            o.Alpha = c.a;
         }
         ENDCG
     }

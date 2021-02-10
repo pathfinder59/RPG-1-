@@ -1212,7 +1212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: NightmareDragon
-  _maxHp: 1500
+  _maxHp: 100
   _level: 8
   _maxExp: 2000
   _atk: 80

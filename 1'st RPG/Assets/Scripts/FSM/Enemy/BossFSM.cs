@@ -68,7 +68,7 @@ public class BossFSM : EnemyFSM
     }
     public void AttackJump()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 10, LayerMask.NameToLayer("Player"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10, 1 << LayerMask.NameToLayer("Player"));
         foreach(Collider collider in colliders)
         {
             collider.gameObject.GetComponent<PlayableFSM>().Damaged(80, gameObject.transform);

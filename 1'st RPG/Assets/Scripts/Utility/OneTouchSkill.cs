@@ -25,16 +25,25 @@ public class OneTouchSkill : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (!isOn)
             return;
         if (other.gameObject.layer == LayerMask.NameToLayer(target))
         {
-            other.gameObject.GetComponent<EnemyFSM>().Damaged(Atk, Caster);
+            other.gameObject.GetComponent<PlayableFSM>().Damaged(Atk, Caster);
         }
     }
-
+    void OnTriggerEnter(Collider other)
+    {
+        if (!isOn)
+            return;
+        if (other.gameObject.layer == LayerMask.NameToLayer(target))
+        {
+            other.gameObject.GetComponent<PlayableFSM>().Damaged(Atk, Caster);
+        }
+    }
+    
     IEnumerator Act()
     {
         yield return new WaitForSeconds(reactTime);

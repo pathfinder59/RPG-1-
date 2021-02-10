@@ -26,6 +26,7 @@ namespace common
             Money = 100000;
             
             var go = ObjectPoolManager.Instance.Spawn(GameSceneManager.Instance.playerClass, spawnRegion.position, spawnRegion.rotation);
+            go.transform.position = spawnRegion.position;
             go.AddComponent<PlayerMove>();
             go.AddComponent<QuestManager>();
             _playerStat = go.GetComponentInParent<PlayerStat>();
@@ -39,7 +40,7 @@ namespace common
             _playerStat.ClassType = "Warrior"; // 임시로 클래스는 자동으로 워리어를 갖도록 함 이후
                                                  // 캐릭터 추가까지 완성된다면 이부분은 바뀔것임
 
-            _playerStat.SkillPoint = 0;
+            _playerStat.SkillPoint = 1;
 
 
             _playerStat.Exp = 0;

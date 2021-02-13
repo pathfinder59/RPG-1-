@@ -45,6 +45,10 @@ public class Skill_Icon : MonoBehaviour
     }
     public void OnClickLevelUpBtn()
     {
+        UpSkillLev();
+    }
+    void UpSkillLev()
+    {
         if (PlayerManager.Instance._playerStat.SkillPoint != 0)
         {
             PlayerManager.Instance._playerStat.SkillLevels[data.Name]++;

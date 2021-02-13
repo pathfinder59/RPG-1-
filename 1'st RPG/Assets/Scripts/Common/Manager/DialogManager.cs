@@ -10,18 +10,14 @@ public class DialogManager : Singleton<DialogManager>
     [SerializeField]
     QuestListPage questListPage;
 
-    GameObject _actionObject;
-
     int dialogIdx;
     public bool isAction;
-    public GameObject ActionObject { get { return _actionObject; } set { _actionObject = value; } }
 
     IDictionary<int, List<string>> dialogDatas;
     void Start()
     {
         isAction = false;
         dialogIdx = 0;
-        _actionObject = null;
 
         dialogDatas = new Dictionary<int, List<string>>();
 
@@ -35,29 +31,28 @@ public class DialogManager : Singleton<DialogManager>
     
     // Update is called once per frame
     void Update()
-    {
-        
+    {        
         if(Input.GetButtonDown("Jump") && !GameSceneManager.Instance._interactBtn.activeInHierarchy)
         {
             if (questListPage.gameObject.activeInHierarchy)
             {
                 return;
             }
-            if(_actionObject != null)
+            if(GameSceneManager.Instance.ActionObject != null)
             {
-                Interact();
+                Interact(GameSceneManager.Instance.ActionObject);
             }
         }
     }
-    public void Interact()
+    public void Interact(GameObject ActionObj)
     {
-        ObjData objData = _actionObject.GetComponent<ObjData>();
+        ObjData objData = ActionObj.GetComponent<ObjData>();
 
-        if (_actionObject.layer == LayerMask.NameToLayer("Object"))
+        if (ActionObj.layer == LayerMask.NameToLayer("Object"))
         {
             //오브젝트 상호작용용 ex)채집
         }
-        else if (_actionObject.layer == LayerMask.NameToLayer("Npc"))
+        else if (ActionObj.layer == LayerMask.NameToLayer("Npc"))
         {
             Action(objData.id);
         }
@@ -93,7 +88,7 @@ public class DialogManager : Singleton<DialogManager>
             }
 
             EventManager.Emit("UpdataQuestPage");
-            PlayerManager.Instance.SetIsControl(false);
+            GameSceneManager.Instance.SetIsAct(true);
             return true;
         }
     }
@@ -126,7 +121,7 @@ public class DialogManager : Singleton<DialogManager>
                 case 2: //퀘스트 진행중
                     break;
             }
-            PlayerManager.Instance.SetIsControl(true);
+            GameSceneManager.Instance.SetIsAct(false);
             isAction = false;
             dialogIdx = 0;
 
@@ -144,13 +139,13 @@ public class DialogManager : Singleton<DialogManager>
         if (textData == null)
         {
             isAction = false;
-            PlayerManager.Instance.SetIsControl(true);
+            GameSceneManager.Instance.SetIsAct(false);
             dialogIdx = 0;
             return;
         }
         _dialogPage._text.text = textData;
         isAction = true;
-        PlayerManager.Instance.SetIsControl(false);
+        GameSceneManager.Instance.SetIsAct(true);
         dialogIdx++;
     }
 

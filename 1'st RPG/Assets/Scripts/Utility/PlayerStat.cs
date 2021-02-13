@@ -31,7 +31,7 @@ public class PlayerStat : Stat
     }
     void LateUpdate()
     {
-        CalculateExp();
+        PrecessExp();
         sumExp = 0f;
     }
 
@@ -64,30 +64,35 @@ public class PlayerStat : Stat
         return;
     }
 
-    void CalculateExp()
+    void PrecessExp()
     {
         if (sumExp == 0f)
             return;
-        Exp += sumExp;
-        var popupText = ParticlePoolManager.Instance.Spawn("PopUpText", transform.position + new Vector3(0, 3, 0));
-        popupText.GetComponentInChildren<TextMesh>().text = "+" + sumExp.ToString();
-        popupText.GetComponentInChildren<TextMesh>().color = new Color(0, 1, 0, 1);
-        if (Exp >= MaxExp)
-        {
-            Level += 1;
-            Exp = Exp - MaxExp;
-            //MaxExp증가
-            MaxExp = Mathf.Floor(MaxExp * 1.5f);
-            Atk += atkRisingValue;
-            MaxHp += hpRisingValue;
-            Hp = MaxHp;
-            SkillPoint++;
 
-            var levelUpParticle = ParticlePoolManager.Instance.Spawn("LevelUp");
-            levelUpParticle.transform.position = transform.position;
-            levelUpParticle.GetComponent<ParticleTime>().SetTarget(transform);
-        }
+        Exp += sumExp;
+
+        var popupText = ParticlePoolManager.Instance.Spawn("PopUpText", transform.position + new Vector3(0, 3, 0));
+        popupText.GetComponent<PopUpText>().InitText("+" + sumExp.ToString(), new Color(0, 1, 0, 1));
+
+        if (Exp >= MaxExp)
+            ProcessLevelUp();          
+
         EventManager.Emit("UpdateStatus");
     }
     
+    void ProcessLevelUp()
+    {
+        Level++;
+
+        Exp = Exp - MaxExp; 
+        MaxExp = Mathf.Floor(MaxExp * 1.5f);
+
+        Atk += atkRisingValue;
+        MaxHp += hpRisingValue;
+
+        Hp = MaxHp;
+        SkillPoint++;
+
+        ParticlePoolManager.Instance.Spawn("LevelUp", transform.position, transform.rotation);
+    }
 }

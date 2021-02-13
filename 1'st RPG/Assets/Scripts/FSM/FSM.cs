@@ -11,7 +11,7 @@ public abstract class FSM : MonoBehaviour
 
     public void FindTarget(float distance, LayerMask layerMask) 
     {
-        Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, 10f, layerMask);
+        Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, distance, layerMask);
         if (colliders.Length == 0)
         {
             Target = null;

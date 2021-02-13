@@ -16,16 +16,23 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     }
     public void OnDrop(PointerEventData eventData)
     {
-        EquipSlot slot = ItemUi.DragedObject.transform.parent.GetComponent<EquipSlot>();
-        if (slot != null)
-        {
-            if (slot.itemCategory != ItemUi.DragedObject.transform.GetComponent<ItemUi>().Data.Category)
-                return;
-        }
+        
+    }
+
+    void SetItem()
+    {
+        ItemData data = ItemUi.DragedObject.GetComponent<ItemUi>().Data;
+        Transform prevSlot = ItemUi.PrevSlot;
+
 
         if (transform.childCount != 0)
         {
-            transform.GetChild(0).SetParent(ItemUi.ItemSlot);
+            if (prevSlot.GetComponent<EquipSlot>() != null)
+            {
+                if (transform.GetChild(0).GetComponent<ItemUi>().Data.Category != data.Category)
+                    return;
+            }
+            transform.GetChild(0).SetParent(ItemUi.PrevSlot);
         }
 
         ItemUi.DragedObject.transform.SetParent(transform);

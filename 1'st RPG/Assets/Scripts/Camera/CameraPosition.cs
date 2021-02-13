@@ -17,18 +17,20 @@ public class CameraPosition : MonoBehaviour
 
     float yRotate = 0;
 
-    [SerializeField]
-    GameObject _settingButton;
-
     private void Start()
     {
         _player = GameObject.Find(PlayerManager.Instance._playerStat.Name);
     }
     void Update()
     {
-        if (_settingButton.activeSelf && PlayerManager.Instance.IsControl)
+        UpdatePosition();
+    }
+
+    void UpdatePosition()
+    {
+        if (!GameSceneManager.Instance.IsAct)
         {
-            if(Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0))
                 yRotate += Input.GetAxis("Mouse X") * rotateSpeed;
 
             transform.rotation = Quaternion.Euler(0, yRotate, 0);
@@ -38,7 +40,4 @@ public class CameraPosition : MonoBehaviour
             Camera.main.transform.LookAt(_player.transform.position);
         }
     }
-
-
-
 }

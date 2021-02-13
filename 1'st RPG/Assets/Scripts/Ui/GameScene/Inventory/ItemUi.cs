@@ -10,7 +10,7 @@ public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     CanvasGroup canvasGroup;
 
     public static GameObject DragedObject;
-    public static Transform ItemSlot;
+    public static Transform PrevSlot;
     public ItemData Data { get; set; }
     [SerializeField]
     Image _image;
@@ -22,10 +22,7 @@ public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         InventoryPage = GameSceneManager.Instance.Inventory.transform;
         canvasGroup = GetComponent<CanvasGroup>();
     }
-    private void OnEnable()
-    {
 
-    }
     void Update()
     {
 
@@ -40,7 +37,7 @@ public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     public void OnBeginDrag(PointerEventData eventData)
     {
         DragedObject = transform.gameObject;
-        ItemSlot = transform.parent;
+        PrevSlot = transform.parent;
         transform.SetParent(InventoryPage);
         canvasGroup.blocksRaycasts = false;
     }
@@ -49,7 +46,7 @@ public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     {
         DragedObject = null;
         if(InventoryPage == transform.parent)
-            transform.SetParent(ItemSlot);
+            transform.SetParent(PrevSlot);
         canvasGroup.blocksRaycasts = true;
     }
 
@@ -58,26 +55,4 @@ public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         _image.sprite = Data.Sprite;
     }
 
-    public void OnClick()
-    {
-        /*
-        if (Data == null) return;
-
-        EquipBtn btn = equipmentPage.EquipUis[Data.Category];
-        if (btn.Data == null)
-        {
-            btn.Data = Data;
-            Data = null;
-        }
-        else
-        {
-            ItemData temp = btn.Data;
-            btn.Data = Data;
-            Data = temp;
-        }
-        EventManager.Emit("UpdateInventory", null);
-        EventManager.Emit("UpdatePlayerEquip", null);
-        EventManager.Emit("UpdateStatus");
-        */
-    }
 }

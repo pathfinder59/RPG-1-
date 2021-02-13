@@ -50,7 +50,7 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
         Quest quest = null;
         if (QuestManager.Instance.currentQuests[data._type-'0'].ContainsKey(data.client + data.questIdx))
             quest = QuestManager.Instance.currentQuests[data._type-'0'][data.client + data.questIdx];
-        int id = DialogManager.Instance.ActionObject.GetComponent<ObjData>().id;
+        int id = GameSceneManager.Instance.ActionObject.GetComponent<ObjData>().id;
         string str = quest == null? "수락가능" : (quest.processRate == 2? "진행중": !(data._type == '1' && data.client == id)? "완료"  : data.client == data.target? "완료": "진행중");
 
         _text.text = str + (data.client + data.questIdx).ToString();

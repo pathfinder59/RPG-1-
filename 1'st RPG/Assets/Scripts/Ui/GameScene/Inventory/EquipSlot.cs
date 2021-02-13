@@ -6,9 +6,7 @@ using UnityEngine.EventSystems;
 
 public class EquipSlot : MonoBehaviour, IDropHandler
 {
-    // Start is called before the first frame update
-    
-    public int itemCategory;
+    public int itemCategory; // 아이템 종류
     void Start()
     {
         
@@ -22,15 +20,19 @@ public class EquipSlot : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        SetEquip();
+    }
+
+    void SetEquip()
+    {
         if (itemCategory != ItemUi.DragedObject.GetComponent<ItemUi>().Data.Category)
             return;
         if (transform.childCount != 0)
         {
-            transform.GetChild(0).SetParent(ItemUi.ItemSlot);
+            transform.GetChild(0).SetParent(ItemUi.PrevSlot);
         }
 
         ItemUi.DragedObject.transform.SetParent(transform);
-
         EventManager.Emit("UpdatePlayerEquip");
     }
 }

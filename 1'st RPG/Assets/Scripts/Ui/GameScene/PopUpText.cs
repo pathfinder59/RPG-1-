@@ -1,25 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PopUpText : MonoBehaviour
 {
+    [SerializeField]
+    TextMesh _text;
     void Start()
     {
         
-    }
-    private void OnEnable()
-    {
-        StartCoroutine(LifeRoutine());
     }
     void Update()
     {
         
     }
-
-    public IEnumerator LifeRoutine()
+    public void InitText(string str,Color color )
     {
-        yield return new WaitForSeconds(0.5f);
-        gameObject.SetActive(false);
+        _text.text = str;
+        _text.color = color;
     }
+
 }

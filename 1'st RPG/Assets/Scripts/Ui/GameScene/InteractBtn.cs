@@ -22,14 +22,15 @@ public class InteractBtn : MonoBehaviour
 
     public void ClickBtn()
     {
-        if (GameSceneManager.Instance.isSetting)
+        if (GameSceneManager.Instance.IsAct)
             return;
+        GameObject ActionObj = GameSceneManager.Instance.ActionObject;
 
-        if(DialogManager.Instance.ActionObject.layer == LayerMask.NameToLayer("Npc"))
+        if (ActionObj.layer == LayerMask.NameToLayer("Npc"))
         {
-            DialogManager.Instance.Interact();
+            DialogManager.Instance.Interact(ActionObj);
         }
-        else if(DialogManager.Instance.ActionObject.layer == LayerMask.NameToLayer("Store"))
+        else if(ActionObj.layer == LayerMask.NameToLayer("Store"))
         {
             StoreCanvas.gameObject.SetActive(true);
             GameSceneCanvas.gameObject.SetActive(false);

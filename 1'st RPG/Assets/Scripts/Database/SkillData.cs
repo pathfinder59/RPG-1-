@@ -19,8 +19,7 @@ namespace GameScene.Skill
         float _coolDown;
         [SerializeField]
         float _time;
-        [SerializeField]
-        bool isTargeting;
+
         [SerializeField]
         float distance;
 
@@ -28,8 +27,6 @@ namespace GameScene.Skill
         public Sprite Sprite => _sprite;
         public float CoolDown => _coolDown;
         public float Time => _time;
-        public bool IsTargeting => isTargeting;
-
         public float Distance => distance;
 
     }

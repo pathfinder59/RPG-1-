@@ -12,28 +12,25 @@ public class GameSceneManager : Singleton<GameSceneManager>
     InventoryPage inventoryPage;
     [SerializeField]
     EquipmentPage equipmentPage;
-    [SerializeField]
-    StatusPage statusPage;
 
     public GameObject _interactBtn;
+
     public string playerClass;
-    public bool isSetting;
+
     public InventoryPage Inventory => inventoryPage;
 
     float spawnTime;
 
+    GameObject _actionObject;
+    public GameObject ActionObject { get { return _actionObject; } set { _actionObject = value; } }
+
+
+    bool _isAct;
+    public bool IsAct => _isAct;
+
     void Start()
     {
-        isSetting = false;
-        spawnTime = 5.0f;
-        playerClass = "Warrior"; // 완성시에는 이 값은 캐릭터 선택화면에서 결정할것
-
-        inventoryPage.gameObject.SetActive(true);
-        inventoryPage.gameObject.SetActive(false);
-        equipmentPage.gameObject.SetActive(true);
-        equipmentPage.gameObject.SetActive(false);
-        statusPage.gameObject.SetActive(true);
-        statusPage.gameObject.SetActive(false);
+        Init();
     }
 
     void Update()
@@ -49,15 +46,26 @@ public class GameSceneManager : Singleton<GameSceneManager>
 
     void Init()
     {
+        _isAct = false;
+        _actionObject = null;
+        spawnTime = 5.0f;
+        playerClass = "Warrior"; // 완성시에는 이 값은 캐릭터 선택화면에서 결정할것
 
+        inventoryPage.gameObject.SetActive(true);
+        inventoryPage.gameObject.SetActive(false);
+        equipmentPage.gameObject.SetActive(true);
+        equipmentPage.gameObject.SetActive(false);
     }
-    void Loading()
-    {
 
+    public void CheckActionObj()
+    {
+        if (ActionObject == null)
+            _interactBtn.SetActive(false);
+        else if (ActionObject.layer == LayerMask.NameToLayer("Npc") || ActionObject.layer == LayerMask.NameToLayer("Store"))
+           _interactBtn.SetActive(true);
     }
-
-    public void SetValueIsSetting(bool value)
+    public void SetIsAct(bool value)
     {
-        isSetting = value;
+        _isAct = value;
     }
 }

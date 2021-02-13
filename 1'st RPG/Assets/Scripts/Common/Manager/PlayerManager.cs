@@ -14,17 +14,33 @@ namespace common
         EquipmentPage _equipmentPage;
         [SerializeField]
         Transform spawnRegion;
+
         public int Money{get;set;}
         public int NumHp { get; set; } //포션 개수
 
-        bool _isControl;
-        public bool IsControl => _isControl;
+        
         private void Awake()
         {
-            _isControl = true;
+            
             NumHp = 0;
             Money = 100000;
+            Init();
             
+        }
+        void Start()
+        {
+            EventManager.On("UpdatePlayerEquip", UpdatePlayerEquipment);
+
+        }
+
+        void Update()
+        {
+
+        }
+
+
+        void Init()
+        {
             var go = ObjectPoolManager.Instance.Spawn(GameSceneManager.Instance.playerClass, spawnRegion.position, spawnRegion.rotation);
             go.transform.position = spawnRegion.position;
             go.AddComponent<PlayerMove>();
@@ -38,7 +54,7 @@ namespace common
 
 
             _playerStat.ClassType = "Warrior"; // 임시로 클래스는 자동으로 워리어를 갖도록 함 이후
-                                                 // 캐릭터 추가까지 완성된다면 이부분은 바뀔것임
+                                               // 캐릭터 추가까지 완성된다면 이부분은 바뀔것임
 
             _playerStat.SkillPoint = 1;
 
@@ -50,24 +66,11 @@ namespace common
 
             go.name = "Player"; // 캐릭터의 클래스타입에 따라 캐릭터 모델 결정
         }
-        // Start is called before the first frame update
-        void Start()
-        {
-            EventManager.On("UpdatePlayerEquip", UpdatePlayerEquipment);
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         void UpdatePlayerEquipment(GameObject obj = null)
         {
             int AddtiveAtk = 0;
             int AddtiveDef = 0;
-            foreach(GameObject slot in _equipmentPage.EquipSlots)
+            foreach(EquipSlot slot in _equipmentPage.EquipSlots)
             {
                 if (slot.transform.childCount == 0)
                     continue;
@@ -79,12 +82,6 @@ namespace common
             }
             _playerStat.GetComponent<PlayableFSM>().AddAtk = AddtiveAtk;
             _playerStat.GetComponent<PlayableFSM>().AddDef = AddtiveDef;
-            EventManager.Emit("UpdateStatus");
-        }
-
-        public void SetIsControl(bool value)
-        {
-            _isControl = value;
         }
     }
 }

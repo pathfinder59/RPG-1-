@@ -19,10 +19,10 @@ public class Store : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        storeEnterBtn.gameObject.SetActive(true);
+        //storeEnterBtn.gameObject.SetActive(true);
     }
     private void OnTriggerExit(Collider other)
     {
-        storeEnterBtn.gameObject.SetActive(false);
+       // storeEnterBtn.gameObject.SetActive(false);
     }
 }

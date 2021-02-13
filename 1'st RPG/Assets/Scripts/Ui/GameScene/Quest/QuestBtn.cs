@@ -16,18 +16,29 @@ public class QuestBtn : MonoBehaviour
 
     public void ClickSelectBtn()
     {
-        if(QuestContent.clickedContent!= null)
-        {
-            EventManager.Emit("CloseQuestPage");
-
-            DialogManager.Instance.Interact();
-        }
+        ActQuest();
     }
     public void ClickExitBtn()
     {
+        ExitQuestPage();
+    }
+
+
+    void ActQuest()
+    {
+        if (QuestContent.clickedContent != null)
+        {
+            EventManager.Emit("CloseQuestPage");
+
+            DialogManager.Instance.Interact(GameSceneManager.Instance.ActionObject);
+        }
+    }
+    void ExitQuestPage()
+    {
         QuestContent.clickedContent = null;
         EventManager.Emit("CloseQuestPage");
-        PlayerManager.Instance.SetIsControl(true);
+        GameSceneManager.Instance.SetIsAct(false);
         GameSceneManager.Instance._interactBtn.SetActive(true);
     }
+
 }

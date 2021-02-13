@@ -15,7 +15,6 @@ public class InventoryPage : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.Emit("UpdateInventory");
     }
     void Start()
     {

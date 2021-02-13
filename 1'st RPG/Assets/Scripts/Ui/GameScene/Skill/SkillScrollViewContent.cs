@@ -12,10 +12,8 @@ public class SkillScrollViewContent : MonoBehaviour
 {
     [SerializeField]
     GameObject _SkillPage;
-
     [SerializeField]
     GameObject _SettingPage;
-
     [SerializeField]
     GameObject _panelPrefab;
     [SerializeField]

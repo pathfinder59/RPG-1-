@@ -29,31 +29,36 @@ public class PlayerMove : MonoBehaviour
     public void Move(float movePower)
     {
 
-        if (PlayerManager.Instance.IsControl)
+        if (!GameSceneManager.Instance.IsAct)
         {
-            float xMove = Input.GetAxis("Horizontal");
-            float yMove = Input.GetAxis("Vertical");
-
-            Vector3 dir = Camera.main.transform.right * xMove + Camera.main.transform.forward * yMove;
-
-            dir = new Vector3(dir.x, 0.0f, dir.z).normalized;
-            if (!dir.Equals(new Vector3(0, 0, 0)))
-            {
-                _characterController.Move(dir * movePower * Time.deltaTime);
-                transform.forward = dir;
-                fsm.IsMoving = true;
-
-                RaycastHit hit;
-                DialogManager.Instance.ActionObject = Physics.Raycast(new Ray(transform.position, transform.forward), out hit, 4f) ? hit.transform.gameObject : null;
-
-                if (DialogManager.Instance.ActionObject == null)
-                    GameSceneManager.Instance._interactBtn.SetActive(false);
-                else if(DialogManager.Instance.ActionObject.layer == LayerMask.NameToLayer("Npc") || DialogManager.Instance.ActionObject.layer == LayerMask.NameToLayer("Store"))
-                    GameSceneManager.Instance._interactBtn.SetActive(true);
+            if (ProcessMove(movePower))
                 return;
-            }
         }
         fsm.IsMoving = false;
-     
+    }
+    bool ProcessMove(float movePower)
+    {
+        float xMove = Input.GetAxis("Horizontal");
+        float yMove = Input.GetAxis("Vertical");
+
+        Vector3 dir = Camera.main.transform.right * xMove + Camera.main.transform.forward * yMove;
+        dir = new Vector3(dir.x, 0.0f, dir.z).normalized;
+
+        if (!dir.Equals(new Vector3(0, 0, 0)))
+        {
+            _characterController.Move(dir * movePower * Time.deltaTime);
+            transform.forward = dir;
+            fsm.IsMoving = true;
+
+            CheckNeighbor();
+            return true;
+        }
+        return false;
+    }
+    void CheckNeighbor()
+    {
+        RaycastHit hit;
+        GameSceneManager.Instance.ActionObject = Physics.Raycast(new Ray(transform.position, transform.forward), out hit, 4f) ? hit.transform.gameObject : null;
+        GameSceneManager.Instance.CheckActionObj();
     }
 }

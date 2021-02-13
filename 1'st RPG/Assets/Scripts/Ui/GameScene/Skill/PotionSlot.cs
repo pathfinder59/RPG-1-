@@ -45,10 +45,9 @@ public class PotionSlot : MonoBehaviour
         {
             PlayerManager.Instance.NumHp--;
             //플레이어 회복
-            playerStat.Hp = Mathf.Clamp(playerStat.Hp + 50, 0, playerStat.MaxHp);
+            playerStat.Heal(50);
             curTime = coolDown;
             UpdatePotion();
-            EventManager.Emit("UpdateStatus");
         }
     }
 }

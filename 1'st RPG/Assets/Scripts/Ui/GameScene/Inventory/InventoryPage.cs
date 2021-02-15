@@ -7,11 +7,21 @@ using UnityEngine;
 public class InventoryPage : MonoBehaviour
 {
     [SerializeField]
-    List<Transform> _itemSlotList;
+    ItemSlotList _equipList;
+    [SerializeField]
+    ItemSlotList _supplyList;
+
     [SerializeField]
     GameObject ItemUiPrefab;
+
+    [SerializeField]
+    InventoryBtn initialBtn;
+    ICommander curPageBtn;
+
     private void Awake()
     {
+        curPageBtn = initialBtn;
+        curPageBtn.On();
     }
     private void OnEnable()
     {
@@ -26,17 +36,29 @@ public class InventoryPage : MonoBehaviour
         
     }
 
+    public void ClickPageBtn(ICommander commander)
+    {
+        if(curPageBtn != null)
+            curPageBtn.Off();
+        SetCommander(commander);
+        commander.On();
+    }
+    public void SetCommander(ICommander commander)
+    {
+        curPageBtn = commander;
+    }
     public bool AddItem(ItemData data)
     {
-        var itemSlot = _itemSlotList.FirstOrDefault(_ => _.childCount == 0)?? null;
-        if (itemSlot == null)
-            return false;
+        ItemSlotList slotList;
 
-        var go = Instantiate(ItemUiPrefab);
-        go.GetComponent<ItemUi>().Data = data;
-        go.GetComponent<ItemUi>().UpdateData();
-        go.transform.SetParent(itemSlot);
-        
-        return true;
+        if (data.Category < 4)
+            slotList = _equipList;
+        else
+            slotList = _supplyList;
+
+        if (slotList.AddItem(data, ItemUiPrefab))
+            return true;
+        else
+            return false;
     }
 }

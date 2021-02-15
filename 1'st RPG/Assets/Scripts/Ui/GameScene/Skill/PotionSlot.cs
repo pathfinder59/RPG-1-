@@ -14,10 +14,13 @@ public class PotionSlot : MonoBehaviour
     float curTime;
 
     PlayerStat playerStat;
+    [SerializeField]
+    SupplySlotList supplySlotList;
     private void Awake()
     {
         curTime = 0;
         EventManager.On("UpdatePotion", UpdatePotion);
+
     }
     void Start()
     {
@@ -39,15 +42,23 @@ public class PotionSlot : MonoBehaviour
 
     public void OnClick()
     {
+        UsePotion();
+    }
+
+    public bool UsePotion()
+    {
         if (PlayerManager.Instance.NumHp == 0)
-            return;
-        if(curTime == 0)
+            return false;
+        if (curTime == 0)
         {
             PlayerManager.Instance.NumHp--;
             //플레이어 회복
             playerStat.Heal(50);
             curTime = coolDown;
+            supplySlotList.SubItem(100);
             UpdatePotion();
+            return true;
         }
+        return false;
     }
 }

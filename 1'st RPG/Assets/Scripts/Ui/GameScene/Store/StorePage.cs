@@ -47,8 +47,7 @@ public class StorePage : MonoBehaviour
             if (selectedData.Category >= 100)
             {
                 //물약 처리
-                PlayerManager.Instance.NumHp++;
-                EventManager.Emit("UpdatePotion");
+                PlayerManager.Instance.IncreasePotion();
             }
 
             PlayerManager.Instance.Money -= selectedData.Price;

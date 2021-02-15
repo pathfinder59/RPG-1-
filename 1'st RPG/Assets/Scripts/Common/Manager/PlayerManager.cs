@@ -38,7 +38,11 @@ namespace common
 
         }
 
-
+        public void IncreasePotion()
+        {
+            NumHp++;
+            EventManager.Emit("UpdatePotion");
+        }
         void Init()
         {
             var go = ObjectPoolManager.Instance.Spawn(GameSceneManager.Instance.playerClass, spawnRegion.position, spawnRegion.rotation);

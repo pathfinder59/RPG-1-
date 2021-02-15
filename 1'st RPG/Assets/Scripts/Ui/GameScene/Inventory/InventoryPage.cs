@@ -10,7 +10,7 @@ public class InventoryPage : MonoBehaviour
     ItemSlotList _equipList;
     [SerializeField]
     ItemSlotList _supplyList;
-
+ 
     [SerializeField]
     GameObject ItemUiPrefab;
 

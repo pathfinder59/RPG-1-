@@ -5,20 +5,30 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 using common;
-public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
     CanvasGroup canvasGroup;
 
     public static GameObject DragedObject;
+    public static GameObject ClickedObject;
+
     public static Transform PrevSlot;
     public ItemData Data { get; set; }
     [SerializeField]
     Image _image;
+    [SerializeField]
+    Text _text;
 
     Transform InventoryPage;
-    
+
+    public int numItem {get;set;}
+
+    void Awake()
+    {
+    }
     void Start()
     {
+        
         InventoryPage = GameSceneManager.Instance.Inventory.transform;
         canvasGroup = GetComponent<CanvasGroup>();
     }
@@ -53,6 +63,32 @@ public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     public void UpdateData()
     {
         _image.sprite = Data.Sprite;
+        if (numItem != 0)
+            _text.text = numItem.ToString();
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        ClickedObject = gameObject;
+
+        if (Data.Category < 3)
+        {
+            if(GameSceneManager.Instance.EquipmentPage.EquipSlots[Data.Category].transform.childCount == 0)
+                transform.SetParent(GameSceneManager.Instance.EquipmentPage.EquipSlots[Data.Category].transform);
+            else
+            {
+                var obj = GameSceneManager.Instance.EquipmentPage.EquipSlots[Data.Category].transform.GetChild(0);
+                obj.SetParent(transform.parent);
+                transform.SetParent(GameSceneManager.Instance.EquipmentPage.EquipSlots[Data.Category].transform);
+            }
+            EventManager.Emit("UpdatePlayerEquip");
+        }
+        else
+        {
+            if(GameSceneManager.Instance.UsePotion())
+            {
+                UpdateData();
+            }
+        }
+    }
 }

@@ -12,12 +12,15 @@ public class GameSceneManager : Singleton<GameSceneManager>
     InventoryPage inventoryPage;
     [SerializeField]
     EquipmentPage equipmentPage;
+    [SerializeField]
+    PotionSlot potionSlot;
 
     public GameObject _interactBtn;
 
     public string playerClass;
 
     public InventoryPage Inventory => inventoryPage;
+    public EquipmentPage EquipmentPage => equipmentPage;
 
     float spawnTime;
 
@@ -67,5 +70,10 @@ public class GameSceneManager : Singleton<GameSceneManager>
     public void SetIsAct(bool value)
     {
         _isAct = value;
+    }
+
+    public bool UsePotion()
+    {
+        return potionSlot.UsePotion();
     }
 }

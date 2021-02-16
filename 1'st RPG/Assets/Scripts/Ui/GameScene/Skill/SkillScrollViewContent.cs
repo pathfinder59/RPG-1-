@@ -14,6 +14,7 @@ public class SkillScrollViewContent : MonoBehaviour
     GameObject _SkillPage;
     [SerializeField]
     GameObject _SettingPage;
+
     [SerializeField]
     GameObject _panelPrefab;
     [SerializeField]
@@ -21,8 +22,17 @@ public class SkillScrollViewContent : MonoBehaviour
 
     void Start()
     {
+        GetCurrentSkills();
+    }
+
+    void Update()
+    {
+        
+    }
+    public void GetCurrentSkills()
+    {
         List<SkillDatabase> databaseList = DataManager.Instance.skillDatabases;
-        foreach(var skillData in databaseList[0].SkillList)
+        foreach (var skillData in databaseList[0].SkillList)
         {
             var go = Instantiate(_panelPrefab);
             go.transform.SetParent(transform);
@@ -40,12 +50,6 @@ public class SkillScrollViewContent : MonoBehaviour
             }
         }
     }
-
-    void Update()
-    {
-        
-    }
-
     private void LateUpdate()
     {
         _skillPointText.text = "Skill Point: " + PlayerManager.Instance._playerStat.SkillPoint.ToString();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,4 +27,10 @@ public abstract class FSM : MonoBehaviour
     public virtual void AddExp(float exp,GameObject obj = null)
     { }
 
+    public void SpawnDamagedText(int hitPower)
+    {
+        var go = ParticlePoolManager.Instance.Spawn("PopUpText", transform.position + new Vector3(0, 3, 0));
+        go.GetComponentInChildren<TextMesh>().text = "-" + hitPower.ToString();
+        go.GetComponentInChildren<TextMesh>().color = new Color(1, 0, 0, 1);
+    }
 }

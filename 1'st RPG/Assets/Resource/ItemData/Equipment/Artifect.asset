@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Artifect
   m_EditorClassIdentifier: 
   _name: Artifact
+  _descript: 'Atk: 0 Def: 5'
   _sprite: {fileID: 21300000, guid: b2b2bc91feec3454a97bd2f31156e6c9, type: 3}
   _category: 2
   _price: 2000

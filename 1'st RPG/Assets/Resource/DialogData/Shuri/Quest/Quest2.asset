@@ -16,7 +16,7 @@ MonoBehaviour:
   client: 1000
   target: 1000
   _type: 48
-  num: 0
+  num: 3
   exp: 150
   child: ef030000
   nParent: 1

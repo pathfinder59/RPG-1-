@@ -48,7 +48,7 @@ namespace common
             var go = ObjectPoolManager.Instance.Spawn(GameSceneManager.Instance.playerClass, spawnRegion.position, spawnRegion.rotation);
             go.transform.position = spawnRegion.position;
             go.AddComponent<PlayerMove>();
-            go.AddComponent<QuestManager>();
+            //go.AddComponent<QuestManager>();
             _playerStat = go.GetComponentInParent<PlayerStat>();
 
             _playerStat.Hp = 150;

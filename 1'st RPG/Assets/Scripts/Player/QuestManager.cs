@@ -6,6 +6,9 @@ using common;
 public class QuestManager : Singleton<QuestManager>
 {
     public Dictionary<int,Quest>[] currentQuests;
+    [SerializeField]
+    Transform curQuestContent;
+
     private void Awake()
     {
 
@@ -30,8 +33,8 @@ public class QuestManager : Singleton<QuestManager>
     }
     public void ClearQuest(Dictionary<int, Quest> currentQuests, QuestData data,int clientID)
     {
+        RemoveDescriptor(data);
         RemoveDataFromQuestList(currentQuests, data, clientID);
-
         SetQuestImage(data.client);
 
         foreach (int i in data.child)
@@ -45,12 +48,30 @@ public class QuestManager : Singleton<QuestManager>
                 SetQuestImage(child.client);
             }
         }
-
     }
     public void StartQuest(Dictionary<int, Quest> currentQuests, QuestData data, int clientID)
     {
         AddDataToQuestList(currentQuests, data, clientID);
         SetQuestImage(data.client);
+        AddDescriptor(data);
+    }
+    public void AddDescriptor(QuestData data)
+    {
+        QuestDescriptor descriptor = ObjectPoolManager.Instance.Spawn("QuestDescriptor").GetComponent<QuestDescriptor>();
+        descriptor.SetData(data);
+        descriptor.transform.SetParent(curQuestContent);
+        EventManager.Emit("UpdateDescriptor");
+    }
+    public void RemoveDescriptor(QuestData data)
+    {
+        for(int i = 0;i < curQuestContent.childCount;++i)
+        {
+            if (curQuestContent.GetChild(i).GetComponent<QuestDescriptor>().Data == data)
+            { 
+                curQuestContent.GetChild(i).gameObject.SetActive(false);
+                return;
+            }
+        }
     }
 
     void AddDataToQuestList(Dictionary<int, Quest> currentQuests, QuestData data, int clientID)

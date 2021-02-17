@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 using common;
-public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
+public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler,IPointerEnterHandler,IPointerExitHandler
 {
     CanvasGroup canvasGroup;
 
@@ -90,5 +90,15 @@ public class ItemUi : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
                 UpdateData();
             }
         }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        GameSceneManager.Instance.Inventory.ItemDescriptor.text = "";
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        GameSceneManager.Instance.Inventory.ItemDescriptor.text = Data.Name +"\n"+ Data.Descript;
     }
 }

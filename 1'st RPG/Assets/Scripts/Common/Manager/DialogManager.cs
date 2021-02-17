@@ -113,10 +113,10 @@ public class DialogManager : Singleton<DialogManager>
             switch(processRate)
             {
                 case 0:  //퀘스트 완료
-                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().ClearQuest(currentQuests, clickedQuestData, id);
+                    QuestManager.Instance.ClearQuest(currentQuests, clickedQuestData, id);
                     break;
                 case 1: //퀘스트 시작
-                    PlayerManager.Instance._playerStat.gameObject.GetComponent<QuestManager>().StartQuest(currentQuests, clickedQuestData, id);
+                    QuestManager.Instance.StartQuest(currentQuests, clickedQuestData, id);
                     break;
                 case 2: //퀘스트 진행중
                     break;

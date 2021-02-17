@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryPage : MonoBehaviour
 {
@@ -10,13 +11,15 @@ public class InventoryPage : MonoBehaviour
     ItemSlotList _equipList;
     [SerializeField]
     ItemSlotList _supplyList;
- 
+
     [SerializeField]
     GameObject ItemUiPrefab;
 
     [SerializeField]
     InventoryBtn initialBtn;
     ICommander curPageBtn;
+
+    public Text ItemDescriptor;
 
     private void Awake()
     {

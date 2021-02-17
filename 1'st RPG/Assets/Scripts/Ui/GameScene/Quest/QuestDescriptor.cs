@@ -10,10 +10,20 @@ public class QuestDescriptor : MonoBehaviour
     [SerializeField]
     Text descriptor;
 
+    [SerializeField]
+    bool isIcon;
+    QuestData data = null;
+    public QuestData Data => data;
     void Awake()
     {
-        EventManager.On("QuestContentClick", UpdateDescriptor);
-        EventManager.On("CloseQuestPage", ResetDescriptor);
+
+        if (!isIcon)
+        {
+            EventManager.On("QuestContentClick", UpdateData);
+            EventManager.On("CloseQuestPage", ResetDescriptor);
+        }
+        else
+            EventManager.On("UpdateDescriptor", UpdateData);
     }
     void Start()
     {
@@ -24,10 +34,23 @@ public class QuestDescriptor : MonoBehaviour
     {
         
     }
-
-    public void UpdateDescriptor(GameObject obj = null)
+    public void UpdateData(GameObject obj = null)
     {
-        QuestData data = QuestContent.clickedContent.data;
+        if (!isIcon)
+        {
+            if(QuestContent.clickedContent != null)
+                data = QuestContent.clickedContent.data;
+        }
+        UpdateDescriptor();
+    }
+    public void SetData(QuestData d)
+    {
+        data = d;
+    }
+    public void UpdateDescriptor()
+    {
+        if (data == null)
+            return;
         Quest quest = null;
 
         if (QuestManager.Instance.currentQuests[data._type - '0'].ContainsKey(data.client + data.questIdx))

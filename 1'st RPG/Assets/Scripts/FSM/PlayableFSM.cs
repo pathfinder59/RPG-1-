@@ -281,7 +281,7 @@ public abstract class PlayableFSM : FSM, IDamagable
         {
             if (obj.layer != LayerMask.NameToLayer("Enemy"))
                 return;
-            QuestManager mgr = gameObject.GetComponent<QuestManager>();
+            QuestManager mgr = QuestManager.Instance;
 
 
             foreach (KeyValuePair<int,Quest> valuePair in mgr.currentQuests[0])
@@ -289,6 +289,7 @@ public abstract class PlayableFSM : FSM, IDamagable
                 if (valuePair.Value.targetId == obj.GetComponent<ObjData>().id)
                     valuePair.Value.DecreaseNum(1);
             }
+            EventManager.Emit("UpdateDescriptor");
         }
         
     }

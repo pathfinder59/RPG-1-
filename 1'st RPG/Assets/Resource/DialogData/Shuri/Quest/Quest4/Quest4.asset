@@ -14,13 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questIdx: 4
   client: 2000
-  target: 1001
+  target: 2001
   _type: 48
-  num: 5
+  num: 2
   exp: 200
-  child: 
-  childClient: 
+  child: 05000000
+  childClient: d0070000
   nParent: 1
-  descript: "\uC704\uC790\uB4DC 5\uB9C8\uB9AC \uCC98\uCE58\uD558\uAE30"
+  descript: "\uC704\uC790\uB4DC 2\uB9C8\uB9AC \uCC98\uCE58\uD558\uAE30"
   isActive: 0
-  _dialogs: []
+  _dialogs:
+  - {fileID: 11400000, guid: eb636d1b05bbd8142aad66b0189303c6, type: 2}
+  - {fileID: 11400000, guid: 57a7ac5f259516e4bb2b4c13e946521b, type: 2}
+  - {fileID: 11400000, guid: 62be389e7458e7f4685fd6b4c8926c57, type: 2}
+  CallrutineName: 

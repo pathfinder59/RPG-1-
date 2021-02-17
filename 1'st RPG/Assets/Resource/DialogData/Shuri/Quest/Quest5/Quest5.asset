@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9cbda8d80ac604b9307107e838e322, type: 3}
+  m_Name: Quest5
+  m_EditorClassIdentifier: 
+  questIdx: 5
+  client: 2000
+  target: 2000
+  _type: 49
+  num: 0
+  exp: 200
+  child: 
+  childClient: 
+  nParent: 1
+  descript: "2000\uC5D0\uAC8C \uB9D0\uAC78\uAE30"
+  isActive: 0
+  _dialogs:
+  - {fileID: 11400000, guid: b353b06d3cc5a6f418b26f2adc1375a4, type: 2}
+  - {fileID: 11400000, guid: acef9e4d6fe60b94d96488f247e3302b, type: 2}
+  - {fileID: 11400000, guid: 7bec3a23e60edef458be67a73146062c, type: 2}
+  CallrutineName: SpawnBoss

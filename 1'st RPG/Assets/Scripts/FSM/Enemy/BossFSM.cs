@@ -8,7 +8,10 @@ public class BossFSM : EnemyFSM
 
     float accessTime = 0.0f;
     bool isAttacking = false;
-
+    [SerializeField]
+    GameObject AttackClawObj;
+    [SerializeField]
+    GameObject AttackHornObj;
     public override void Attack()
     {
         if (Vector3.Distance(transform.position, _target.position) < attackDistance)
@@ -59,12 +62,12 @@ public class BossFSM : EnemyFSM
 
     public void AttackClaw()
     {
-        var go = ParticlePoolManager.Instance.Spawn("AttackClaw");
-        go.transform.position = transform.position;
-        go.transform.forward = transform.forward;
-        go.GetComponentInChildren<OneTouchSkill>().target = "Player";
-        go.GetComponentInChildren<OneTouchSkill>().Caster = gameObject.transform;
-        go.GetComponentInChildren<OneTouchSkill>().Atk = 150;
+        AttackClawObj.SetActive(true);
+        AttackClawObj.transform.position = transform.position;
+        AttackClawObj.transform.forward = transform.forward;
+        AttackClawObj.GetComponentInChildren<OneTouchSkill>().target = "Player";
+        AttackClawObj.GetComponentInChildren<OneTouchSkill>().Caster = gameObject.transform;
+        AttackClawObj.GetComponentInChildren<OneTouchSkill>().Atk = 150;
     }
     public void AttackJump()
     {
@@ -76,12 +79,12 @@ public class BossFSM : EnemyFSM
     }
     public void AttackHorn()
     {
-        var go = ParticlePoolManager.Instance.Spawn("AttackHorn");
-        go.transform.position = transform.position;
-        go.transform.forward = transform.forward;
-        go.GetComponentInChildren<OneTouchSkill>().target = "Player";
-        go.GetComponentInChildren<OneTouchSkill>().Caster = gameObject.transform;
-        go.GetComponentInChildren<OneTouchSkill>().Atk = 100;
+        AttackHornObj.SetActive(true);
+        AttackHornObj.transform.position = transform.position;
+        AttackHornObj.transform.forward = transform.forward;
+        AttackHornObj.GetComponentInChildren<OneTouchSkill>().target = "Player";
+        AttackHornObj.GetComponentInChildren<OneTouchSkill>().Caster = gameObject.transform;
+        AttackHornObj.GetComponentInChildren<OneTouchSkill>().Atk = 100;
     }
     public override void AttackEvent()
     {

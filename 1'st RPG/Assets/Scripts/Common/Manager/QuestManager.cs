@@ -6,9 +6,11 @@ using common;
 public class QuestManager : Singleton<QuestManager>
 {
     public Dictionary<int,Quest>[] currentQuests;
+
     [SerializeField]
     Transform curQuestScrollView;
-
+    [SerializeField]
+    QuestListPage questListPage;
     private void Awake()
     {
 
@@ -48,6 +50,8 @@ public class QuestManager : Singleton<QuestManager>
                 SetQuestImage(child.client);
             }
         }
+        if(data.CallrutineName.Length != 0)
+            ScenemaManager.Instance.CallCorutin(data.CallrutineName);
     }
     public void StartQuest(Dictionary<int, Quest> currentQuests, QuestData data, int clientID)
     {
@@ -181,5 +185,26 @@ public class QuestManager : Singleton<QuestManager>
         }
         GameSceneManager.Instance.SetIsAct(false);
         GameSceneManager.Instance.SetInterctBtnAct(true);
+    }
+
+    public bool OpenQuestList(int id)
+    {
+        if (QuestContent.clickedContent != null)
+            return false;
+        else
+        {
+            questListPage.gameObject.SetActive(true);
+            Dictionary<int, List<QuestData>> database = DataManager.Instance.questDict;
+
+            foreach (QuestData data in database[id])
+            {
+                if (data.isActive)
+                    questListPage.AddContent(data);
+            }
+
+            EventManager.Emit("UpdataQuestPage");
+            GameSceneManager.Instance.SetIsAct(true);
+            return true;
+        }
     }
 }

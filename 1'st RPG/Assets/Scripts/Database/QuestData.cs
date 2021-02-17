@@ -24,7 +24,7 @@ public class QuestData : ScriptableObject
     public bool isActive;
 
     public List<DialogData> _dialogs;
-
+    public string CallrutineName = null;
     public QuestData(QuestData data)
     {
         questIdx = data.questIdx;
@@ -46,6 +46,7 @@ public class QuestData : ScriptableObject
 
         _dialogs = new List<DialogData>();
         _dialogs = data._dialogs.GetRange(0, data._dialogs.Count);
+        CallrutineName = data.CallrutineName;
     }
 }
 

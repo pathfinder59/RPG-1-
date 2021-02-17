@@ -84,29 +84,10 @@ public class DialogManager : Singleton<DialogManager>
 
         _dialogPage.gameObject.SetActive(isAction);
     }
-    public bool OpenQuestList(int id)
-    {
-        if (QuestContent.clickedContent != null)
-            return false;
-        else
-        {
-            questListPage.gameObject.SetActive(true);
-            Dictionary<int, List<QuestData>> database = DataManager.Instance.questDict;
 
-            foreach(QuestData data in database[id])
-            {
-                if (data.isActive)
-                    questListPage.AddContent(data);
-            }
-
-            EventManager.Emit("UpdataQuestPage");
-            GameSceneManager.Instance.SetIsAct(true);
-            return true;
-        }
-    }
     void CommunicateForQuest(int id)
     {
-        if (OpenQuestList(id))
+        if (QuestManager.Instance.OpenQuestList(id))
             return;
 
         QuestData clickedQuestData = QuestContent.clickedContent.data;

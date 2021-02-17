@@ -60,7 +60,7 @@ namespace common
             _playerStat.ClassType = "Warrior"; // 임시로 클래스는 자동으로 워리어를 갖도록 함 이후
                                                // 캐릭터 추가까지 완성된다면 이부분은 바뀔것임
 
-            _playerStat.SkillPoint = 1;
+            _playerStat.SkillPoint = 0;
 
 
             _playerStat.Exp = 0;

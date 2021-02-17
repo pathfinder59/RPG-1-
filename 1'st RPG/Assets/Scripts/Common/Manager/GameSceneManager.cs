@@ -63,15 +63,18 @@ public class GameSceneManager : Singleton<GameSceneManager>
     public void CheckActionObj()
     {
         if (ActionObject == null)
-            _interactBtn.SetActive(false);
+            SetInterctBtnAct(false);
         else if (ActionObject.layer == LayerMask.NameToLayer("Npc") || ActionObject.layer == LayerMask.NameToLayer("Store"))
-           _interactBtn.SetActive(true);
+            SetInterctBtnAct(true);
     }
     public void SetIsAct(bool value)
     {
         _isAct = value;
     }
-
+    public void SetInterctBtnAct(bool value)
+    {
+        _interactBtn.SetActive(value);
+    }
     public bool UsePotion()
     {
         return potionSlot.UsePotion();

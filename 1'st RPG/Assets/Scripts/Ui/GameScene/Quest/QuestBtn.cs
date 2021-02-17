@@ -35,10 +35,10 @@ public class QuestBtn : MonoBehaviour
     }
     void ExitQuestPage()
     {
-        QuestContent.clickedContent = null;
+        QuestContent.ResetPointer();
         EventManager.Emit("CloseQuestPage");
         GameSceneManager.Instance.SetIsAct(false);
-        GameSceneManager.Instance._interactBtn.SetActive(true);
+        GameSceneManager.Instance.SetInterctBtnAct(true);
     }
 
 }

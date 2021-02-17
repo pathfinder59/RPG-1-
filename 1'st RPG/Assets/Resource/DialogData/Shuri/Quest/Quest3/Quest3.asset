@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9cbda8d80ac604b9307107e838e322, type: 3}
+  m_Name: Quest3
+  m_EditorClassIdentifier: 
+  questIdx: 3
+  client: 1000
+  target: 2000
+  _type: 49
+  num: 0
+  exp: 200
+  child: 
+  childClient: 
+  nParent: 1
+  descript: "2000 \uB3C4\uC640\uC8FC\uAE30"
+  isActive: 0
+  _dialogs:
+  - {fileID: 11400000, guid: a3484579f29d2eb47b4d8916364a8620, type: 2}
+  - {fileID: 11400000, guid: b47cdfc51ae72c846944c2247a466154, type: 2}
+  - {fileID: 11400000, guid: 62be389e7458e7f4685fd6b4c8926c57, type: 2}

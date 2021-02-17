@@ -14,6 +14,11 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
     Image contentImage;
     [SerializeField]
     Text _text;
+
+    public static void ResetPointer()
+    {
+        clickedContent = null;
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
         
@@ -48,12 +53,12 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
     public void UpdateContent(GameObject obj = null)
     {
         Quest quest = null;
-        if (QuestManager.Instance.currentQuests[data._type-'0'].ContainsKey(data.client + data.questIdx))
-            quest = QuestManager.Instance.currentQuests[data._type-'0'][data.client + data.questIdx];
+        if (QuestManager.Instance.currentQuests[data._type-'0'].ContainsKey(data.questIdx))
+            quest = QuestManager.Instance.currentQuests[data._type-'0'][data.questIdx];
         int id = GameSceneManager.Instance.ActionObject.GetComponent<ObjData>().id;
-        string str = quest == null? "수락가능" : (quest.processRate == 2? "진행중": !(data._type == '1' && data.client == id)? "완료"  : data.client == data.target? "완료": "진행중");
+        string str = quest == null? "[수락가능]" : (quest.processRate == 1? "[진행중]": !(data._type == '1' && data.client == id)? "[완료]"  : data.client == data.target? "[완료]": "[진행중]");
 
-        _text.text = str + (data.client + data.questIdx).ToString();
+        _text.text = str + (data.questIdx).ToString();
     }
     public void SetActiveContent(GameObject obj = null)
     {

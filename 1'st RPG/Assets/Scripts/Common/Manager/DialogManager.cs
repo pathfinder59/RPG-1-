@@ -13,22 +13,34 @@ public class DialogManager : Singleton<DialogManager>
     int dialogIdx;
     public bool isAction;
 
-    IDictionary<int, List<string>> dialogDatas;
+    IDictionary<int, List<string>> dlgDatas;
+    IDictionary<int, List<DialogData>> questDlgDatas;
     void Start()
     {
         isAction = false;
         dialogIdx = 0;
 
-        dialogDatas = new Dictionary<int, List<string>>();
-
-        foreach(DialogData data in DataManager.Instance.dialogDatabase)
+        dlgDatas = new Dictionary<int, List<string>>();
+        questDlgDatas = new Dictionary<int, List<DialogData>>();
+        foreach (DialogData data in DataManager.Instance.dialogDatabase)
         {
-            if (!dialogDatas.ContainsKey(data._id))
-                dialogDatas.Add(data._id, new List<string>());
-            dialogDatas[data._id] = data._dialogs;
+            if (!dlgDatas.ContainsKey(data._id))
+                dlgDatas.Add(data._id, new List<string>());
+            dlgDatas[data._id] = data._dialogs;
+
+
+        }
+
+        foreach (QuestData data in DataManager.Instance.questDatabase)
+        {
+            if (!questDlgDatas.ContainsKey(data.questIdx))
+            {
+                questDlgDatas.Add(data.questIdx, new List<DialogData>());
+            }
+            for (int i = 0; i < 3; ++i)
+                questDlgDatas[data.questIdx] = data._dialogs.GetRange(0, data._dialogs.Count);
         }
     }
-    
     // Update is called once per frame
     void Update()
     {        
@@ -94,38 +106,21 @@ public class DialogManager : Singleton<DialogManager>
     }
     void CommunicateForQuest(int id)
     {
-        int processRate;
-
         if (OpenQuestList(id))
             return;
 
         QuestData clickedQuestData = QuestContent.clickedContent.data;
         Dictionary<int, Quest> currentQuests = QuestManager.Instance.currentQuests[clickedQuestData._type - '0'];
 
-        getQuestProceesRate(out processRate, id, currentQuests, clickedQuestData);
-
-        string textData = GetData(clickedQuestData.client + processRate, dialogIdx);
+        int processRate = QuestManager.Instance.GetQuestProceesRate(id, currentQuests, clickedQuestData);
+        string textData = GetData( questDlgDatas[clickedQuestData.questIdx][processRate-1]._dialogs, dialogIdx);
         
         if (textData == null)
         {
-            QuestContent.clickedContent = null;
-            processRate %= 3;
-            switch(processRate)
-            {
-                case 0:  //퀘스트 완료
-                    QuestManager.Instance.ClearQuest(currentQuests, clickedQuestData, id);
-                    break;
-                case 1: //퀘스트 시작
-                    QuestManager.Instance.StartQuest(currentQuests, clickedQuestData, id);
-                    break;
-                case 2: //퀘스트 진행중
-                    break;
-            }
-            GameSceneManager.Instance.SetIsAct(false);
+            QuestManager.Instance.ProcessQuest(id, processRate, clickedQuestData, currentQuests);
+
             isAction = false;
             dialogIdx = 0;
-
-            GameSceneManager.Instance._interactBtn.SetActive(true);
             return;
         }
         _dialogPage._text.text = textData;
@@ -135,7 +130,7 @@ public class DialogManager : Singleton<DialogManager>
     }
     void Communicate(int id)
     {
-        string textData = GetData(id, dialogIdx);
+        string textData = GetData(dlgDatas[id], dialogIdx);
         if (textData == null)
         {
             isAction = false;
@@ -149,26 +144,13 @@ public class DialogManager : Singleton<DialogManager>
         dialogIdx++;
     }
 
-    string GetData(int key,int idx)
+    string GetData(List<string> strings,int idx)
     {
-        if (idx == dialogDatas[key].Count)
+        if (idx == strings.Count)
             return null;
         else
-            return dialogDatas[key][idx];
+            return strings[idx];
     }
     
-    void getQuestProceesRate(out int idx, int id, Dictionary<int, Quest> QuestList, QuestData data)
-    {
-        if (QuestList.ContainsKey(data.questIdx + data.client))
-        {
-            idx = QuestList[data.questIdx + data.client].processRate;
-            idx = data.questIdx - 1 + idx;
-            if (data._type == '1' && data.target != id)
-            {
-                idx = data.questIdx - 1 + 2; //진행중으로 이동
-            }
-        }
-        else
-            idx = data.questIdx;
-    }
+    
 }

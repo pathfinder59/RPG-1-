@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,13 +13,18 @@ public class QuestData : ScriptableObject
     public char _type; // 0:토벌, 1:대화, 2:재료
     public int num; //갯수 1경우에는 제외
     public int exp; //보상 경험치
-    //public int[] npcId;   //대화 순서 루틴
+    
+    
     public List<int> child;
+    public List<int> childClient;
     public int nParent;
 
 
     public string descript;
     public bool isActive;
+
+    public List<DialogData> _dialogs;
+
     public QuestData(QuestData data)
     {
         questIdx = data.questIdx;
@@ -28,11 +34,18 @@ public class QuestData : ScriptableObject
         num = data.num;
         exp = data.exp;
 
+        
+
         child = new List<int>();
         child = data.child.GetRange(0, data.child.Count);
+        childClient = new List<int>();
+        childClient = data.childClient.GetRange(0, data.childClient.Count);
 
         nParent = data.nParent;
         isActive = data.isActive;
+
+        _dialogs = new List<DialogData>();
+        _dialogs = data._dialogs.GetRange(0, data._dialogs.Count);
     }
 }
 

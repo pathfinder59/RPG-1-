@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9cbda8d80ac604b9307107e838e322, type: 3}
+  m_Name: Quest2
+  m_EditorClassIdentifier: 
+  questIdx: 2
+  client: 1000
+  target: 1000
+  _type: 48
+  num: 3
+  exp: 150
+  child: 03000000
+  childClient: d0070000
+  nParent: 1
+  descript: "\uC2A4\uCF08\uB808\uD1A4 3\uB9C8\uB9AC \uCC98\uCE58\uD558\uAE30"
+  isActive: 0
+  _dialogs:
+  - {fileID: 11400000, guid: 3636f6c1a8e4bf74990a23f03dec5943, type: 2}
+  - {fileID: 11400000, guid: c5b1eaeb2854ae34c9567d178931dbf4, type: 2}
+  - {fileID: 11400000, guid: f55c2d7ff85d72544a545f46dd13d5de, type: 2}

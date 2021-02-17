@@ -53,8 +53,8 @@ public class QuestDescriptor : MonoBehaviour
             return;
         Quest quest = null;
 
-        if (QuestManager.Instance.currentQuests[data._type - '0'].ContainsKey(data.client + data.questIdx))
-            quest = QuestManager.Instance.currentQuests[data._type - '0'][data.client + data.questIdx];
+        if (QuestManager.Instance.currentQuests[data._type - '0'].ContainsKey(data.questIdx))
+            quest = QuestManager.Instance.currentQuests[data._type - '0'][data.questIdx];
         
         string questType = data._type == '0' ? "[토벌] " : (data._type == '1' ? "[말걸기] " : "[수집] ");
         descriptor.text = questType + data.descript;

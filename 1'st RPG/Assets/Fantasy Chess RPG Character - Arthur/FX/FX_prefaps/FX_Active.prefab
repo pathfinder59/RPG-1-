@@ -9653,10 +9653,10 @@ GameObject:
   m_Component:
   - component: {fileID: 492670}
   - component: {fileID: 4123221163406959570}
-  - component: {fileID: 1811290703872888781}
   - component: {fileID: 19886802}
   - component: {fileID: 19978652}
   - component: {fileID: -2031923082339068883}
+  - component: {fileID: 3938668894765457599}
   m_Layer: 0
   m_Name: FX_Active
   m_TagString: Untagged
@@ -9692,19 +9692,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0.5
---- !u!114 &1811290703872888781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 197656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be3d1eebbbc0da14d8dad08b4314fe1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reactTime: 0.3
 --- !u!198 &19886802
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -14440,3 +14427,16 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 4
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &3938668894765457599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46d3d2b043211748a7e9e03285be26b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reactTime: 0.5

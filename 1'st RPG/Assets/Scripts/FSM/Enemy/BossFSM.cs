@@ -63,11 +63,9 @@ public class BossFSM : EnemyFSM
     public void AttackClaw()
     {
         AttackClawObj.SetActive(true);
-        AttackClawObj.transform.position = transform.position;
-        AttackClawObj.transform.forward = transform.forward;
-        AttackClawObj.GetComponentInChildren<OneTouchSkill>().target = "Player";
-        AttackClawObj.GetComponentInChildren<OneTouchSkill>().Caster = gameObject.transform;
-        AttackClawObj.GetComponentInChildren<OneTouchSkill>().Atk = 150;
+        AttackClawObj.GetComponentInChildren<TouchingSkill>().SetTarget("Player");
+        AttackClawObj.GetComponentInChildren<TouchingSkill>().SetCaster(gameObject.transform);
+        AttackClawObj.GetComponentInChildren<TouchingSkill>().SetAtk(100);
     }
     public void AttackJump()
     {
@@ -80,11 +78,9 @@ public class BossFSM : EnemyFSM
     public void AttackHorn()
     {
         AttackHornObj.SetActive(true);
-        AttackHornObj.transform.position = transform.position;
-        AttackHornObj.transform.forward = transform.forward;
-        AttackHornObj.GetComponentInChildren<OneTouchSkill>().target = "Player";
-        AttackHornObj.GetComponentInChildren<OneTouchSkill>().Caster = gameObject.transform;
-        AttackHornObj.GetComponentInChildren<OneTouchSkill>().Atk = 100;
+        AttackHornObj.GetComponentInChildren<TouchingSkill>().SetTarget("Player");
+        AttackHornObj.GetComponentInChildren<TouchingSkill>().SetCaster(gameObject.transform);
+        AttackHornObj.GetComponentInChildren<TouchingSkill>().SetAtk(100);
     }
     public override void AttackEvent()
     {

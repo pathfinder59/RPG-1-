@@ -5,6 +5,10 @@ using UnityEngine;
 using common;
 public class WarriorFSM : PlayableFSM
 {
+    [SerializeField]
+    GameObject ActiveEfx;
+    [SerializeField]
+    GameObject PassiveEfx;
     public override IEnumerator AttackEffect()
     {
         yield return new WaitForSeconds(1.0f);
@@ -21,22 +25,19 @@ public class WarriorFSM : PlayableFSM
     
     public void Active()
     {
-        var go = ParticlePoolManager.Instance.Spawn("WarriorActive");
-        go.transform.position = transform.position;
-        go.transform.forward = transform.forward;
-        go.GetComponent<OneTouchSkill>().target = "Enemy";
-        go.GetComponent<OneTouchSkill>().Caster = gameObject.transform;
-        go.GetComponent<OneTouchSkill>().Atk = Status.SkillLevels["Active"] * 10 + (int)((Status.Atk + AddAtk) * 0.3);
+        ActiveEfx.SetActive(true);
+   
+        ActiveEfx.GetComponent<TouchingSkill>().SetTarget("Enemy");
+        ActiveEfx.GetComponent<TouchingSkill>().SetCaster(gameObject.transform);
+        ActiveEfx.GetComponent<TouchingSkill>().SetAtk(Status.SkillLevels["Active"] * 15 + (int)((Status.Atk + AddAtk) * 0.6));
     }
 
     public void Passive()
     {
-        var go = ParticlePoolManager.Instance.Spawn("WarriorPassive");
-        go.transform.position = transform.position;
-        go.transform.forward = transform.forward;
-        go.GetComponent<OneTouchSkill>().target = "Enemy";
-        go.GetComponent<OneTouchSkill>().Caster = gameObject.transform;
-        go.GetComponent<OneTouchSkill>().Atk = Status.SkillLevels["Passive"] * 20 + (int)((Status.Atk + AddAtk) * 0.7);
+        PassiveEfx.SetActive(true);
+        PassiveEfx.GetComponent<RegularSkill>().SetTarget("Enemy");
+        PassiveEfx.GetComponent<RegularSkill>().SetCaster(gameObject.transform);
+        PassiveEfx.GetComponent<RegularSkill>().SetAtk(Status.SkillLevels["Passive"] * 10 + (int)((Status.Atk + AddAtk) * 0.3));
     }
     public override void AttackEvent()
     {

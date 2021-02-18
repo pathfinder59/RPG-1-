@@ -8,22 +8,9 @@ using common;
 public abstract class EnemyFSM : FSM, IDamagable
 {
 
-    public enum FuncState
-    {
-        Idle,
-        Move,
-        Attack,
-        Return,
-        Damaged,
-        Die
-    }
-    protected FuncState _state;
-
-    protected float currentTime = 0;
     Stat _stat;
     CharacterController cc;
     protected Animator _animator;
-    NavMeshAgent _navMeshAgent;
 
     [SerializeField]
     float findDistance;   //탐색 범위
@@ -31,11 +18,7 @@ public abstract class EnemyFSM : FSM, IDamagable
     [SerializeField]
     float moveDistance;  //추적 범위
 
-    [SerializeField]
-    protected float attackDistance; //공격 범위
 
-    [SerializeField]
-    protected float attackDelay;
 
     [SerializeField]
     float hitTime;
@@ -57,8 +40,6 @@ public abstract class EnemyFSM : FSM, IDamagable
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         _stat = GetComponent<Stat>();
-        //string str = name.Substring(0, name.IndexOf('('));
-        //str += "Status";
     }
     void Start()
     {
@@ -85,92 +66,59 @@ public abstract class EnemyFSM : FSM, IDamagable
     void Update()
     {
         _hpBar.value = (float)Hp / MaxHp;
-        
 
-        currentTime = Mathf.Clamp(currentTime - Time.deltaTime, 0, attackDelay);
-
-        switch (_state)
-        {
-            case FuncState.Idle:
-                Idle();
-                break;
-            case FuncState.Move:
-                Move();
-                break;
-            case FuncState.Attack:
-                Attack();
-                break;
-            case FuncState.Return:
-                Return();
-                break;
-            case FuncState.Damaged:
-                break;
-            case FuncState.Die:
-                break;
-        }
+        UpdataRoutine();
     }
 
-    void Idle()
+    override public void Idle()
     {
         if (_target != null)
         {
             _state = FuncState.Move;
-            print("상태 전환: Idle -> Move");
-
             _animator.SetTrigger("Move");
         }
     }
 
-    void Move()
+    override public void Move()
     {
         if (Vector3.Distance(transform.position, _target.position) > moveDistance)
         {
             _state = FuncState.Return;
-            print("상태 전환: Move -> Return");
             _target = null;
         }
         else if (Vector3.Distance(transform.position, _target.position) > attackDistance + enemyWidth)
         {
-            _navMeshAgent.isStopped = true;
-            _navMeshAgent.ResetPath();
-            _navMeshAgent.stoppingDistance = attackDistance + enemyWidth;
-
-            _navMeshAgent.destination = _target.position;
+            Chase(_target.position, attackDistance + enemyWidth);
         }
         else
         {
 
             _state = FuncState.Attack;
-            print("상태 전환: Move -> Attack");
-
             _animator.SetTrigger("Attack");           
         }
     }
 
-    public virtual void Attack()
+    override public void Attack()
     {
         if (Vector3.Distance(transform.position, _target.position) < attackDistance + enemyWidth)
         {           
             if (currentTime == 0)
             {
                 transform.LookAt(_target);
-                print("공격");
                 currentTime = attackDelay;
                 _animator.SetTrigger("StartAttack");
-                //StartCoroutine("AttackEffect");
             }
         }
         else
         {
             _state = FuncState.Move;
-            print("상태 전환: Attack -> Move");
             _animator.SetTrigger("Move");
         }
     }
 
     public abstract void AttackEvent();
 
-    void Return()
+    override public void Return()
     {
         if (Vector3.Distance(transform.position, _originPos) > 0.1f)
         {
@@ -179,8 +127,7 @@ public abstract class EnemyFSM : FSM, IDamagable
         }
         else
         {
-            _navMeshAgent.isStopped = true;
-            _navMeshAgent.ResetPath();
+            StopChase();
 
             transform.position = _originPos;
             transform.rotation = _originRot;
@@ -188,8 +135,6 @@ public abstract class EnemyFSM : FSM, IDamagable
             Hp = MaxHp;
 
             _state = FuncState.Idle;
-            print("상태 전환: Return -> Idle");
-
             _animator.SetTrigger("Idle");
         }
     }
@@ -222,7 +167,6 @@ public abstract class EnemyFSM : FSM, IDamagable
             else if (MaxHp/5 <= hitPower)
             {
                 _state = FuncState.Damaged;
-                print("상태 전환: Any State -> Damaged");
                 _animator.SetTrigger("Damaged");
                 StartCoroutine(DamageProcess());
             }
@@ -230,7 +174,6 @@ public abstract class EnemyFSM : FSM, IDamagable
         else
         {
             _state = FuncState.Die;
-            print("상태 전환: Any State -> Die");
             _animator.SetTrigger("Die");
             Die(enemy);
         }
@@ -242,7 +185,6 @@ public abstract class EnemyFSM : FSM, IDamagable
         yield return new WaitForSeconds(hitTime);
 
         _state = FuncState.Move;
-        print("상태 전환: Damaged -> Move");
         //데미지 애니메이션이 실행될 경우 끝나면 바로 무브로 넘어가기때문에 트리거를 따로 설정하지 않아도 됨
         //이 부분을 바꿀 필요가 잇음
     }

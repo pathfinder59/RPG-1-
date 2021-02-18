@@ -1195,14 +1195,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cad76478f0a3541bbee20547147f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDelay: 3
   findDistance: 10
   moveDistance: 15
   attackDistance: 5
-  attackDelay: 2
   hitTime: 2
   _hpBar: {fileID: 6695696804103857909}
-  AttackClawObj: {fileID: 0}
-  AttackHornObj: {fileID: 0}
+  AttackClawObj: {fileID: 5829104535770916551}
+  AttackHornObj: {fileID: 4139221098050025808}
 --- !u!114 &3771033748227979742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2988,6 +2988,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5aaa9250b654a446aa2f86ea262ede4, type: 3}
+--- !u!1 &4139221098050025808 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7579055311481307983, guid: d5aaa9250b654a446aa2f86ea262ede4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5791419174374046239}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4139221098050025809 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7579055311481307982, guid: d5aaa9250b654a446aa2f86ea262ede4,
@@ -3063,6 +3069,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c440384a3b834be4ba29b0564b2870c4, type: 3}
+--- !u!1 &5829104535770916551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3361670362700854156, guid: c440384a3b834be4ba29b0564b2870c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 9097885679697810763}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5829104535770916545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3361670362700854154, guid: c440384a3b834be4ba29b0564b2870c4,

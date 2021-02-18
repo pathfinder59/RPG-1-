@@ -12,7 +12,7 @@ public abstract class PlayableFSM : FSM, IDamagable
     protected Animator _animator;
 
     PlayerStat _stat;
-    NavMeshAgent _navMeshAgent;
+  
 
     public PlayerStat Status { get => _stat;}
 
@@ -22,24 +22,9 @@ public abstract class PlayableFSM : FSM, IDamagable
     public int MaxHp { get { return _stat.MaxHp; }}
 
     public bool IsMoving { get; set; }
-    public enum FuncState
-    {
-        Idle, Move, Chase, Attack, Damaged,Die
-    }
-    FuncState _state;
     
     public bool isUsingSkill = false;
 
-    private float currentTime;  //현재 공격 쿨타임을 나타냄
-
-    [SerializeField]
-    float attackDelay;  //공격 딜레이 길이
-
-    [SerializeField]
-    float attackDistance;   
-
-    [SerializeField]
-    float dieTime;
 
     [SerializeField]
     Slider _hpBar;
@@ -95,28 +80,12 @@ public abstract class PlayableFSM : FSM, IDamagable
     void Update()
     {
         _hpBar.value = (float)Hp / MaxHp;
-        currentTime = Mathf.Clamp(currentTime - Time.deltaTime, 0, attackDelay);
-
-        switch (_state)
-        {
-            case FuncState.Idle:
-                Idle();
-                break;
-            case FuncState.Move:
-                Move();
-                break;
-            case FuncState.Chase:
-                Chase();
-                break;
-            case FuncState.Attack:
-                Attack();
-                break;
-        }
+        UpdataRoutine();
     }
 
 
 
-    public void Idle()
+    override public void Idle()
     {
         if (isUsingSkill)
             return;
@@ -131,11 +100,11 @@ public abstract class PlayableFSM : FSM, IDamagable
 
         if (_target != null)
         {
-            _state = FuncState.Chase;
+            _state = FuncState.Move;
             _animator.SetTrigger("Move");
         }
     }
-    void Move()
+    override public void Move()
     {
         if (isUsingSkill)
             return;
@@ -146,39 +115,25 @@ public abstract class PlayableFSM : FSM, IDamagable
             {
                 _state = FuncState.Idle;
                 _animator.SetTrigger("Idle");
-
+                StopChase();
             }
             else
-                _state = FuncState.Chase;
-            return;
-        }
-        
-    }
-
-    void Chase()
-    {
-        if (isUsingSkill)
-            return;
-        if (_target == null || IsMoving)  //플레이어인 경우에만
-        {
-            _state = FuncState.Move;
-            StopChase();
-            return;
-
+            {
+                if (Vector3.Distance(gameObject.transform.position, _target.transform.position) <= attackDistance + enemyWidth)
+                {
+                    _state = FuncState.Attack;
+                    _animator.SetTrigger("Attack");
+                }
+                else
+                    Chase(_target.transform.position, attackDistance + enemyWidth);
+            }
         }
         else
-        {
-            if (Vector3.Distance(gameObject.transform.position, _target.transform.position) <= attackDistance + enemyWidth)
-            {
-                _state = FuncState.Attack;
-                _animator.SetTrigger("Attack");
-            }
-            else
-                Chase(_target.transform.position, attackDistance + enemyWidth);
-        }
+            StopChase();
+
     }
 
-    void Attack()
+    override public void Attack()
     {
         if (isUsingSkill)
             return;
@@ -211,7 +166,7 @@ public abstract class PlayableFSM : FSM, IDamagable
         }
         else
         {
-            _state = FuncState.Chase;
+            _state = FuncState.Move;
             _animator.SetTrigger("Move");
         }
     }
@@ -294,17 +249,15 @@ public abstract class PlayableFSM : FSM, IDamagable
         
     }
 
-    IEnumerator DieProcess(Transform enemy)
+    void DieProcess(Transform enemy)
     {
-        yield return new WaitForSeconds(dieTime);
-        print("소멸!");
         gameObject.SetActive(false);
     }
     void Die(Transform enemy)
     {
         StopAllCoroutines();
         StartCoroutine("LateDie");
-        StartCoroutine(DieProcess(enemy));
+        StartCoroutine(LateDie(enemy));
     }
 
     abstract public IEnumerator LateDie(Transform enemy);
@@ -317,19 +270,4 @@ public abstract class PlayableFSM : FSM, IDamagable
             Hp = Mathf.Clamp(Hp + MaxHp/100, 0, MaxHp);
         }
     }
-
-    public void Chase(Vector3 target, float distance)
-    {
-        _navMeshAgent.isStopped = true;
-        _navMeshAgent.ResetPath();
-        _navMeshAgent.stoppingDistance = distance;
-        _navMeshAgent.destination = target;
-    }
-
-    public void StopChase()
-    {
-        _navMeshAgent.isStopped = true;
-        _navMeshAgent.ResetPath();
-    }
-
 }

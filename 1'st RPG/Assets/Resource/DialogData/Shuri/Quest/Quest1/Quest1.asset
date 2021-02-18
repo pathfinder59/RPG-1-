@@ -27,4 +27,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0405b36b23392ac4791bc3fd644b3fd2, type: 2}
   - {fileID: 11400000, guid: dc63a3a13365c5c45aed388c2a0171ce, type: 2}
   - {fileID: 11400000, guid: 815f6ba8b1c37844c8dc186a4b6d14ab, type: 2}
-  CallrutineName: SpawnBoss
+  CallrutineName: 

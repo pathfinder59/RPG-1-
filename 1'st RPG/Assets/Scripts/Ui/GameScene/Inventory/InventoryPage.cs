@@ -17,14 +17,14 @@ public class InventoryPage : MonoBehaviour
 
     [SerializeField]
     InventoryBtn initialBtn;
-    ICommander curPageBtn;
+    ICommander curCommander;
 
     public Text ItemDescriptor;
 
     private void Awake()
     {
-        curPageBtn = initialBtn;
-        curPageBtn.On();
+        curCommander = initialBtn;
+        curCommander.On();
     }
     private void OnEnable()
     {
@@ -41,14 +41,14 @@ public class InventoryPage : MonoBehaviour
 
     public void ClickPageBtn(ICommander commander)
     {
-        if(curPageBtn != null)
-            curPageBtn.Off();
+        if(curCommander != null)
+            curCommander.Off();
         SetCommander(commander);
         commander.On();
     }
     public void SetCommander(ICommander commander)
     {
-        curPageBtn = commander;
+        curCommander = commander;
     }
     public bool AddItem(ItemData data)
     {

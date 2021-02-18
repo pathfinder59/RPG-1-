@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemSlotList : MonoBehaviour
+public abstract class ItemSlotList : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -17,10 +17,7 @@ public class ItemSlotList : MonoBehaviour
     }
 
 
-    public virtual bool AddItem(ItemData data, GameObject itemUi)
-    {
-        return true;
-    }
+    public abstract bool AddItem(ItemData data, GameObject itemUi);
     public virtual void SubItem(int category)
     {
         

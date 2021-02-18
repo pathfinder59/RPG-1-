@@ -12,6 +12,8 @@ public class BossFSM : EnemyFSM
     GameObject AttackClawObj;
     [SerializeField]
     GameObject AttackHornObj;
+    [SerializeField]
+    GameObject AttackJumpObj;
     public override void Attack()
     {
         if (Vector3.Distance(transform.position, _target.position) < attackDistance)
@@ -60,28 +62,6 @@ public class BossFSM : EnemyFSM
         isAttacking = !isAttacking;
     }
 
-    public void AttackClaw()
-    {
-        AttackClawObj.SetActive(true);
-        AttackClawObj.GetComponentInChildren<TouchingSkill>().SetTarget("Player");
-        AttackClawObj.GetComponentInChildren<TouchingSkill>().SetCaster(gameObject.transform);
-        AttackClawObj.GetComponentInChildren<TouchingSkill>().SetAtk(100);
-    }
-    public void AttackJump()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 10, 1 << LayerMask.NameToLayer("Player"));
-        foreach(Collider collider in colliders)
-        {
-            collider.gameObject.GetComponent<PlayableFSM>().Damaged(80, gameObject.transform);
-        }
-    }
-    public void AttackHorn()
-    {
-        AttackHornObj.SetActive(true);
-        AttackHornObj.GetComponentInChildren<TouchingSkill>().SetTarget("Player");
-        AttackHornObj.GetComponentInChildren<TouchingSkill>().SetCaster(gameObject.transform);
-        AttackHornObj.GetComponentInChildren<TouchingSkill>().SetAtk(100);
-    }
     public override void AttackEvent()
     {
         Target.GetComponent<PlayableFSM>().Damaged(5, gameObject.transform);
@@ -90,5 +70,25 @@ public class BossFSM : EnemyFSM
     public override IEnumerator LateDie(Transform enemy)
     {
         yield break;
+    }
+
+    void SpawnSkill(GameObject obj,int hitPower)
+    {
+        obj.SetActive(true);
+        obj.GetComponentInChildren<TouchingSkill>().SetTarget("Player");
+        obj.GetComponentInChildren<TouchingSkill>().SetCaster(gameObject.transform);
+        obj.GetComponentInChildren<TouchingSkill>().SetAtk(hitPower);
+    }
+    public void AttackClaw()
+    {
+        SpawnSkill(AttackClawObj, 100);
+    }
+    public void AttackJump()
+    {
+        SpawnSkill(AttackJumpObj, 80);
+    }
+    public void AttackHorn()
+    {
+        SpawnSkill(AttackHornObj, 100);
     }
 }

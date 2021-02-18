@@ -6,5 +6,6 @@ public class AttackClaw : TouchingSkill
 {
     protected override void processCollision(Collider collision)
     {
+        collision.GetComponent<Rigidbody>().AddForce(transform.forward*50);
     }
 }

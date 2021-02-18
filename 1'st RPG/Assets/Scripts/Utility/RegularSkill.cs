@@ -5,7 +5,7 @@ using UnityEngine;
 public class RegularSkill : DealingSkill
 {
     [SerializeField]
-    float _time;
+    float _time; //스킬 오브젝트는 처음에 생성된 이후 한번 충돌체크후 사라지게 되는데 이 값만큼 시간이 지나면 다시 활성화됨
 
     void OnDisable()
     {

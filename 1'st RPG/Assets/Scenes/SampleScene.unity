@@ -622,6 +622,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.5, z: 1}
   m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!1 &425666002 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 996098516, guid: 8072ad45b920f374b8d17d256101545b,
+    type: 3}
+  m_PrefabInstance: {fileID: 8686664962889927385}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &425666003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425666002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bcf17b8c9f347e4bac992a6d9d0eb62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _viewContent: {fileID: 712014100}
 --- !u!1 &441103397
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,8 +1476,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4318fbbf0f0e404aaae97c00f0a898e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curQuestScrollView: {fileID: 712014100}
   questListPage: {fileID: 8686664962889927390}
+  _curQuestList: {fileID: 425666003}
 --- !u!4 &1199326170
 Transform:
   m_ObjectHideFlags: 0

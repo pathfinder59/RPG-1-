@@ -8,9 +8,9 @@ public class QuestManager : Singleton<QuestManager>
     public Dictionary<int,Quest>[] currentQuests;
 
     [SerializeField]
-    Transform curQuestScrollView;
-    [SerializeField]
     QuestListPage questListPage;
+    [SerializeField]
+    CurQuestList _curQuestList;
     private void Awake()
     {
 
@@ -61,21 +61,11 @@ public class QuestManager : Singleton<QuestManager>
     }
     public void AddDescriptor(QuestData data)
     {
-        QuestDescriptor descriptor = ObjectPoolManager.Instance.Spawn("QuestDescriptor").GetComponent<QuestDescriptor>();
-        descriptor.SetData(data);
-        descriptor.transform.SetParent(curQuestScrollView);
-        EventManager.Emit("UpdateDescriptor");
+        _curQuestList.AddDescriptor(data);
     }
     public void RemoveDescriptor(QuestData data)
     {
-        for(int i = 0;i < curQuestScrollView.childCount;++i)
-        {
-            if (curQuestScrollView.GetChild(i).GetComponent<QuestDescriptor>().Data == data)
-            {
-                curQuestScrollView.GetChild(i).gameObject.SetActive(false);
-                return;
-            }
-        }
+        _curQuestList.RemoveDescriptor(data);
     }
 
     void AddDataToQuestList(Dictionary<int, Quest> currentQuests, QuestData data, int clientID)

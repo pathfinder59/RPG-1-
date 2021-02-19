@@ -15,27 +15,6 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
     [SerializeField]
     Text _text;
 
-    public static void ResetPointer()
-    {
-        clickedContent = null;
-    }
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        
-        clickedContent = this;
-        EventManager.Emit("QuestContentClick");
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        contentImage.color = contentImage.color + new Color(0.1f, 0.1f, 0.1f);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        contentImage.color = contentImage.color - new Color(0.1f, 0.1f, 0.1f);
-    }
-
     void Awake()
     {
         EventManager.On("UpdataQuestPage", UpdateContent);
@@ -50,6 +29,28 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
     {
         
     }
+
+    public static void ResetPointer()
+    {
+        clickedContent = null;
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+
+        clickedContent = this;
+        EventManager.Emit("QuestContentClick");
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        contentImage.color = contentImage.color + new Color(0.1f, 0.1f, 0.1f);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        contentImage.color = contentImage.color - new Color(0.1f, 0.1f, 0.1f);
+    }
+
     public void UpdateContent(GameObject obj = null)
     {
         Quest quest = null;

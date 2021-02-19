@@ -7,7 +7,7 @@ public class QuestListPage : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    Transform _questContents;
+    Transform _questContent;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class QuestListPage : MonoBehaviour
     {
         var content = ObjectPoolManager.Instance.Spawn("QuestContent").GetComponent<QuestContent>();
         content.data = data;
-        content.transform.SetParent(_questContents);
+        content.transform.SetParent(_questContent);
     }
     public void ClosePage(GameObject obj = null)
     {

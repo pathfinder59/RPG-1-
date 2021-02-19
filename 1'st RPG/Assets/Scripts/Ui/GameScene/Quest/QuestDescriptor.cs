@@ -39,13 +39,13 @@ public class QuestDescriptor : MonoBehaviour
         if (!isIcon)
         {
             if(QuestContent.clickedContent != null)
-                data = QuestContent.clickedContent.data;
+                SetData(QuestContent.clickedContent.data);
         }
         UpdateDescriptor();
     }
-    public void SetData(QuestData d)
+    public void SetData(QuestData questData)
     {
-        data = d;
+        data = questData;
     }
     public void UpdateDescriptor()
     {

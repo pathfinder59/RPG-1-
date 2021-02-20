@@ -25,14 +25,14 @@ public class EquipSlot : MonoBehaviour, IDropHandler
 
     void SetEquip()
     {
-        if (itemCategory != ItemUi.DragedObject.GetComponent<ItemUi>().Data.Category)
+        if (itemCategory != Item.DragedObject.GetComponent<Item>().Data.Category)
             return;
         if (transform.childCount != 0)
         {
-            transform.GetChild(0).SetParent(ItemUi.PrevSlot);
+            transform.GetChild(0).SetParent(Item.PrevSlot);
         }
 
-        ItemUi.DragedObject.transform.SetParent(transform);
+        Item.DragedObject.transform.SetParent(transform);
         EventManager.Emit("UpdatePlayerEquip");
     }
 }

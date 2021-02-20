@@ -78,7 +78,7 @@ namespace common
             {
                 if (slot.transform.childCount == 0)
                     continue;
-                Equipment data = slot.GetComponentInChildren<ItemUi>().Data as Equipment ?? null;
+                Equipment data = slot.GetComponentInChildren<Item>().Data as Equipment ?? null;
                 if (data == null)
                     continue;
                 AddtiveAtk += data.Atk;

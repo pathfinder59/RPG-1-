@@ -22,15 +22,15 @@ public class SupplySlotList : ItemSlotList
             if (transform.GetChild(i).childCount == 0)
             {
                 GameObject go = Instantiate(itemUi);
-                go.GetComponent<ItemUi>().Data = data;
-                go.GetComponent<ItemUi>().numItem = 1;
-                go.GetComponent<ItemUi>().UpdateData();
+                go.GetComponent<Item>().Data = data;
+                go.GetComponent<Item>().numItem = 1;
+                go.GetComponent<Item>().UpdateData();
                 go.transform.SetParent(transform.GetChild(i));
                 return true;
             }
             else
             {
-                ItemUi item = transform.GetChild(i).GetChild(0).GetComponent<ItemUi>();
+                Item item = transform.GetChild(i).GetChild(0).GetComponent<Item>();
                 if(item.Data == data && item.numItem < 10)
                 {
                     item.numItem++;
@@ -48,7 +48,7 @@ public class SupplySlotList : ItemSlotList
         {
             if (transform.GetChild(i).childCount != 0)
             {
-                ItemUi item = transform.GetChild(i).GetChild(0).GetComponent<ItemUi>();
+                Item item = transform.GetChild(i).GetChild(0).GetComponent<Item>();
                 if(item.Data.Category == category)
                 {
                     item.numItem--;
@@ -66,5 +66,11 @@ public class SupplySlotList : ItemSlotList
         }
 
     }
-
+    public override void PointerClickItem(Item item)
+    {
+        if (GameSceneManager.Instance.UsePotion())
+        {
+            item.UpdateData();
+        }
+    }
 }

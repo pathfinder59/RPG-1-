@@ -35,6 +35,11 @@ public class InteractBtn : MonoBehaviour
             StoreCanvas.gameObject.SetActive(true);
             GameSceneCanvas.gameObject.SetActive(false);
         }
+        else if (ActionObj.layer == LayerMask.NameToLayer("Reinforce"))
+        {
+            //StoreCanvas.gameObject.SetActive(true);
+            //GameSceneCanvas.gameObject.SetActive(false);
+        }
         gameObject.SetActive(false);
     }
 }

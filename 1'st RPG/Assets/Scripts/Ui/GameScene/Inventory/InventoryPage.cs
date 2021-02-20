@@ -16,18 +16,18 @@ public class InventoryPage : MonoBehaviour
     GameObject ItemUiPrefab;
 
     [SerializeField]
-    InventoryBtn initialBtn;
-    ICommander curCommander;
+    InventoryBtn initialBtn; //장비 or 소비 선택버튼
+    ICommander curCategory;
 
     public Text ItemDescriptor;
 
     private void Awake()
     {
-        curCommander = initialBtn;
-        curCommander.On();
+        curCategory = initialBtn;
     }
     private void OnEnable()
     {
+        curCategory.On();
     }
     void Start()
     {
@@ -41,14 +41,14 @@ public class InventoryPage : MonoBehaviour
 
     public void ClickPageBtn(ICommander commander)
     {
-        if(curCommander != null)
-            curCommander.Off();
+        if(curCategory != null)
+            curCategory.Off();
         SetCommander(commander);
         commander.On();
     }
     public void SetCommander(ICommander commander)
     {
-        curCommander = commander;
+        curCategory = commander;
     }
     public bool AddItem(ItemData data)
     {

@@ -21,21 +21,21 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
     void SetItem()
     {
-        ItemData data = ItemUi.DragedObject.GetComponent<ItemUi>().Data;
-        Transform prevSlot = ItemUi.PrevSlot;
+        ItemData data = Item.DragedObject.GetComponent<Item>().Data;
+        Transform prevSlot = Item.PrevSlot;
 
 
         if (transform.childCount != 0)
         {
             if (prevSlot.GetComponent<EquipSlot>() != null)
             {
-                if (transform.GetChild(0).GetComponent<ItemUi>().Data.Category != data.Category)
+                if (transform.GetChild(0).GetComponent<Item>().Data.Category != data.Category)
                     return;
             }
-            transform.GetChild(0).SetParent(ItemUi.PrevSlot);
+            transform.GetChild(0).SetParent(Item.PrevSlot);
         }
 
-        ItemUi.DragedObject.transform.SetParent(transform);
+        Item.DragedObject.transform.SetParent(transform);
         EventManager.Emit("UpdatePlayerEquip");
     }
 }

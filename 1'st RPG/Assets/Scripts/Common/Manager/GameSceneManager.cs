@@ -31,8 +31,12 @@ public class GameSceneManager : Singleton<GameSceneManager>
     bool _isAct;
     public bool IsAct => _isAct;
 
+
+    public ItemSlotList curItemSlotList;
+
     void Start()
     {
+        curItemSlotList = null;
         Init();
     }
 

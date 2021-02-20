@@ -18,6 +18,7 @@ public abstract class ItemSlotList : MonoBehaviour
 
 
     public abstract bool AddItem(ItemData data, GameObject itemUi);
+    public abstract void PointerClickItem(Item item);
     public virtual void SubItem(int category)
     {
         

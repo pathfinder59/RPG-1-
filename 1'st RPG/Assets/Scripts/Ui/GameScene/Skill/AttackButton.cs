@@ -18,6 +18,8 @@ public class AttackButton : MonoBehaviour
 
     public void OnClickBtn()
     {
+        if (GameSceneManager.Instance.IsAct)
+            return;
         if (_playerFsm.Target == null)
             _playerFsm.FindTarget(10f, 1 << LayerMask.NameToLayer("Enemy"));
         else

@@ -11,18 +11,16 @@ public class DialogManager : Singleton<DialogManager>
     QuestListPage questListPage;
 
     int dialogIdx;
-    public bool isAction;
 
     IDictionary<int, List<string>> dlgDatas;
     IDictionary<int, List<DialogData>> questDlgDatas;
     void Start()
     {
-        isAction = false;
         dialogIdx = 0;
 
         dlgDatas = new Dictionary<int, List<string>>();
         questDlgDatas = new Dictionary<int, List<DialogData>>();
-        foreach (DialogData data in DataManager.Instance.dialogDatabase)
+        foreach (DialogData data in DataManager.Instance.dialogDatabase)  //npc별 퀘스트 컬렉션 
         {
             if (!dlgDatas.ContainsKey(data._id))
                 dlgDatas.Add(data._id, new List<string>());
@@ -31,7 +29,7 @@ public class DialogManager : Singleton<DialogManager>
 
         }
 
-        foreach (QuestData data in DataManager.Instance.questDatabase)
+        foreach (QuestData data in DataManager.Instance.questDatabase) //퀘스트용 대화 컬렉션
         {
             if (!questDlgDatas.ContainsKey(data.questIdx))
             {
@@ -41,7 +39,7 @@ public class DialogManager : Singleton<DialogManager>
                 questDlgDatas[data.questIdx] = data._dialogs.GetRange(0, data._dialogs.Count);
         }
     }
-    // Update is called once per frame
+
     void Update()
     {        
         if(Input.GetButtonDown("Jump") && !GameSceneManager.Instance._interactBtn.activeInHierarchy)
@@ -69,7 +67,7 @@ public class DialogManager : Singleton<DialogManager>
             Action(objData.id);
         }
     }
-    void Action(int id)
+    public void Action(int id)
     {
         Dictionary<int, List<QuestData>> database = DataManager.Instance.questDict;
         QuestData questData = null;
@@ -81,8 +79,6 @@ public class DialogManager : Singleton<DialogManager>
             CommunicateForQuest(id);
         else
             Communicate(id);
-
-        _dialogPage.gameObject.SetActive(isAction);
     }
 
     void CommunicateForQuest(int id)
@@ -99,13 +95,12 @@ public class DialogManager : Singleton<DialogManager>
         if (textData == null)
         {
             QuestManager.Instance.ProcessQuest(id, processRate, clickedQuestData, currentQuests);
-
-            isAction = false;
             dialogIdx = 0;
+            UiController.Instance.OpenDialogPage(false);
             return;
         }
         _dialogPage._text.text = textData;
-        isAction = true;
+        UiController.Instance.OpenDialogPage(true);
         dialogIdx++;
 
     }
@@ -114,14 +109,12 @@ public class DialogManager : Singleton<DialogManager>
         string textData = GetData(dlgDatas[id], dialogIdx);
         if (textData == null)
         {
-            isAction = false;
-            GameSceneManager.Instance.SetIsAct(false);
+            UiController.Instance.OpenDialogPage(false);
             dialogIdx = 0;
             return;
         }
         _dialogPage._text.text = textData;
-        isAction = true;
-        GameSceneManager.Instance.SetIsAct(true);
+        UiController.Instance.OpenDialogPage(true);
         dialogIdx++;
     }
 

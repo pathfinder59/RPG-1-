@@ -11,7 +11,6 @@ public class QuestListPage : MonoBehaviour
 
     void Start()
     {
-        EventManager.On("CloseQuestPage", ClosePage);
     }
 
     // Update is called once per frame

@@ -15,6 +15,7 @@ public class GameSceneManager : Singleton<GameSceneManager>
     [SerializeField]
     PotionSlot potionSlot;
 
+
     public GameObject _interactBtn;
 
     public string playerClass;
@@ -83,4 +84,5 @@ public class GameSceneManager : Singleton<GameSceneManager>
     {
         return potionSlot.UsePotion();
     }
+
 }

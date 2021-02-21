@@ -25,21 +25,10 @@ public class InteractBtn : MonoBehaviour
         if (GameSceneManager.Instance.IsAct)
             return;
         GameObject ActionObj = GameSceneManager.Instance.ActionObject;
-
+        
         if (ActionObj.layer == LayerMask.NameToLayer("Npc"))
-        {
-            DialogManager.Instance.Interact(ActionObj);
-        }
-        else if(ActionObj.layer == LayerMask.NameToLayer("Store"))
-        {
-            StoreCanvas.gameObject.SetActive(true);
-            GameSceneCanvas.gameObject.SetActive(false);
-        }
-        else if (ActionObj.layer == LayerMask.NameToLayer("Reinforce"))
-        {
-            //StoreCanvas.gameObject.SetActive(true);
-            //GameSceneCanvas.gameObject.SetActive(false);
-        }
+            ActionObj.GetComponent<Obj>().Interact();
+        
         gameObject.SetActive(false);
     }
 }

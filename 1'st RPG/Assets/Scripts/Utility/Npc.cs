@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Npc : MonoBehaviour
+public class Npc : Obj
 {
     // Start is called before the first frame update
     [SerializeField]
@@ -43,5 +43,11 @@ public class Npc : MonoBehaviour
     public void SetImageActive(bool value)
     {
         questImage.gameObject.SetActive(value);
+    }
+
+    public override void Interact()
+    {
+        int id = GetComponent<ObjData>().id;
+        DialogManager.Instance.Action(id);
     }
 }

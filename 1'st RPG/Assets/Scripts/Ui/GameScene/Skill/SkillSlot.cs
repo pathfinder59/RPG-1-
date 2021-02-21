@@ -47,11 +47,15 @@ public class SkillSlot : MonoBehaviour
 
     public void OnClickBtn()
     {
-        if(_coverImage.activeInHierarchy)
+
+        if (_coverImage.activeInHierarchy)
             SetSkill();
         else
+        {
+            if (GameSceneManager.Instance.IsAct)
+                return;
             UseSkill();
-
+        }
     }
     void SetSkill()
     {

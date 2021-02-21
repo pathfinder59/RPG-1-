@@ -183,7 +183,8 @@ public class QuestManager : Singleton<QuestManager>
             return false;
         else
         {
-            questListPage.gameObject.SetActive(true);
+            UiController.Instance.OpenQuestPage(true);
+
             Dictionary<int, List<QuestData>> database = DataManager.Instance.questDict;
 
             foreach (QuestData data in database[id])
@@ -193,7 +194,7 @@ public class QuestManager : Singleton<QuestManager>
             }
 
             EventManager.Emit("UpdataQuestPage");
-            GameSceneManager.Instance.SetIsAct(true);
+            
             return true;
         }
     }

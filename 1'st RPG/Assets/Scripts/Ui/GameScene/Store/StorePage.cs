@@ -62,5 +62,6 @@ public class StorePage : MonoBehaviour
             StoreItemContent.selectedStoreItem.GetComponent<Image>().color = new Color(0.9f, 0.3f, 0.3f);
             StoreItemContent.selectedStoreItem = null;
         }
+        UiController.Instance.OpenStorePage(false);
     }
 }

@@ -57,7 +57,7 @@ public class QuestDescriptor : MonoBehaviour
             quest = QuestManager.Instance.currentQuests[data._type - '0'][data.questIdx];
         
         string questType = data._type == '0' ? "[토벌] " : (data._type == '1' ? "[말걸기] " : "[수집] ");
-        descriptor.text = questType + data.descript;
+        descriptor.text = questType + data.title +"\n"+data.descript;
 
         if (data._type != '1' && quest != null)
             descriptor.text += string.Format("\n{0}/{1}", data.num - quest.num, data.num); 

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Quest5
   m_EditorClassIdentifier: 
   questIdx: 5
+  title: "\uB098\uC774\uD2B8\uBA54\uC5B4 \uB4DC\uB798\uACE4 \uCC98\uCE58"
   client: 2000
   target: 2000
   _type: 49

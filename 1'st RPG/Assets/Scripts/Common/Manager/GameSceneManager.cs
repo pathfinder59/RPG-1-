@@ -85,4 +85,13 @@ public class GameSceneManager : Singleton<GameSceneManager>
         return potionSlot.UsePotion();
     }
 
+    public void PointerClickItem(Item item)
+    {
+        curItemSlotList.PointerClickItem(item);
+    }
+
+    public void SetInventoryDescriptorContent(string str)
+    {
+        inventoryPage.SetDescriptorContent(str);
+    }
 }

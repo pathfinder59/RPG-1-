@@ -7,6 +7,8 @@ public class CurQuestList : MonoBehaviour
 {
     [SerializeField]
     Transform _viewContent;
+    [SerializeField]
+    GameObject _descriptorPrefab;
     void Start()
     {
         
@@ -20,6 +22,7 @@ public class CurQuestList : MonoBehaviour
 
     public void AddDescriptor(QuestData data)
     {
+        
         QuestDescriptor descriptor = ObjectPoolManager.Instance.Spawn("QuestDescriptor").GetComponent<QuestDescriptor>();
         descriptor.SetData(data);
         descriptor.transform.SetParent(_viewContent);

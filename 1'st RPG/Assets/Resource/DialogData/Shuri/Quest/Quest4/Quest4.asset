@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Quest4
   m_EditorClassIdentifier: 
   questIdx: 4
+  title: "\uC704\uC790\uB4DC \uCC98\uCE58"
   client: 2000
   target: 2001
   _type: 48

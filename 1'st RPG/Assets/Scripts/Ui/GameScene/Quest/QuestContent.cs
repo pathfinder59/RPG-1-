@@ -59,7 +59,7 @@ public class QuestContent : MonoBehaviour , IPointerClickHandler,IPointerEnterHa
         int id = GameSceneManager.Instance.ActionObject.GetComponent<ObjData>().id;
         string str = quest == null? "[수락가능]" : (quest.processRate == 2? "[진행중]": !(data._type == '1' && data.target == id)? "[완료]"  : data.client == data.target? "[완료]": "[진행중]");
 
-        _text.text = str + (data.questIdx).ToString();
+        _text.text = str + data.title;
     }
     public void SetActiveContent(GameObject obj = null)
     {

@@ -36,32 +36,38 @@ public class UiController : Singleton<UiController>
     public void SetActiveQuestPage(bool value)
     {
         _questPage.SetActive(value);
-        if(!value)
-            EventManager.Emit("CloseQuestPage");
     }
     public void SetActiveDialogPage(bool value)
     {
         _dialogPage.SetActive(value);
     }
-
-    public void OpenStorePage(bool value)
+    void OffPlayUi(bool value)
     {
         GameSceneManager.Instance.SetIsAct(value);
         SetActivePlayUi(!value);
+    }
+
+
+    public void OpenStorePage(bool value)
+    {
+        OffPlayUi(value);
         SetActiveStorePage(value);
     }
 
     public void OpenQuestPage(bool value)
     {
-        GameSceneManager.Instance.SetIsAct(value);
-        SetActivePlayUi(!value);
+        OffPlayUi(value);
         SetActiveQuestPage(value);
+        if (!value)
+        {
+            EventManager.Emit("CloseQuestPage");
+            GameSceneManager.Instance.SetInterctBtnAct(true);
+        }
     }
 
     public void OpenDialogPage(bool value)
     {
-        GameSceneManager.Instance.SetIsAct(value);
-        SetActivePlayUi(!value);
+        OffPlayUi(value);
         SetActiveDialogPage(value);
     }
 }

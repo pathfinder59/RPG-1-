@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class BossFSM : EnemyFSM
 {
 
@@ -69,7 +69,8 @@ public class BossFSM : EnemyFSM
 
     public override IEnumerator LateDie(Transform enemy)
     {
-        yield break;
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene(2);   
     }
 
     void SpawnSkill(GameObject obj,int hitPower)

@@ -204,7 +204,6 @@ public abstract class EnemyFSM : FSM, IDamagable
             fsm.FindTarget(5, 1 << LayerMask.NameToLayer("Enemy"));
 
         StartCoroutine(LateDie(enemy));
-        //StartCoroutine(DieProcess());
     }
 
     abstract public IEnumerator LateDie(Transform enemy);

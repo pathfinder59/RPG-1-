@@ -74,16 +74,16 @@ public class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         ClickedObject = gameObject;
 
-        GameSceneManager.Instance.curItemSlotList.PointerClickItem(this);
+        GameSceneManager.Instance.PointerClickItem(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        GameSceneManager.Instance.Inventory.ItemDescriptor.text = "";
+        GameSceneManager.Instance.SetInventoryDescriptorContent("");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        GameSceneManager.Instance.Inventory.ItemDescriptor.text = Data.Name +"\n"+ Data.Descript;
+        GameSceneManager.Instance.SetInventoryDescriptorContent(Data.Name + "\n" + Data.Descript);
     }
 }

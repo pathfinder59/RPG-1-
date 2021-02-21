@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Quest3
   m_EditorClassIdentifier: 
   questIdx: 3
+  title: "\uC9C0\uC6D0 \uC694\uCCAD"
   client: 1000
   target: 2000
   _type: 49

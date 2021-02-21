@@ -161,6 +161,7 @@ public class QuestManager : Singleton<QuestManager>
     public void ProcessQuest(int id,int processRate ,QuestData clickedQuestData, Dictionary<int, Quest> questDict)
     {
         QuestContent.clickedContent = null;
+        UiController.Instance.OpenDialogPage(false);
         processRate %= 3;
         switch (processRate)
         {

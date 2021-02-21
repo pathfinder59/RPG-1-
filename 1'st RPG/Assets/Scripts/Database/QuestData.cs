@@ -7,6 +7,7 @@ using UnityEngine;
 public class QuestData : ScriptableObject
 {
     public int questIdx; //대화 번호
+    public string title;
     public int client; //퀘스트를 주는 npc
     public int target;
 
@@ -28,6 +29,7 @@ public class QuestData : ScriptableObject
     public QuestData(QuestData data)
     {
         questIdx = data.questIdx;
+        title = data.title;
         client = data.client;
         target = data.target;
         _type = data._type;

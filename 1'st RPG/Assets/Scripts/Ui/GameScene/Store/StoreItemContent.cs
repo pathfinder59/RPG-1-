@@ -9,7 +9,8 @@ public class StoreItemContent : MonoBehaviour,IPointerClickHandler
     Image _itemIcon;
     [SerializeField]
     Text _itemPrice;
-
+    [SerializeField]
+    Text _itemName;
     public ItemData data;
 
     static public StoreItemContent selectedStoreItem;
@@ -26,6 +27,7 @@ public class StoreItemContent : MonoBehaviour,IPointerClickHandler
     {
         _itemIcon.sprite = data.Sprite;
         _itemPrice.text = data.Price.ToString();
+        _itemName.text = data.Name;
     }
 
     public void OnPointerClick(PointerEventData eventData)

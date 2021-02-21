@@ -17,7 +17,7 @@ public class InventoryPage : MonoBehaviour
 
     [SerializeField]
     InventoryBtn initialBtn; //장비 or 소비 선택버튼
-    ICommander curCategory;
+    ICommand curCategory;
 
     public Text ItemDescriptor;
 
@@ -39,16 +39,16 @@ public class InventoryPage : MonoBehaviour
         
     }
 
-    public void ClickPageBtn(ICommander commander)
+    public void ClickPageBtn(ICommand command)
     {
         if(curCategory != null)
             curCategory.Off();
-        SetCommander(commander);
-        commander.On();
+        SetCommand(command);
+        command.On();
     }
-    public void SetCommander(ICommander commander)
+    public void SetCommand(ICommand command)
     {
-        curCategory = commander;
+        curCategory = command;
     }
     public bool AddItem(ItemData data)
     {
@@ -63,5 +63,9 @@ public class InventoryPage : MonoBehaviour
             return true;
         else
             return false;
+    }
+    public void SetDescriptorContent(string str)
+    {
+        ItemDescriptor.text = str;
     }
 }

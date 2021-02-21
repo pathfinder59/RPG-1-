@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Quest2
   m_EditorClassIdentifier: 
   questIdx: 2
+  title: "\uC2A4\uCF08\uB808\uD1A4 \uCC98\uCE58"
   client: 1000
   target: 1000
   _type: 48
@@ -20,7 +21,7 @@ MonoBehaviour:
   exp: 150
   child: 03000000
   childClient: e8030000
-  nParent: 1
+  nParent: 2
   descript: "\uC2A4\uCF08\uB808\uD1A4 3\uB9C8\uB9AC \uCC98\uCE58\uD558\uAE30"
   isActive: 0
   _dialogs:

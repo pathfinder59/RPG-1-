@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryBtn : MonoBehaviour,ICommander
+public class InventoryBtn : MonoBehaviour,ICommand
 {
     [SerializeField]
     InventoryPage _inventoryPage;
@@ -22,16 +22,5 @@ public class InventoryBtn : MonoBehaviour,ICommander
     public void OnClick()
     {
         _inventoryPage.ClickPageBtn(this);
-    }
-
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 }

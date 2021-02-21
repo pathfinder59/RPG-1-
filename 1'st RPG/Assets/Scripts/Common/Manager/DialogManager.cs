@@ -96,7 +96,6 @@ public class DialogManager : Singleton<DialogManager>
         {
             QuestManager.Instance.ProcessQuest(id, processRate, clickedQuestData, currentQuests);
             dialogIdx = 0;
-            UiController.Instance.OpenDialogPage(false);
             return;
         }
         _dialogPage._text.text = textData;

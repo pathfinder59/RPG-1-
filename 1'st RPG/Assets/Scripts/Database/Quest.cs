@@ -9,7 +9,7 @@ public class Quest
     public int num;
     public int processRate;
     public Quest(QuestData data,bool isClear = false)
-    {
+    { 
         client = data.client;
         targetId = data.target;
         num = data.num;

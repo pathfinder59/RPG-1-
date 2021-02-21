@@ -9,7 +9,8 @@ public class InteractBtn : MonoBehaviour
     Canvas StoreCanvas;
     [SerializeField]
     Canvas GameSceneCanvas;
-    
+
+    Material mat;
     void Start()
     {
         

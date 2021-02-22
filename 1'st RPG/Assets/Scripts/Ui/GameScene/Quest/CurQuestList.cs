@@ -35,6 +35,7 @@ public class CurQuestList : MonoBehaviour
         {
             if (_viewContent.GetChild(i).GetComponent<QuestDescriptor>().Data == data)
             {
+                _viewContent.GetChild(i).GetComponent<QuestDescriptor>().CancleSubscribe();
                 Destroy(_viewContent.GetChild(i).gameObject);
                 return;
             }

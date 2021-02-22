@@ -34,7 +34,8 @@ public class QuestDescriptor : MonoBehaviour
     {
         
     }
-    private void OnDestroy()
+
+    public void CancleSubscribe()
     {
         if (isIcon)
             EventManager.Remove("UpdateDescriptor", UpdateData);

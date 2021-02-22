@@ -14,6 +14,8 @@ public class DialogManager : Singleton<DialogManager>
 
     IDictionary<int, List<string>> dlgDatas;
     IDictionary<int, List<DialogData>> questDlgDatas;
+
+    public void UpIdx() { dialogIdx++; }
     void Start()
     {
         dialogIdx = 0;
@@ -98,9 +100,9 @@ public class DialogManager : Singleton<DialogManager>
             dialogIdx = 0;
             return;
         }
-        _dialogPage._text.text = textData;
         UiController.Instance.OpenDialogPage(true);
-        dialogIdx++;
+        _dialogPage.SetDlg(textData);
+        //dialogIdx++;
 
     }
     void Communicate(int id)
@@ -112,9 +114,9 @@ public class DialogManager : Singleton<DialogManager>
             dialogIdx = 0;
             return;
         }
-        _dialogPage._text.text = textData;
         UiController.Instance.OpenDialogPage(true);
-        dialogIdx++;
+        _dialogPage.SetDlg(textData);
+        //dialogIdx++;
     }
 
     string GetData(List<string> strings,int idx)

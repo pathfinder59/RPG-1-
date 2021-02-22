@@ -6,7 +6,6 @@ public class SideMenuCommand : MonoBehaviour,ICommand
 {
     [SerializeField]
     GameObject _sideContent;
-
     static ICommand curCommand;
     public void Off()
     {
@@ -16,6 +15,7 @@ public class SideMenuCommand : MonoBehaviour,ICommand
     public void On()
     {
         _sideContent.gameObject.SetActive(true);
+        _sideContent.GetComponent<Animator>().SetTrigger("On");
     }
 
 

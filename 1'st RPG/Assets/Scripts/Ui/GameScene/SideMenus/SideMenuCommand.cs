@@ -34,6 +34,8 @@ public class SideMenuCommand : MonoBehaviour,ICommand
 
     public void OnClick()
     {
+        if (curCommand == this as ICommand)
+            return;
         curCommand.Off();
         curCommand = this;
         curCommand.On();

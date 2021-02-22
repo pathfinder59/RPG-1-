@@ -8,9 +8,6 @@ using UnityEngine.AI;
 
 public abstract class PlayableFSM : FSM, IDamagable
 {
-
-    protected Animator _animator;
-
     PlayerStat _stat;
   
 
@@ -85,7 +82,7 @@ public abstract class PlayableFSM : FSM, IDamagable
 
 
 
-    override public void Idle()
+    public override void Idle()
     {
         if (isUsingSkill)
             return;
@@ -96,15 +93,10 @@ public abstract class PlayableFSM : FSM, IDamagable
             _animator.SetTrigger("Move");
             return;
         }
-        
 
-        if (_target != null)
-        {
-            _state = FuncState.Move;
-            _animator.SetTrigger("Move");
-        }
+        base.Idle();
     }
-    override public void Move()
+    public override void Move()
     {
         if (isUsingSkill)
             return;
@@ -119,13 +111,15 @@ public abstract class PlayableFSM : FSM, IDamagable
             }
             else
             {
-                if (Vector3.Distance(gameObject.transform.position, _target.transform.position) <= attackDistance + enemyWidth)
+                if (Vector3.Distance(transform.position, _target.position) > attackDistance + enemyWidth)
+                {
+                    Chase(_target.position, attackDistance + enemyWidth);
+                }
+                else
                 {
                     _state = FuncState.Attack;
                     _animator.SetTrigger("Attack");
                 }
-                else
-                    Chase(_target.transform.position, attackDistance + enemyWidth);
             }
         }
         else
@@ -133,14 +127,14 @@ public abstract class PlayableFSM : FSM, IDamagable
 
     }
 
-    override public void Attack()
+    public override void Attack()
     {
         if (isUsingSkill)
             return;
         if (_target == null)
         {
             _state = FuncState.Idle;
-            _animator.ResetTrigger("AttackStart");
+            _animator.ResetTrigger("StartAttack");
             _animator.SetTrigger("Idle");
             StopChase();
             return;
@@ -148,30 +142,15 @@ public abstract class PlayableFSM : FSM, IDamagable
         else if(IsMoving)
         {
             _state = FuncState.Move;
-            _animator.ResetTrigger("AttackStart");
+            _animator.ResetTrigger("StartAttack");
             _animator.SetTrigger("Move");
             StopChase();
             return;
         }
-
-        if (Vector3.Distance(gameObject.transform.position, _target.transform.position) <= attackDistance + enemyWidth)
-        {
-            if (currentTime == 0.0f)
-            {
-
-                currentTime = attackDelay;
-                gameObject.transform.LookAt(_target.transform);
-                _animator.SetTrigger("AttackStart");
-            }
-        }
-        else
-        {
-            _state = FuncState.Move;
-            _animator.SetTrigger("Move");
-        }
+        base.Attack();
     }
     public abstract void AttackEvent();
-    abstract public IEnumerator AttackEffect();
+    public abstract IEnumerator AttackEffect();
     
 
     public IEnumerator UseSkill(SkillData data)
@@ -189,8 +168,6 @@ public abstract class PlayableFSM : FSM, IDamagable
 
         _animator.SetTrigger(data.Name);
 
-        //StartCoroutine(data.Name); //각 자식 클래스에서 스킬이 있을경우 스킬 이름과 동일한 코루틴을 만들어 둘것! , 공통 스킬은 여기에 만들어 둔다
-
         yield return new WaitForSeconds(data.Time);  //스킬 애니메이션 길이
         TurnOffSkill();
     }
@@ -207,7 +184,7 @@ public abstract class PlayableFSM : FSM, IDamagable
             return;
         }
         hitPower -= (AddDef + _stat.Def);
-        Hp -= hitPower;
+        _stat.Heal(-hitPower);
 
         _navMeshAgent.isStopped = true;
         _navMeshAgent.ResetPath();
@@ -221,7 +198,6 @@ public abstract class PlayableFSM : FSM, IDamagable
         if (Hp <= 0)
         {
             _state = FuncState.Die;
-            print("상태 전환: Any State -> Die");
             _animator.SetTrigger("Die");
             Die(enemy);
         }
@@ -256,7 +232,6 @@ public abstract class PlayableFSM : FSM, IDamagable
     void Die(Transform enemy)
     {
         StopAllCoroutines();
-        StartCoroutine("LateDie");
         StartCoroutine(LateDie(enemy));
     }
 

@@ -34,6 +34,11 @@ public class QuestDescriptor : MonoBehaviour
     {
         
     }
+    private void OnDestroy()
+    {
+        if (isIcon)
+            EventManager.Remove("UpdateDescriptor", UpdateData);
+    }
     public void UpdateData(GameObject obj = null)
     {
         if (!isIcon)

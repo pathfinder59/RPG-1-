@@ -64,7 +64,7 @@ public class BossFSM : EnemyFSM
 
     public override void AttackEvent()
     {
-        Target.GetComponent<PlayableFSM>().Damaged(5, gameObject.transform);
+        Target.GetComponent<PlayableFSM>().Damaged(_stat.Atk, gameObject.transform);
     }
 
     public override IEnumerator LateDie(Transform enemy)

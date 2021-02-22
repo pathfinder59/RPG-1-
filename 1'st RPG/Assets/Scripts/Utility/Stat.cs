@@ -45,7 +45,7 @@ public class Stat : MonoBehaviour
     {
         Hp = _maxHp;
     }
-    public virtual void Heal(int amount)
+    public void Heal(int amount)
     {
         Hp = Mathf.Clamp(amount+Hp,0,MaxHp);
     }

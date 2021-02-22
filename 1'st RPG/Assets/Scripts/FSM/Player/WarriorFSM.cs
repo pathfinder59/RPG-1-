@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 using common;
 public class WarriorFSM : PlayableFSM
 {
@@ -17,9 +17,7 @@ public class WarriorFSM : PlayableFSM
 
     public override IEnumerator LateDie(Transform enemy)
     {
-        var fsm = enemy.GetComponent<FSM>();
-        if (fsm != null)
-            fsm.FindTarget(5, 1 << LayerMask.NameToLayer("Enemy"));
+        SceneManager.LoadScene(3);
         yield break;
     }
     

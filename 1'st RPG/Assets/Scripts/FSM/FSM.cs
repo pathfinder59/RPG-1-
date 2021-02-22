@@ -12,6 +12,7 @@ public abstract class FSM : MonoBehaviour
     protected FuncState _state;
     protected float currentTime = 0;
     protected NavMeshAgent _navMeshAgent;
+    protected Animator _animator;
     [SerializeField]
     protected float attackDelay;  //공격 딜레이 길이
     [SerializeField]
@@ -73,9 +74,32 @@ public abstract class FSM : MonoBehaviour
                 break;
         }
     }
-    public virtual void Idle() { }
+    public virtual void Idle() 
+    {
+        if (_target != null)
+        {
+            _state = FuncState.Move;
+            _animator.SetTrigger("Move");
+        }
+    }
     public virtual void Move() { }
-    public virtual void Attack() { }
+    public virtual void Attack() 
+    {
+        if (Vector3.Distance(transform.position, _target.position) <= attackDistance + enemyWidth)
+        {
+            if (currentTime == 0)
+            {
+                transform.LookAt(_target);
+                currentTime = attackDelay;
+                _animator.SetTrigger("StartAttack");
+            }
+        }
+        else
+        {
+            _state = FuncState.Move;
+            _animator.SetTrigger("Move");
+        }
+    }
     public virtual void Return() { }
 
     public void Chase(Vector3 target, float distance)

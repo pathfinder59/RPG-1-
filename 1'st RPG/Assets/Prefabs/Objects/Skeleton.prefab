@@ -253,7 +253,7 @@ MonoBehaviour:
   _maxHp: 10
   _level: 1
   _maxExp: 50
-  _atk: 30
+  _atk: 150
   _def: 20
   _moveSpeed: 5
 --- !u!114 &4524687380284111296
@@ -268,10 +268,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3fcdc049dd67ab4c879f26864f9311c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDelay: 2
+  attackDistance: 5
   findDistance: 10
   moveDistance: 15
-  attackDistance: 5
-  attackDelay: 2
   hitTime: 0.5
   _hpBar: {fileID: 677637387401719295}
 --- !u!195 &-4800046866685164556

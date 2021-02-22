@@ -8,9 +8,8 @@ using common;
 public abstract class EnemyFSM : FSM, IDamagable
 {
 
-    Stat _stat;
-    CharacterController cc;
-    protected Animator _animator;
+    protected Stat _stat;
+    CharacterController cc;   
 
     [SerializeField]
     float findDistance;   //탐색 범위
@@ -70,16 +69,7 @@ public abstract class EnemyFSM : FSM, IDamagable
         UpdataRoutine();
     }
 
-    override public void Idle()
-    {
-        if (_target != null)
-        {
-            _state = FuncState.Move;
-            _animator.SetTrigger("Move");
-        }
-    }
-
-    override public void Move()
+    public override void Move()
     {
         if (Vector3.Distance(transform.position, _target.position) > moveDistance)
         {
@@ -98,27 +88,9 @@ public abstract class EnemyFSM : FSM, IDamagable
         }
     }
 
-    override public void Attack()
-    {
-        if (Vector3.Distance(transform.position, _target.position) < attackDistance + enemyWidth)
-        {           
-            if (currentTime == 0)
-            {
-                transform.LookAt(_target);
-                currentTime = attackDelay;
-                _animator.SetTrigger("StartAttack");
-            }
-        }
-        else
-        {
-            _state = FuncState.Move;
-            _animator.SetTrigger("Move");
-        }
-    }
-
     public abstract void AttackEvent();
 
-    override public void Return()
+    public override void Return()
     {
         if (Vector3.Distance(transform.position, _originPos) > 0.1f)
         {
@@ -147,8 +119,7 @@ public abstract class EnemyFSM : FSM, IDamagable
             return;
         }
 
-        Hp -= hitPower;
-
+        _stat.Heal(-hitPower);
         _navMeshAgent.isStopped = true;
         _navMeshAgent.ResetPath();
 
@@ -206,7 +177,7 @@ public abstract class EnemyFSM : FSM, IDamagable
         StartCoroutine(LateDie(enemy));
     }
 
-    abstract public IEnumerator LateDie(Transform enemy);
+    public abstract IEnumerator LateDie(Transform enemy);
 
     void TrackEnemy(GameObject enemy)
     {

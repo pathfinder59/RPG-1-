@@ -9,9 +9,10 @@ public class CurQuestList : MonoBehaviour
     Transform _viewContent;
     [SerializeField]
     GameObject _descriptorPrefab;
+
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -22,8 +23,8 @@ public class CurQuestList : MonoBehaviour
 
     public void AddDescriptor(QuestData data)
     {
-        
-        QuestDescriptor descriptor = ObjectPoolManager.Instance.Spawn("QuestDescriptor").GetComponent<QuestDescriptor>();
+        var obj = Instantiate(_descriptorPrefab);
+        QuestDescriptor descriptor = obj.GetComponent<QuestDescriptor>();
         descriptor.SetData(data);
         descriptor.transform.SetParent(_viewContent);
         EventManager.Emit("UpdateDescriptor");
@@ -34,7 +35,7 @@ public class CurQuestList : MonoBehaviour
         {
             if (_viewContent.GetChild(i).GetComponent<QuestDescriptor>().Data == data)
             {
-                _viewContent.GetChild(i).gameObject.SetActive(false);
+                Destroy(_viewContent.GetChild(i).gameObject);
                 return;
             }
         }

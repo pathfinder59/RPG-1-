@@ -115,9 +115,11 @@ public class QuestManager : Singleton<QuestManager>
 
             foreach (QuestData questData in DataManager.Instance.questDict[client])
             {
-                if (!QuestManager.Instance.currentQuests[questData._type - '0'].ContainsKey(questData.questIdx))
+                if (!questData.isActive)
+                    continue;
+                if (!QuestManager.Instance.currentQuests[questData._type - '0'].ContainsKey(questData.questIdx)) //수락한 퀘스트가 아닐경우
                 {
-                    if ((questData._type == '1' && questData.target != client) || questData._type == '0')
+                    if ((questData._type == '1' && questData.client == client) || questData._type == '0')
                         n = 1;
                 }
                 else
